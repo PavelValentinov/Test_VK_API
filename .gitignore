@@ -127,5 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/Iterators_Generators/countries.txt
+/02.Iterators_Generators/countries.txt
 /tmp.py
