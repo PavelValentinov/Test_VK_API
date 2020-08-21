@@ -36,7 +36,8 @@ class MyIter:
         # else:
         #     self.counter = 0
 
-    def hash_gen(self):
+    @staticmethod
+    def hash_gen():
         with open("countries.txt", 'rb') as f:
             for line in f:
                 yield hashlib.md5(line).hexdigest()
