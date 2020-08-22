@@ -43,6 +43,7 @@ m – move – команда, которая спросит номер доку
 
 as – add shelf – команда, которая спросит номер новой полки и добавит ее в перечень.
 Предусмотрите случай, когда пользователь добавляет полку, которая уже существует.;"""
+import os
 
 from logger import logger
 
@@ -57,11 +58,12 @@ directories = {
     '2': ['10006'],
     '3': []
 }
+logfile = str(os.path.basename(__file__).split('.')[0] + '.log')
 
 
-@logger
+@logger(logfile)
 def check_doc_num():
-    @logger
+    @logger(logfile)
     def docs_list():
         doc_list = []
         for i in directories.values():
@@ -77,7 +79,7 @@ def check_doc_num():
     return doc_num
 
 
-@logger
+@logger(logfile)
 def person():
     doc_number = check_doc_num()
     for dic in documents:
@@ -86,7 +88,7 @@ def person():
     return "Информация о владельце/составителе документа отсутствует"
 
 
-@logger
+@logger(logfile)
 def shelf():
     doc_number = check_doc_num()
     for shelf_num, document_num in directories.items():
@@ -94,7 +96,7 @@ def shelf():
             return shelf_num
 
 
-@logger
+@logger(logfile)
 def lst():
     docs = []
     for dic in documents:
@@ -105,16 +107,16 @@ def lst():
     return docs
 
 
-@logger
+@logger(logfile)
 def add():
-    @logger
+    @logger(logfile)
     def add_dic(doc_t, doc_n, pers):
         dic = {"type": doc_t.strip(), "number": doc_n.strip(), "name": pers.strip()}
         documents.append(dic)
         return documents[documents.index(dic)]
 
-    @logger
-    def add_sh(doc_n, shelf_n):
+    @logger(logfile)
+    def add_sh(shelf_n, doc_n):
         if shelf_n not in directories.keys():
             add_shelf(shelf_n, doc_n)
             return directories[shelf_n]
@@ -134,7 +136,7 @@ def add():
     return new_dic, shelved_doc
 
 
-@logger
+@logger(logfile)
 def delete():
     doc_number = check_doc_num()
 
@@ -149,9 +151,9 @@ def delete():
     return f"\nДокумент успешно удалён.\n\n{documents}\n{directories}\n"
 
 
-@logger
+@logger(logfile)
 def move():
-    @logger
+    @logger(logfile)
     def del_number(doc_num):
         for keys, values in directories.items():
             if doc_num in values:
@@ -162,7 +164,7 @@ def move():
                 continue
             return keys, directories[keys]
 
-    @logger
+    @logger(logfile)
     def create_number(shelf_num, doc_num):
         if shelf_num not in directories.keys():
             add_shelf(shelf_num, doc_num)
@@ -182,7 +184,7 @@ def move():
     return f"\nДокумент успешно перемещён c полки {delete[0]} ({delete[1]}) на полку {shelf_number} ({create})\n"
 
 
-@logger
+@logger(logfile)
 def add_shelf(shelf_num=None, key=None):
     shelves = []
     for num in directories.keys():
@@ -202,7 +204,7 @@ def add_shelf(shelf_num=None, key=None):
     print(directories)
 
 
-@logger
+@logger(logfile)
 def main():
     """
 1) Функция person() выводит имя человека, имеющего/составившего документ с определенным номером

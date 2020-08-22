@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 /02.Iterators_Generators/countries.txt
 /tmp.py
+/03.Decorators/LOGS/
