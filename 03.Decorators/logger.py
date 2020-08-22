@@ -4,7 +4,7 @@ from functools import wraps
 def logger(filename):
     """Декоратор, принимающий в себя путь к файлу с логами"""
     import os
-    path = os.makedirs('LOGS', exist_ok=True)
+    os.makedirs('LOGS', exist_ok=True)
     logfile = str(os.path.join('LOGS', filename))
 
     def _logger(original_function):
