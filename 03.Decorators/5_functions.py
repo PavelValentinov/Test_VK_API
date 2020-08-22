@@ -58,7 +58,8 @@ directories = {
     '2': ['10006'],
     '3': []
 }
-logfile = str(os.path.basename(__file__).split('.')[0] + '.log')
+filename = os.path.basename(__file__)
+logfile = str(os.path.splitext(filename)[0]) + '.log'
 
 
 @logger(logfile)
@@ -204,7 +205,6 @@ def add_shelf(shelf_num=None, key=None):
     print(directories)
 
 
-@logger(logfile)
 def main():
     """
 1) Функция person() выводит имя человека, имеющего/составившего документ с определенным номером
