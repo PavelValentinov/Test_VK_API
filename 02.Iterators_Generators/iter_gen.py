@@ -32,9 +32,10 @@ class MyIter:
                 f.write(string)
             self.counter += 1
             return string
-        # # если нужно сделать итератор многоразовым - обнуляем счётчик
-        # else:
-        #     self.counter = 0
+        else:
+            # # если нужно сделать итератор многоразовым - обнуляем счётчик
+            #     self.counter = 0
+            raise StopIteration
 
     @staticmethod
     def hash_gen():
@@ -46,7 +47,11 @@ class MyIter:
 if __name__ == '__main__':
     my_iter = MyIter('countries.json')
     md5 = my_iter.hash_gen()
-    for i in range(len(my_iter.countries)):
-        print(next(my_iter), end='\t')
+    # for i in range(len(my_iter.countries)):
+    #     print(next(my_iter), end='\t')
+    #     print(next(md5))
+    #     print()
+    for item in my_iter:
+        print(item, end='')
         print(next(md5))
         print()
