@@ -35,7 +35,7 @@ def parse_habr() -> tuple:
         title = post.find('a', class_='post__title_link').text
         date = _convert_to_date(post)
         for word in KEYWORDS:
-            if word in post.text.lower():
+            if word.lower() in post.text.lower():
                 articles.append((date, title, link))
             else:
                 if (date, title, link) not in articles:
@@ -48,7 +48,7 @@ def parse_habr() -> tuple:
         topic_soup = BeautifulSoup(get(link).text, 'html5lib').find('div',
                                                                     class_='post__text post__text-html post__text_v1')
         for word in KEYWORDS:
-            if word in topic_soup.text.lower():
+            if word.lower() in topic_soup.text.lower():
                 articles.append((date, title, link))
     articles = tuple(set(articles))
     print(f'Всего найдено {len(articles)} подходящих статей')
