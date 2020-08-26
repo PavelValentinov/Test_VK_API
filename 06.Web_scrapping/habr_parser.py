@@ -1,5 +1,8 @@
-"""Парсер для создания дайджеста новостей Хабра по ключевым словам.
-Новости собираются за 2 последних дня (сегодня и вчера)."""
+"""
+Парсер для создания дайджеста новостей Хабра по ключевым словам.
+Новости собираются за 2 последних дня (сегодня и вчера).
+В случае совпадения по искомым словам могут быть захвачены несколько статьей трёхдневной давности.
+"""
 
 from datetime import date, timedelta
 from urllib.parse import urljoin
@@ -16,7 +19,11 @@ TODAY = date.today()
 def parse_habr(url) -> tuple:
     """Функция принимает URL новостей Хабра и парсит новости за 2 последних дня (вчера и сегодня)"""
 
-    def parse_page_by_page(url):
+    def parse_page_by_page(url) -> None:
+        """ Рекурсивная функция, разбирающая код каждой страницы на отдельные блоки со статьями.
+        Рекурсия продолжает выполняться до тех пор, пока дата размещения последней статьи на странице не будет
+        позже вчерашнего дня. """
+
         print(f'Парсим страницу {url}')
         html = get(url).text
         soup = BeautifulSoup(html, 'html5lib')
@@ -55,7 +62,7 @@ def text_processing(posts) -> tuple:
     topics = set(topics) - set(articles)
     print(f'\nПо заголовкам, тегам или описанию найдено {len(articles)} подходящих статей\n')
 
-    for date, title, link in tqdm(topics, desc=f'Просматриваем полное сожержимое оставшихся статей'):
+    for date, title, link in tqdm(topics, desc=f'Просматриваем полное содержимое оставшихся статей'):
         topic_soup = BeautifulSoup(get(link).text, 'html5lib').find('div',
                                                                     class_='post__text post__text-html post__text_v1')
         for word in KEYWORDS:
@@ -78,7 +85,8 @@ def _convert_to_date(post) -> str:
         return str(tag_text)
 
 
-def main():
+def main() -> None:
+    """ Основная функция модуля """
     print()
     strings = text_processing(parse_habr(URL))
     for date, title, link in strings:
