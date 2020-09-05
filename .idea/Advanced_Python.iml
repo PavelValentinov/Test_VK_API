@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/01.Import_Module_Package" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/03.Decorators" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/04.Tests" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/04.Tests/04_1" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.8 (Advanced_Python)" jdkType="Python SDK" />
