@@ -27,15 +27,18 @@ LIFO(англ.last in — first out, «последним пришёл — пе�
 Программа ожидает на вход строку с скобками. На выход сообщение "Сбалансированно", если строка корректная
 и "Небалансированно", если строка составлена неверно."""
 
-import random
+from typing import List, Dict
 
 
 class Stack:
-    PARENTHESES: dict = {'(': ')',
-                         '[': ']',
-                         '{': '}'}
+    PARENTHESES: Dict[str, str] = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
 
-    stack: list = list()
+    def __init__(self):
+        self.stack: List[str] = list()
 
     def size(self) -> int:
         """Проверка текущего размера стека """
@@ -61,50 +64,34 @@ class Stack:
     def check(self, string: str) -> str:
         """Проверка сбалансированности строк"""
         for elem in string:
-            if elem == string[0] and elem in self.PARENTHESES.values():
-                return f"{string} - не cбалансировано"
-            elif elem in self.PARENTHESES.keys():
+            if elem in self.PARENTHESES.keys():
                 self.push(elem)
             elif elem in self.PARENTHESES.values():
                 if self.PARENTHESES.get(self.peek()) == elem:
                     self.pop()
                 else:
-                    return f"{string} - не cбалансировано"
-            if self.is_empty() is True:
-                return f"{string} - сбалансировано"
+                    return f"{string} - не сбалансировано"
+        if self.is_empty():
+            return f"{string} - сбалансировано"
+        return f"{string} - не сбалансировано"
 
 
 if __name__ == '__main__':
-    lines: list = [
+    lines: List[str] = [
         '(((([{}]))))',
         '[([])((([[[]]])))]{()}',
         '{{[()]}}',
         '}{}',
         '{{[(])]}}',
         '[[{())}]',
+        '()()',
+        '[{({[([[[[[[(((({{{{}}}}))))]]]]]])]})}]',
+        '({(((())))})[{(([])([]))}][({})]',
+        ')()',
+        '())',
+        '()(',
     ]
-    stack: Stack = Stack()
 
-    print()
-    print('Прямой порядок строк')
-    print(*lines)
     for line in lines:
+        stack = Stack()
         print(stack.check(line))
-
-    print()
-    random.shuffle(lines)
-
-    print('Перемешанные строки')
-    print(*lines)
-    for line in lines:
-        print(stack.check(line))
-
-    # Почему при перемешивании строк через shuffle некоторые из них не попадают в вывод?
-    # Например:
-
-    # None
-    # }{} - не cбалансировано
-    # None
-    # [[{())}] - не cбалансировано
-    # None
-    # {{[(])]}} - не cбалансировано
