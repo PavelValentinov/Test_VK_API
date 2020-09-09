@@ -84,13 +84,18 @@ def text_processing(posts) -> tuple:
     # просматриваем полное содержимое текста постов, в превью которых ключевые слова не были найдены
     for date, title, link in tqdm(topics, desc=f'Просматриваем полное содержимое оставшихся статей'):
         topic_soup = BeautifulSoup(get(link).text, 'html5lib')
-        topic_text = topic_soup.find('div', class_='post__text post__text-html post__text_v1')
+        text_blocks = topic_soup.find('div', class_='post__text post__text-html post__text_v1')
+        try:
+            topic_text = '\n'.join([i.text for i in [block for block in text_blocks.findAll('p')]])
+        except AttributeError:
+            pass
 
         for word in KEYWORDS:
             # если хотя бы одно слово найдено
             # и кортеж (date, title, link) ещё не находится в списке нужных статей - добавляем его туда
-            if word.lower() in topic_text.text.lower() and ((date, title, link) not in articles):
+            if word.lower() in topic_text.lower() and ((date, title, link) not in articles):
                 articles.append((date, title, link))
+
     print(f'\nВсего за вчера и сегодня по ключевым словам "{", ".join(KEYWORDS)}" найдено {len(articles)} '
           f'подходящих статей:\n')
     return tuple(sorted(articles, reverse=True))
