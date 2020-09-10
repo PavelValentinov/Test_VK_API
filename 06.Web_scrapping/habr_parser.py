@@ -88,7 +88,7 @@ def text_processing(posts) -> tuple:
         try:
             topic_text = '\n'.join([i.text for i in [block for block in text_blocks.findAll('p')]])
         except AttributeError:
-            pass
+            continue
 
         for word in KEYWORDS:
             # если хотя бы одно слово найдено
