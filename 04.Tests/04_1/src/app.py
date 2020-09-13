@@ -7,9 +7,9 @@ def update_date():
     current_path = str(os.path.dirname(os.path.abspath(__file__)))
     f_directories = os.path.join(current_path, 'fixtures/directories.json')
     f_documents = os.path.join(current_path, 'fixtures/documents.json')
-    with open(f_documents, 'r') as out_docs:
+    with open(f_documents, 'r', encoding='utf-8') as out_docs:
         documents = json.load(out_docs)
-    with open(f_directories, 'r') as out_dirs:
+    with open(f_directories, 'r', encoding='utf-8') as out_dirs:
         directories = json.load(out_dirs)
     return directories, documents
 
@@ -51,6 +51,11 @@ def remove_doc_from_shelf(doc_number):
         if doc_number in directory_docs_list:
             directory_docs_list.remove(doc_number)
             break
+        else:
+            return False
+    for directory_number, directory_docs_list in directories.items():
+        if doc_number not in directory_docs_list:
+            return True
 
 
 def add_new_shelf(shelf_number=''):
@@ -77,6 +82,7 @@ def delete_doc():
                 documents.remove(current_document)
                 remove_doc_from_shelf(doc_number)
                 return doc_number, True
+    return user_doc_number, False
 
 
 def get_doc_shelf():
@@ -96,17 +102,22 @@ def move_doc_to_shelf():
     print('Документ номер "{}" был перемещен на полку номер "{}"'.format(user_doc_number, user_shelf_number))
 
 
+
 def show_document_info(document):
     doc_type = document['type']
     doc_number = document['number']
     doc_owner_name = document['name']
-    print('{} "{}" "{}"'.format(doc_type, doc_number, doc_owner_name))
+    result = '{} "{}" "{}"'.format(doc_type, doc_number, doc_owner_name)
+    print(result)
+    return result
 
 
 def show_all_docs_info():
     print('Список всех документов:\n')
+    result = []
     for current_document in documents:
-        show_document_info(current_document)
+        result.append(show_document_info(current_document))
+    return result
 
 
 def add_new_doc():
