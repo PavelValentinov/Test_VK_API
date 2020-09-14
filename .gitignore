@@ -128,6 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /02.Iterators_Generators/countries.txt
-/tmp.py
+*tmp*.py
 /03.Decorators/LOGS/
 /Advanced_Python_Diploma/access_token.json
+.idea/
