@@ -1,4 +1,4 @@
-""" Модуль определяет порядок авторизации и дальнейшей работы с сервисом vk.com"""
+""" Модуль определяет порядок авторизации и дальнейшей работы с сервисом vk_bot.com"""
 import json
 import os
 import time
@@ -15,7 +15,7 @@ now = int(time.mktime(datetime.now().timetuple()))
 
 
 class VKAPIAuth:
-    """ Класс предназначен для авторизации на сервисе vk.com"""
+    """ Класс предназначен для авторизации на сервисе vk_bot.com"""
     ACCESS_TOKEN = ""
 
     def __init__(self, login=None, password=None):
