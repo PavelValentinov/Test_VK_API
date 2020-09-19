@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 
 class VKAuth:
-    username: str = os.getenv("VK_USER_LOGIN")
+    username: str = os.getenv("VK1_USER_LOGIN")
     password: str = os.getenv("VK_USER_PASS")
     session = vk_api.VkApi(username, password)
 
