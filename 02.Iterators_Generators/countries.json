@@ -1,6 +1,6 @@
 [
     {
-        "name": {
+        "title": {
             "common": "Aruba",
             "official": "Aruba",
             "native": {
@@ -26,7 +26,7 @@
         "unMember": false,
         "currencies": {
             "AWG": {
-                "name": "Aruban florin",
+                "title": "Aruban florin",
                 "symbol": "\u0192"
             }
         },
@@ -150,7 +150,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Afghanistan",
             "official": "Islamic Republic of Afghanistan",
             "native": {
@@ -180,7 +180,7 @@
         "unMember": true,
         "currencies": {
             "AFN": {
-                "name": "Afghan afghani",
+                "title": "Afghan afghani",
                 "symbol": "\u060b"
             }
         },
@@ -317,7 +317,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Angola",
             "official": "Republic of Angola",
             "native": {
@@ -339,7 +339,7 @@
         "unMember": true,
         "currencies": {
             "AOA": {
-                "name": "Angolan kwanza",
+                "title": "Angolan kwanza",
                 "symbol": "Kz"
             }
         },
@@ -473,7 +473,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Anguilla",
             "official": "Anguilla",
             "native": {
@@ -495,7 +495,7 @@
         "unMember": false,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -618,7 +618,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "\u00c5land Islands",
             "official": "\u00c5land Islands",
             "native": {
@@ -640,7 +640,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -766,7 +766,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Albania",
             "official": "Republic of Albania",
             "native": {
@@ -788,7 +788,7 @@
         "unMember": true,
         "currencies": {
             "ALL": {
-                "name": "Albanian lek",
+                "title": "Albanian lek",
                 "symbol": "L"
             }
         },
@@ -923,7 +923,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Andorra",
             "official": "Principality of Andorra",
             "native": {
@@ -945,7 +945,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -1077,7 +1077,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "United Arab Emirates",
             "official": "United Arab Emirates",
             "native": {
@@ -1100,7 +1100,7 @@
         "unMember": true,
         "currencies": {
             "AED": {
-                "name": "United Arab Emirates dirham",
+                "title": "United Arab Emirates dirham",
                 "symbol": "\u062f.\u0625"
             }
         },
@@ -1228,7 +1228,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Argentina",
             "official": "Argentine Republic",
             "native": {
@@ -1254,7 +1254,7 @@
         "unMember": true,
         "currencies": {
             "ARS": {
-                "name": "Argentine peso",
+                "title": "Argentine peso",
                 "symbol": "$"
             }
         },
@@ -1390,7 +1390,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Armenia",
             "official": "Republic of Armenia",
             "native": {
@@ -1412,7 +1412,7 @@
         "unMember": true,
         "currencies": {
             "AMD": {
-                "name": "Armenian dram",
+                "title": "Armenian dram",
                 "symbol": "\u058f"
             }
         },
@@ -1547,7 +1547,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "American Samoa",
             "official": "American Samoa",
             "native": {
@@ -1573,7 +1573,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -1700,7 +1700,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Antarctica",
             "official": "Antarctica",
             "native": {}
@@ -1835,7 +1835,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "French Southern and Antarctic Lands",
             "official": "Territory of the French Southern and Antarctic Lands",
             "native": {
@@ -1857,7 +1857,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -1981,7 +1981,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Antigua and Barbuda",
             "official": "Antigua and Barbuda",
             "native": {
@@ -2003,7 +2003,7 @@
         "unMember": true,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -2130,7 +2130,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Australia",
             "official": "Commonwealth of Australia",
             "native": {
@@ -2152,7 +2152,7 @@
         "unMember": true,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             }
         },
@@ -2279,7 +2279,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Austria",
             "official": "Republic of Austria",
             "native": {
@@ -2301,7 +2301,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -2439,7 +2439,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Azerbaijan",
             "official": "Republic of Azerbaijan",
             "native": {
@@ -2465,7 +2465,7 @@
         "unMember": true,
         "currencies": {
             "AZN": {
-                "name": "Azerbaijani manat",
+                "title": "Azerbaijani manat",
                 "symbol": "\u20bc"
             }
         },
@@ -2601,7 +2601,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Burundi",
             "official": "Republic of Burundi",
             "native": {
@@ -2627,7 +2627,7 @@
         "unMember": true,
         "currencies": {
             "BIF": {
-                "name": "Burundian franc",
+                "title": "Burundian franc",
                 "symbol": "Fr"
             }
         },
@@ -2762,7 +2762,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Belgium",
             "official": "Kingdom of Belgium",
             "native": {
@@ -2792,7 +2792,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -2934,7 +2934,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Benin",
             "official": "Republic of Benin",
             "native": {
@@ -2956,7 +2956,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -3090,7 +3090,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Burkina Faso",
             "official": "Burkina Faso",
             "native": {
@@ -3112,7 +3112,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -3246,7 +3246,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bangladesh",
             "official": "People's Republic of Bangladesh",
             "native": {
@@ -3268,7 +3268,7 @@
         "unMember": true,
         "currencies": {
             "BDT": {
-                "name": "Bangladeshi taka",
+                "title": "Bangladeshi taka",
                 "symbol": "\u09f3"
             }
         },
@@ -3400,7 +3400,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bulgaria",
             "official": "Republic of Bulgaria",
             "native": {
@@ -3422,7 +3422,7 @@
         "unMember": true,
         "currencies": {
             "BGN": {
-                "name": "Bulgarian lev",
+                "title": "Bulgarian lev",
                 "symbol": "\u043b\u0432"
             }
         },
@@ -3557,7 +3557,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bahrain",
             "official": "Kingdom of Bahrain",
             "native": {
@@ -3579,7 +3579,7 @@
         "unMember": true,
         "currencies": {
             "BHD": {
-                "name": "Bahraini dinar",
+                "title": "Bahraini dinar",
                 "symbol": ".\u062f.\u0628"
             }
         },
@@ -3708,7 +3708,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bahamas",
             "official": "Commonwealth of the Bahamas",
             "native": {
@@ -3730,11 +3730,11 @@
         "unMember": true,
         "currencies": {
             "BSD": {
-                "name": "Bahamian dollar",
+                "title": "Bahamian dollar",
                 "symbol": "$"
             },
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -3862,7 +3862,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bosnia and Herzegovina",
             "official": "Bosnia and Herzegovina",
             "native": {
@@ -3892,7 +3892,7 @@
         "unMember": true,
         "currencies": {
             "BAM": {
-                "name": "Bosnia and Herzegovina convertible mark",
+                "title": "Bosnia and Herzegovina convertible mark",
                 "symbol": ""
             }
         },
@@ -4027,7 +4027,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Barth\u00e9lemy",
             "official": "Collectivity of Saint Barth\u00e9lemy",
             "native": {
@@ -4049,7 +4049,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -4175,7 +4175,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Helena, Ascension and Tristan da Cunha",
             "official": "Saint Helena, Ascension and Tristan da Cunha",
             "native": {
@@ -4198,11 +4198,11 @@
         "unMember": false,
         "currencies": {
             "GBP": {
-                "name": "Pound sterling",
+                "title": "Pound sterling",
                 "symbol": "\u00a3"
             },
             "SHP": {
-                "name": "Saint Helena pound",
+                "title": "Saint Helena pound",
                 "symbol": "\u00a3"
             }
         },
@@ -4327,7 +4327,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Belarus",
             "official": "Republic of Belarus",
             "native": {
@@ -4353,7 +4353,7 @@
         "unMember": true,
         "currencies": {
             "BYN": {
-                "name": "Belarusian ruble",
+                "title": "Belarusian ruble",
                 "symbol": "Br"
             }
         },
@@ -4491,7 +4491,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Belize",
             "official": "Belize",
             "native": {
@@ -4521,7 +4521,7 @@
         "unMember": true,
         "currencies": {
             "BZD": {
-                "name": "Belize dollar",
+                "title": "Belize dollar",
                 "symbol": "$"
             }
         },
@@ -4653,7 +4653,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bermuda",
             "official": "Bermuda",
             "native": {
@@ -4675,7 +4675,7 @@
         "unMember": false,
         "currencies": {
             "BMD": {
-                "name": "Bermudian dollar",
+                "title": "Bermudian dollar",
                 "symbol": "$"
             }
         },
@@ -4805,7 +4805,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bolivia",
             "official": "Plurinational State of Bolivia",
             "native": {
@@ -4839,7 +4839,7 @@
         "unMember": true,
         "currencies": {
             "BOB": {
-                "name": "Bolivian boliviano",
+                "title": "Bolivian boliviano",
                 "symbol": "Bs."
             }
         },
@@ -4983,7 +4983,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Caribbean Netherlands",
             "official": "Bonaire, Sint Eustatius and Saba",
             "native": {
@@ -5010,7 +5010,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -5133,7 +5133,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Brazil",
             "official": "Federative Republic of Brazil",
             "native": {
@@ -5155,7 +5155,7 @@
         "unMember": true,
         "currencies": {
             "BRL": {
-                "name": "Brazilian real",
+                "title": "Brazilian real",
                 "symbol": "R$"
             }
         },
@@ -5296,7 +5296,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Barbados",
             "official": "Barbados",
             "native": {
@@ -5318,7 +5318,7 @@
         "unMember": true,
         "currencies": {
             "BBD": {
-                "name": "Barbadian dollar",
+                "title": "Barbadian dollar",
                 "symbol": "$"
             }
         },
@@ -5445,7 +5445,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Brunei",
             "official": "Nation of Brunei, Abode of Peace",
             "native": {
@@ -5467,11 +5467,11 @@
         "unMember": true,
         "currencies": {
             "BND": {
-                "name": "Brunei dollar",
+                "title": "Brunei dollar",
                 "symbol": "$"
             },
             "SGD": {
-                "name": "Singapore dollar",
+                "title": "Singapore dollar",
                 "symbol": "$"
             }
         },
@@ -5603,7 +5603,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bhutan",
             "official": "Kingdom of Bhutan",
             "native": {
@@ -5625,11 +5625,11 @@
         "unMember": true,
         "currencies": {
             "BTN": {
-                "name": "Bhutanese ngultrum",
+                "title": "Bhutanese ngultrum",
                 "symbol": "Nu."
             },
             "INR": {
-                "name": "Indian rupee",
+                "title": "Indian rupee",
                 "symbol": "\u20b9"
             }
         },
@@ -5760,7 +5760,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Bouvet Island",
             "official": "Bouvet Island",
             "native": {
@@ -5902,7 +5902,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Botswana",
             "official": "Republic of Botswana",
             "native": {
@@ -5928,7 +5928,7 @@
         "unMember": true,
         "currencies": {
             "BWP": {
-                "name": "Botswana pula",
+                "title": "Botswana pula",
                 "symbol": "P"
             }
         },
@@ -6059,7 +6059,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Central African Republic",
             "official": "Central African Republic",
             "native": {
@@ -6085,7 +6085,7 @@
         "unMember": true,
         "currencies": {
             "XAF": {
-                "name": "Central African CFA franc",
+                "title": "Central African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -6222,7 +6222,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Canada",
             "official": "Canada",
             "native": {
@@ -6248,7 +6248,7 @@
         "unMember": true,
         "currencies": {
             "CAD": {
-                "name": "Canadian dollar",
+                "title": "Canadian dollar",
                 "symbol": "$"
             }
         },
@@ -6378,7 +6378,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cocos (Keeling) Islands",
             "official": "Territory of the Cocos (Keeling) Islands",
             "native": {
@@ -6400,7 +6400,7 @@
         "unMember": false,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             }
         },
@@ -6529,7 +6529,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Switzerland",
             "official": "Swiss Confederation",
             "native": {
@@ -6563,7 +6563,7 @@
         "unMember": true,
         "currencies": {
             "CHF": {
-                "name": "Swiss franc",
+                "title": "Swiss franc",
                 "symbol": "Fr."
             }
         },
@@ -6700,7 +6700,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Chile",
             "official": "Republic of Chile",
             "native": {
@@ -6722,7 +6722,7 @@
         "unMember": true,
         "currencies": {
             "CLP": {
-                "name": "Chilean peso",
+                "title": "Chilean peso",
                 "symbol": "$"
             }
         },
@@ -6855,7 +6855,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "China",
             "official": "People's Republic of China",
             "native": {
@@ -6881,7 +6881,7 @@
         "unMember": true,
         "currencies": {
             "CNY": {
-                "name": "Chinese yuan",
+                "title": "Chinese yuan",
                 "symbol": "\u00a5"
             }
         },
@@ -7027,7 +7027,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Ivory Coast",
             "official": "Republic of C\u00f4te d'Ivoire",
             "native": {
@@ -7049,7 +7049,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -7182,7 +7182,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cameroon",
             "official": "Republic of Cameroon",
             "native": {
@@ -7208,7 +7208,7 @@
         "unMember": true,
         "currencies": {
             "XAF": {
-                "name": "Central African CFA franc",
+                "title": "Central African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -7345,7 +7345,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "DR Congo",
             "official": "Democratic Republic of the Congo",
             "native": {
@@ -7383,7 +7383,7 @@
         "unMember": true,
         "currencies": {
             "CDF": {
-                "name": "Congolese franc",
+                "title": "Congolese franc",
                 "symbol": "FC"
             }
         },
@@ -7528,7 +7528,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Republic of the Congo",
             "official": "Republic of the Congo",
             "native": {
@@ -7558,7 +7558,7 @@
         "unMember": true,
         "currencies": {
             "XAF": {
-                "name": "Central African CFA franc",
+                "title": "Central African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -7695,7 +7695,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cook Islands",
             "official": "Cook Islands",
             "native": {
@@ -7721,11 +7721,11 @@
         "unMember": false,
         "currencies": {
             "CKD": {
-                "name": "Cook Islands dollar",
+                "title": "Cook Islands dollar",
                 "symbol": "$"
             },
             "NZD": {
-                "name": "New Zealand dollar",
+                "title": "New Zealand dollar",
                 "symbol": "$"
             }
         },
@@ -7854,7 +7854,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Colombia",
             "official": "Republic of Colombia",
             "native": {
@@ -7876,7 +7876,7 @@
         "unMember": true,
         "currencies": {
             "COP": {
-                "name": "Colombian peso",
+                "title": "Colombian peso",
                 "symbol": "$"
             }
         },
@@ -8011,7 +8011,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Comoros",
             "official": "Union of the Comoros",
             "native": {
@@ -8041,7 +8041,7 @@
         "unMember": true,
         "currencies": {
             "KMF": {
-                "name": "Comorian franc",
+                "title": "Comorian franc",
                 "symbol": "Fr"
             }
         },
@@ -8174,7 +8174,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cape Verde",
             "official": "Republic of Cabo Verde",
             "native": {
@@ -8196,7 +8196,7 @@
         "unMember": true,
         "currencies": {
             "CVE": {
-                "name": "Cape Verdean escudo",
+                "title": "Cape Verdean escudo",
                 "symbol": "Esc"
             }
         },
@@ -8325,7 +8325,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Costa Rica",
             "official": "Republic of Costa Rica",
             "native": {
@@ -8347,7 +8347,7 @@
         "unMember": true,
         "currencies": {
             "CRC": {
-                "name": "Costa Rican col\u00f3n",
+                "title": "Costa Rican col\u00f3n",
                 "symbol": "\u20a1"
             }
         },
@@ -8479,7 +8479,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cuba",
             "official": "Republic of Cuba",
             "native": {
@@ -8501,11 +8501,11 @@
         "unMember": true,
         "currencies": {
             "CUC": {
-                "name": "Cuban convertible peso",
+                "title": "Cuban convertible peso",
                 "symbol": "$"
             },
             "CUP": {
-                "name": "Cuban peso",
+                "title": "Cuban peso",
                 "symbol": "$"
             }
         },
@@ -8634,7 +8634,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cura\u00e7ao",
             "official": "Country of Cura\u00e7ao",
             "native": {
@@ -8664,7 +8664,7 @@
         "unMember": false,
         "currencies": {
             "ANG": {
-                "name": "Netherlands Antillean guilder",
+                "title": "Netherlands Antillean guilder",
                 "symbol": "\u0192"
             }
         },
@@ -8786,7 +8786,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Christmas Island",
             "official": "Territory of Christmas Island",
             "native": {
@@ -8808,7 +8808,7 @@
         "unMember": false,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             }
         },
@@ -8936,7 +8936,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cayman Islands",
             "official": "Cayman Islands",
             "native": {
@@ -8958,7 +8958,7 @@
         "unMember": false,
         "currencies": {
             "KYD": {
-                "name": "Cayman Islands dollar",
+                "title": "Cayman Islands dollar",
                 "symbol": "$"
             }
         },
@@ -9085,7 +9085,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cyprus",
             "official": "Republic of Cyprus",
             "native": {
@@ -9111,7 +9111,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -9244,7 +9244,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Czechia",
             "official": "Czech Republic",
             "native": {
@@ -9270,7 +9270,7 @@
         "unMember": true,
         "currencies": {
             "CZK": {
-                "name": "Czech koruna",
+                "title": "Czech koruna",
                 "symbol": "K\u010d"
             }
         },
@@ -9405,7 +9405,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Germany",
             "official": "Federal Republic of Germany",
             "native": {
@@ -9427,7 +9427,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -9562,7 +9562,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Djibouti",
             "official": "Republic of Djibouti",
             "native": {
@@ -9588,7 +9588,7 @@
         "unMember": true,
         "currencies": {
             "DJF": {
-                "name": "Djiboutian franc",
+                "title": "Djiboutian franc",
                 "symbol": "Fr"
             }
         },
@@ -9726,7 +9726,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Dominica",
             "official": "Commonwealth of Dominica",
             "native": {
@@ -9748,7 +9748,7 @@
         "unMember": true,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -9878,7 +9878,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Denmark",
             "official": "Kingdom of Denmark",
             "native": {
@@ -9900,7 +9900,7 @@
         "unMember": true,
         "currencies": {
             "DKK": {
-                "name": "Danish krone",
+                "title": "Danish krone",
                 "symbol": "kr"
             }
         },
@@ -10032,7 +10032,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Dominican Republic",
             "official": "Dominican Republic",
             "native": {
@@ -10054,7 +10054,7 @@
         "unMember": true,
         "currencies": {
             "DOP": {
-                "name": "Dominican peso",
+                "title": "Dominican peso",
                 "symbol": "$"
             }
         },
@@ -10185,7 +10185,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Algeria",
             "official": "People's Democratic Republic of Algeria",
             "native": {
@@ -10208,7 +10208,7 @@
         "unMember": true,
         "currencies": {
             "DZD": {
-                "name": "Algerian dinar",
+                "title": "Algerian dinar",
                 "symbol": "\u062f.\u062c"
             }
         },
@@ -10345,7 +10345,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Ecuador",
             "official": "Republic of Ecuador",
             "native": {
@@ -10367,7 +10367,7 @@
         "unMember": true,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -10499,7 +10499,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Egypt",
             "official": "Arab Republic of Egypt",
             "native": {
@@ -10522,7 +10522,7 @@
         "unMember": true,
         "currencies": {
             "EGP": {
-                "name": "Egyptian pound",
+                "title": "Egyptian pound",
                 "symbol": "\u00a3"
             }
         },
@@ -10655,7 +10655,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Eritrea",
             "official": "State of Eritrea",
             "native": {
@@ -10685,7 +10685,7 @@
         "unMember": true,
         "currencies": {
             "ERN": {
-                "name": "Eritrean nakfa",
+                "title": "Eritrean nakfa",
                 "symbol": "Nfk"
             }
         },
@@ -10823,7 +10823,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Western Sahara",
             "official": "Sahrawi Arab Democratic Republic",
             "native": {
@@ -10853,15 +10853,15 @@
         "unMember": false,
         "currencies": {
             "DZD": {
-                "name": "Algerian dinar",
+                "title": "Algerian dinar",
                 "symbol": "\u062f\u062c"
             },
             "MAD": {
-                "name": "Moroccan dirham",
+                "title": "Moroccan dirham",
                 "symbol": "DH"
             },
             "MRU": {
-                "name": "Mauritanian ouguiya",
+                "title": "Mauritanian ouguiya",
                 "symbol": "UM"
             }
         },
@@ -10992,7 +10992,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Spain",
             "official": "Kingdom of Spain",
             "native": {
@@ -11014,7 +11014,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -11145,7 +11145,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Estonia",
             "official": "Republic of Estonia",
             "native": {
@@ -11167,7 +11167,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -11300,7 +11300,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Ethiopia",
             "official": "Federal Democratic Republic of Ethiopia",
             "native": {
@@ -11322,7 +11322,7 @@
         "unMember": true,
         "currencies": {
             "ETB": {
-                "name": "Ethiopian birr",
+                "title": "Ethiopian birr",
                 "symbol": "Br"
             }
         },
@@ -11459,7 +11459,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Finland",
             "official": "Republic of Finland",
             "native": {
@@ -11485,7 +11485,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -11617,7 +11617,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Fiji",
             "official": "Republic of Fiji",
             "native": {
@@ -11647,7 +11647,7 @@
         "unMember": true,
         "currencies": {
             "FJD": {
-                "name": "Fijian dollar",
+                "title": "Fijian dollar",
                 "symbol": "$"
             }
         },
@@ -11776,7 +11776,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Falkland Islands",
             "official": "Falkland Islands",
             "native": {
@@ -11798,7 +11798,7 @@
         "unMember": false,
         "currencies": {
             "FKP": {
-                "name": "Falkland Islands pound",
+                "title": "Falkland Islands pound",
                 "symbol": "\u00a3"
             }
         },
@@ -11923,7 +11923,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "France",
             "official": "French Republic",
             "native": {
@@ -11945,7 +11945,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -12079,7 +12079,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Faroe Islands",
             "official": "Faroe Islands",
             "native": {
@@ -12105,11 +12105,11 @@
         "unMember": false,
         "currencies": {
             "DKK": {
-                "name": "Danish krone",
+                "title": "Danish krone",
                 "symbol": "kr"
             },
             "FOK": {
-                "name": "Faroese kr\u00f3na",
+                "title": "Faroese kr\u00f3na",
                 "symbol": "kr"
             }
         },
@@ -12235,7 +12235,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Micronesia",
             "official": "Federated States of Micronesia",
             "native": {
@@ -12377,7 +12377,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Gabon",
             "official": "Gabonese Republic",
             "native": {
@@ -12399,7 +12399,7 @@
         "unMember": true,
         "currencies": {
             "XAF": {
-                "name": "Central African CFA franc",
+                "title": "Central African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -12528,7 +12528,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "United Kingdom",
             "official": "United Kingdom of Great Britain and Northern Ireland",
             "native": {
@@ -12550,7 +12550,7 @@
         "unMember": true,
         "currencies": {
             "GBP": {
-                "name": "British pound",
+                "title": "British pound",
                 "symbol": "\u00a3"
             }
         },
@@ -12677,7 +12677,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Georgia",
             "official": "Georgia",
             "native": {
@@ -12699,7 +12699,7 @@
         "unMember": true,
         "currencies": {
             "GEL": {
-                "name": "lari",
+                "title": "lari",
                 "symbol": "\u20be"
             }
         },
@@ -12828,7 +12828,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guernsey",
             "official": "Bailiwick of Guernsey",
             "native": {
@@ -12858,11 +12858,11 @@
         "unMember": false,
         "currencies": {
             "GBP": {
-                "name": "British pound",
+                "title": "British pound",
                 "symbol": "\u00a3"
             },
             "GGP": {
-                "name": "Guernsey pound",
+                "title": "Guernsey pound",
                 "symbol": "\u00a3"
             }
         },
@@ -12989,7 +12989,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Ghana",
             "official": "Republic of Ghana",
             "native": {
@@ -13011,7 +13011,7 @@
         "unMember": true,
         "currencies": {
             "GHS": {
-                "name": "Ghanaian cedi",
+                "title": "Ghanaian cedi",
                 "symbol": "\u20b5"
             }
         },
@@ -13138,7 +13138,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Gibraltar",
             "official": "Gibraltar",
             "native": {
@@ -13160,7 +13160,7 @@
         "unMember": false,
         "currencies": {
             "GIP": {
-                "name": "Gibraltar pound",
+                "title": "Gibraltar pound",
                 "symbol": "\u00a3"
             }
         },
@@ -13285,7 +13285,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guinea",
             "official": "Republic of Guinea",
             "native": {
@@ -13307,7 +13307,7 @@
         "unMember": true,
         "currencies": {
             "GNF": {
-                "name": "Guinean franc",
+                "title": "Guinean franc",
                 "symbol": "Fr"
             }
         },
@@ -13439,7 +13439,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guadeloupe",
             "official": "Guadeloupe",
             "native": {
@@ -13461,7 +13461,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -13585,7 +13585,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Gambia",
             "official": "Republic of the Gambia",
             "native": {
@@ -13607,7 +13607,7 @@
         "unMember": true,
         "currencies": {
             "GMD": {
-                "name": "dalasi",
+                "title": "dalasi",
                 "symbol": "D"
             }
         },
@@ -13733,7 +13733,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guinea-Bissau",
             "official": "Republic of Guinea-Bissau",
             "native": {
@@ -13759,7 +13759,7 @@
         "unMember": false,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -13888,7 +13888,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Equatorial Guinea",
             "official": "Republic of Equatorial Guinea",
             "native": {
@@ -13918,7 +13918,7 @@
         "unMember": true,
         "currencies": {
             "XAF": {
-                "name": "Central African CFA franc",
+                "title": "Central African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -14054,7 +14054,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Greece",
             "official": "Hellenic Republic",
             "native": {
@@ -14076,7 +14076,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -14207,7 +14207,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Grenada",
             "official": "Grenada",
             "native": {
@@ -14229,7 +14229,7 @@
         "unMember": true,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -14352,7 +14352,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Greenland",
             "official": "Greenland",
             "native": {
@@ -14374,7 +14374,7 @@
         "unMember": false,
         "currencies": {
             "DKK": {
-                "name": "krone",
+                "title": "krone",
                 "symbol": "kr."
             }
         },
@@ -14498,7 +14498,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guatemala",
             "official": "Republic of Guatemala",
             "native": {
@@ -14520,7 +14520,7 @@
         "unMember": true,
         "currencies": {
             "GTQ": {
-                "name": "Guatemalan quetzal",
+                "title": "Guatemalan quetzal",
                 "symbol": "Q"
             }
         },
@@ -14648,7 +14648,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "French Guiana",
             "official": "Guiana",
             "native": {
@@ -14670,7 +14670,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -14798,7 +14798,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guam",
             "official": "Guam",
             "native": {
@@ -14828,7 +14828,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -14954,7 +14954,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Guyana",
             "official": "Co-operative Republic of Guyana",
             "native": {
@@ -14976,7 +14976,7 @@
         "unMember": true,
         "currencies": {
             "GYD": {
-                "name": "Guyanese dollar",
+                "title": "Guyanese dollar",
                 "symbol": "$"
             }
         },
@@ -15104,7 +15104,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Hong Kong",
             "official": "Hong Kong Special Administrative Region of the People's Republic of China",
             "native": {
@@ -15131,7 +15131,7 @@
         "unMember": false,
         "currencies": {
             "HKD": {
-                "name": "Hong Kong dollar",
+                "title": "Hong Kong dollar",
                 "symbol": "$"
             }
         },
@@ -15253,7 +15253,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Heard Island and McDonald Islands",
             "official": "Heard Island and McDonald Islands",
             "native": {
@@ -15395,7 +15395,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Honduras",
             "official": "Republic of Honduras",
             "native": {
@@ -15417,7 +15417,7 @@
         "unMember": true,
         "currencies": {
             "HNL": {
-                "name": "Honduran lempira",
+                "title": "Honduran lempira",
                 "symbol": "L"
             }
         },
@@ -15546,7 +15546,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Croatia",
             "official": "Republic of Croatia",
             "native": {
@@ -15568,7 +15568,7 @@
         "unMember": true,
         "currencies": {
             "HRK": {
-                "name": "Croatian kuna",
+                "title": "Croatian kuna",
                 "symbol": "kn"
             }
         },
@@ -15704,7 +15704,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Haiti",
             "official": "Republic of Haiti",
             "native": {
@@ -15730,7 +15730,7 @@
         "unMember": true,
         "currencies": {
             "HTG": {
-                "name": "Haitian gourde",
+                "title": "Haitian gourde",
                 "symbol": "G"
             }
         },
@@ -15859,7 +15859,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Hungary",
             "official": "Hungary",
             "native": {
@@ -15881,7 +15881,7 @@
         "unMember": true,
         "currencies": {
             "HUF": {
-                "name": "Hungarian forint",
+                "title": "Hungarian forint",
                 "symbol": "Ft"
             }
         },
@@ -16012,7 +16012,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Indonesia",
             "official": "Republic of Indonesia",
             "native": {
@@ -16034,7 +16034,7 @@
         "unMember": true,
         "currencies": {
             "IDR": {
-                "name": "Indonesian rupiah",
+                "title": "Indonesian rupiah",
                 "symbol": "Rp"
             }
         },
@@ -16163,7 +16163,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Isle of Man",
             "official": "Isle of Man",
             "native": {
@@ -16189,11 +16189,11 @@
         "unMember": false,
         "currencies": {
             "GBP": {
-                "name": "British pound",
+                "title": "British pound",
                 "symbol": "\u00a3"
             },
             "IMP": {
-                "name": "Manx pound",
+                "title": "Manx pound",
                 "symbol": "\u00a3"
             }
         },
@@ -16320,7 +16320,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "India",
             "official": "Republic of India",
             "native": {
@@ -16350,7 +16350,7 @@
         "unMember": true,
         "currencies": {
             "INR": {
-                "name": "Indian rupee",
+                "title": "Indian rupee",
                 "symbol": "\u20b9"
             }
         },
@@ -16486,7 +16486,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "British Indian Ocean Territory",
             "official": "British Indian Ocean Territory",
             "native": {
@@ -16508,7 +16508,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -16635,7 +16635,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Ireland",
             "official": "Republic of Ireland",
             "native": {
@@ -16661,7 +16661,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -16790,7 +16790,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Iran",
             "official": "Islamic Republic of Iran",
             "native": {
@@ -16813,7 +16813,7 @@
         "unMember": true,
         "currencies": {
             "IRR": {
-                "name": "Iranian rial",
+                "title": "Iranian rial",
                 "symbol": "\ufdfc"
             }
         },
@@ -16943,7 +16943,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Iraq",
             "official": "Republic of Iraq",
             "native": {
@@ -16973,7 +16973,7 @@
         "unMember": true,
         "currencies": {
             "IQD": {
-                "name": "Iraqi dinar",
+                "title": "Iraqi dinar",
                 "symbol": "\u0639.\u062f"
             }
         },
@@ -17107,7 +17107,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Iceland",
             "official": "Iceland",
             "native": {
@@ -17129,7 +17129,7 @@
         "unMember": true,
         "currencies": {
             "ISK": {
-                "name": "Icelandic kr\u00f3na",
+                "title": "Icelandic kr\u00f3na",
                 "symbol": "kr"
             }
         },
@@ -17255,7 +17255,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Israel",
             "official": "State of Israel",
             "native": {
@@ -17281,7 +17281,7 @@
         "unMember": true,
         "currencies": {
             "ILS": {
-                "name": "Israeli new shekel",
+                "title": "Israeli new shekel",
                 "symbol": "\u20aa"
             }
         },
@@ -17413,7 +17413,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Italy",
             "official": "Italian Republic",
             "native": {
@@ -17435,7 +17435,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -17567,7 +17567,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Jamaica",
             "official": "Jamaica",
             "native": {
@@ -17593,7 +17593,7 @@
         "unMember": true,
         "currencies": {
             "JMD": {
-                "name": "Jamaican dollar",
+                "title": "Jamaican dollar",
                 "symbol": "$"
             }
         },
@@ -17717,7 +17717,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Jersey",
             "official": "Bailiwick of Jersey",
             "native": {
@@ -17747,11 +17747,11 @@
         "unMember": false,
         "currencies": {
             "GBP": {
-                "name": "British pound",
+                "title": "British pound",
                 "symbol": "\u00a3"
             },
             "JEP": {
-                "name": "Jersey pound",
+                "title": "Jersey pound",
                 "symbol": "\u00a3"
             }
         },
@@ -17879,7 +17879,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Jordan",
             "official": "Hashemite Kingdom of Jordan",
             "native": {
@@ -17902,7 +17902,7 @@
         "unMember": true,
         "currencies": {
             "JOD": {
-                "name": "Jordanian dinar",
+                "title": "Jordanian dinar",
                 "symbol": "\u062f.\u0627"
             }
         },
@@ -18033,7 +18033,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Japan",
             "official": "Japan",
             "native": {
@@ -18056,7 +18056,7 @@
         "unMember": true,
         "currencies": {
             "JPY": {
-                "name": "Japanese yen",
+                "title": "Japanese yen",
                 "symbol": "\u00a5"
             }
         },
@@ -18181,7 +18181,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Kazakhstan",
             "official": "Republic of Kazakhstan",
             "native": {
@@ -18208,7 +18208,7 @@
         "unMember": true,
         "currencies": {
             "KZT": {
-                "name": "Kazakhstani tenge",
+                "title": "Kazakhstani tenge",
                 "symbol": "\u20b8"
             }
         },
@@ -18346,7 +18346,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Kenya",
             "official": "Republic of Kenya",
             "native": {
@@ -18372,7 +18372,7 @@
         "unMember": true,
         "currencies": {
             "KES": {
-                "name": "Kenyan shilling",
+                "title": "Kenyan shilling",
                 "symbol": "Sh"
             }
         },
@@ -18504,7 +18504,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Kyrgyzstan",
             "official": "Kyrgyz Republic",
             "native": {
@@ -18530,7 +18530,7 @@
         "unMember": true,
         "currencies": {
             "KGS": {
-                "name": "Kyrgyzstani som",
+                "title": "Kyrgyzstani som",
                 "symbol": "\u0441"
             }
         },
@@ -18663,7 +18663,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Cambodia",
             "official": "Kingdom of Cambodia",
             "native": {
@@ -18685,11 +18685,11 @@
         "unMember": true,
         "currencies": {
             "KHR": {
-                "name": "Cambodian riel",
+                "title": "Cambodian riel",
                 "symbol": "\u17db"
             },
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -18821,7 +18821,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Kiribati",
             "official": "Independent and Sovereign Republic of Kiribati",
             "native": {
@@ -18847,11 +18847,11 @@
         "unMember": true,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             },
             "KID": {
-                "name": "Kiribati dollar",
+                "title": "Kiribati dollar",
                 "symbol": "$"
             }
         },
@@ -18977,7 +18977,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Kitts and Nevis",
             "official": "Federation of Saint Christopher and Nevis",
             "native": {
@@ -18999,7 +18999,7 @@
         "unMember": true,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -19123,7 +19123,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "South Korea",
             "official": "Republic of Korea",
             "native": {
@@ -19146,7 +19146,7 @@
         "unMember": true,
         "currencies": {
             "KRW": {
-                "name": "South Korean won",
+                "title": "South Korean won",
                 "symbol": "\u20a9"
             }
         },
@@ -19275,7 +19275,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Kosovo",
             "official": "Republic of Kosovo",
             "native": {
@@ -19299,7 +19299,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -19425,7 +19425,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Kuwait",
             "official": "State of Kuwait",
             "native": {
@@ -19447,7 +19447,7 @@
         "unMember": true,
         "currencies": {
             "KWD": {
-                "name": "Kuwaiti dinar",
+                "title": "Kuwaiti dinar",
                 "symbol": "\u062f.\u0643"
             }
         },
@@ -19575,7 +19575,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Laos",
             "official": "Lao People's Democratic Republic",
             "native": {
@@ -19597,7 +19597,7 @@
         "unMember": true,
         "currencies": {
             "LAK": {
-                "name": "Lao kip",
+                "title": "Lao kip",
                 "symbol": "\u20ad"
             }
         },
@@ -19729,7 +19729,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Lebanon",
             "official": "Lebanese Republic",
             "native": {
@@ -19755,7 +19755,7 @@
         "unMember": true,
         "currencies": {
             "LBP": {
-                "name": "Lebanese pound",
+                "title": "Lebanese pound",
                 "symbol": "\u0644.\u0644"
             }
         },
@@ -19884,7 +19884,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Liberia",
             "official": "Republic of Liberia",
             "native": {
@@ -19906,7 +19906,7 @@
         "unMember": true,
         "currencies": {
             "LRD": {
-                "name": "Liberian dollar",
+                "title": "Liberian dollar",
                 "symbol": "$"
             }
         },
@@ -20034,7 +20034,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Libya",
             "official": "State of Libya",
             "native": {
@@ -20056,7 +20056,7 @@
         "unMember": true,
         "currencies": {
             "LYD": {
-                "name": "Libyan dinar",
+                "title": "Libyan dinar",
                 "symbol": "\u0644.\u062f"
             }
         },
@@ -20188,7 +20188,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Lucia",
             "official": "Saint Lucia",
             "native": {
@@ -20210,7 +20210,7 @@
         "unMember": true,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -20333,7 +20333,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Liechtenstein",
             "official": "Principality of Liechtenstein",
             "native": {
@@ -20355,7 +20355,7 @@
         "unMember": true,
         "currencies": {
             "CHF": {
-                "name": "Swiss franc",
+                "title": "Swiss franc",
                 "symbol": "Fr"
             }
         },
@@ -20483,7 +20483,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Sri Lanka",
             "official": "Democratic Socialist Republic of Sri Lanka",
             "native": {
@@ -20511,7 +20511,7 @@
         "unMember": true,
         "currencies": {
             "LKR": {
-                "name": "Sri Lankan rupee",
+                "title": "Sri Lankan rupee",
                 "symbol": "Rs  \u0dbb\u0dd4"
             }
         },
@@ -20639,7 +20639,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Lesotho",
             "official": "Kingdom of Lesotho",
             "native": {
@@ -20665,11 +20665,11 @@
         "unMember": true,
         "currencies": {
             "LSL": {
-                "name": "Lesotho loti",
+                "title": "Lesotho loti",
                 "symbol": "L"
             },
             "ZAR": {
-                "name": "South African rand",
+                "title": "South African rand",
                 "symbol": "R"
             }
         },
@@ -20797,7 +20797,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Lithuania",
             "official": "Republic of Lithuania",
             "native": {
@@ -20819,7 +20819,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -20949,7 +20949,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Luxembourg",
             "official": "Grand Duchy of Luxembourg",
             "native": {
@@ -20979,7 +20979,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -21112,7 +21112,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Latvia",
             "official": "Republic of Latvia",
             "native": {
@@ -21134,7 +21134,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -21264,7 +21264,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Macau",
             "official": "Macao Special Administrative Region of the People's Republic of China",
             "native": {
@@ -21290,7 +21290,7 @@
         "unMember": false,
         "currencies": {
             "MOP": {
-                "name": "Macanese pataca",
+                "title": "Macanese pataca",
                 "symbol": "P"
             }
         },
@@ -21417,7 +21417,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Martin",
             "official": "Saint Martin",
             "native": {
@@ -21440,7 +21440,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -21568,7 +21568,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Morocco",
             "official": "Kingdom of Morocco",
             "native": {
@@ -21595,7 +21595,7 @@
         "unMember": true,
         "currencies": {
             "MAD": {
-                "name": "Moroccan dirham",
+                "title": "Moroccan dirham",
                 "symbol": "\u062f.\u0645."
             }
         },
@@ -21725,7 +21725,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Monaco",
             "official": "Principality of Monaco",
             "native": {
@@ -21747,7 +21747,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -21874,7 +21874,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Moldova",
             "official": "Republic of Moldova",
             "native": {
@@ -21896,7 +21896,7 @@
         "unMember": true,
         "currencies": {
             "MDL": {
-                "name": "Moldovan leu",
+                "title": "Moldovan leu",
                 "symbol": "L"
             }
         },
@@ -22025,7 +22025,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Madagascar",
             "official": "Republic of Madagascar",
             "native": {
@@ -22051,7 +22051,7 @@
         "unMember": true,
         "currencies": {
             "MGA": {
-                "name": "Malagasy ariary",
+                "title": "Malagasy ariary",
                 "symbol": "Ar"
             }
         },
@@ -22178,7 +22178,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Maldives",
             "official": "Republic of the Maldives",
             "native": {
@@ -22200,7 +22200,7 @@
         "unMember": true,
         "currencies": {
             "MVR": {
-                "name": "Maldivian rufiyaa",
+                "title": "Maldivian rufiyaa",
                 "symbol": ".\u0783"
             }
         },
@@ -22326,7 +22326,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mexico",
             "official": "United Mexican States",
             "native": {
@@ -22348,7 +22348,7 @@
         "unMember": true,
         "currencies": {
             "MXN": {
-                "name": "Mexican peso",
+                "title": "Mexican peso",
                 "symbol": "$"
             }
         },
@@ -22478,7 +22478,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Marshall Islands",
             "official": "Republic of the Marshall Islands",
             "native": {
@@ -22504,7 +22504,7 @@
         "unMember": true,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -22630,7 +22630,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "North Macedonia",
             "official": "Republic of North Macedonia",
             "native": {
@@ -22652,7 +22652,7 @@
         "unMember": true,
         "currencies": {
             "MKD": {
-                "name": "denar",
+                "title": "denar",
                 "symbol": "den"
             }
         },
@@ -22785,7 +22785,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mali",
             "official": "Republic of Mali",
             "native": {
@@ -22807,7 +22807,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -22940,7 +22940,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Malta",
             "official": "Republic of Malta",
             "native": {
@@ -22966,7 +22966,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -23092,7 +23092,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Myanmar",
             "official": "Republic of the Union of Myanmar",
             "native": {
@@ -23114,7 +23114,7 @@
         "unMember": true,
         "currencies": {
             "MMK": {
-                "name": "Burmese kyat",
+                "title": "Burmese kyat",
                 "symbol": "Ks"
             }
         },
@@ -23246,7 +23246,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Montenegro",
             "official": "Montenegro",
             "native": {
@@ -23268,7 +23268,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -23398,7 +23398,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mongolia",
             "official": "Mongolia",
             "native": {
@@ -23420,7 +23420,7 @@
         "unMember": true,
         "currencies": {
             "MNT": {
-                "name": "Mongolian t\u00f6gr\u00f6g",
+                "title": "Mongolian t\u00f6gr\u00f6g",
                 "symbol": "\u20ae"
             }
         },
@@ -23546,7 +23546,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Northern Mariana Islands",
             "official": "Commonwealth of the Northern Mariana Islands",
             "native": {
@@ -23576,7 +23576,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -23703,7 +23703,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mozambique",
             "official": "Republic of Mozambique",
             "native": {
@@ -23725,7 +23725,7 @@
         "unMember": true,
         "currencies": {
             "MZN": {
-                "name": "Mozambican metical",
+                "title": "Mozambican metical",
                 "symbol": "MT"
             }
         },
@@ -23857,7 +23857,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mauritania",
             "official": "Islamic Republic of Mauritania",
             "native": {
@@ -23879,7 +23879,7 @@
         "unMember": true,
         "currencies": {
             "MRU": {
-                "name": "Mauritanian ouguiya",
+                "title": "Mauritanian ouguiya",
                 "symbol": "UM"
             }
         },
@@ -24009,7 +24009,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Montserrat",
             "official": "Montserrat",
             "native": {
@@ -24031,7 +24031,7 @@
         "unMember": false,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -24154,7 +24154,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Martinique",
             "official": "Martinique",
             "native": {
@@ -24176,7 +24176,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -24299,7 +24299,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mauritius",
             "official": "Republic of Mauritius",
             "native": {
@@ -24329,7 +24329,7 @@
         "unMember": true,
         "currencies": {
             "MUR": {
-                "name": "Mauritian rupee",
+                "title": "Mauritian rupee",
                 "symbol": "\u20a8"
             }
         },
@@ -24456,7 +24456,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Malawi",
             "official": "Republic of Malawi",
             "native": {
@@ -24482,7 +24482,7 @@
         "unMember": true,
         "currencies": {
             "MWK": {
-                "name": "Malawian kwacha",
+                "title": "Malawian kwacha",
                 "symbol": "MK"
             }
         },
@@ -24611,7 +24611,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Malaysia",
             "official": "Malaysia",
             "native": {
@@ -24637,7 +24637,7 @@
         "unMember": true,
         "currencies": {
             "MYR": {
-                "name": "Malaysian ringgit",
+                "title": "Malaysian ringgit",
                 "symbol": "RM"
             }
         },
@@ -24765,7 +24765,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Mayotte",
             "official": "Department of Mayotte",
             "native": {
@@ -24787,7 +24787,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -24912,7 +24912,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Namibia",
             "official": "Republic of Namibia",
             "native": {
@@ -24966,11 +24966,11 @@
         "unMember": true,
         "currencies": {
             "NAD": {
-                "name": "Namibian dollar",
+                "title": "Namibian dollar",
                 "symbol": "$"
             },
             "ZAR": {
-                "name": "South African rand",
+                "title": "South African rand",
                 "symbol": "R"
             }
         },
@@ -25108,7 +25108,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "New Caledonia",
             "official": "New Caledonia",
             "native": {
@@ -25130,7 +25130,7 @@
         "unMember": false,
         "currencies": {
             "XPF": {
-                "name": "CFP franc",
+                "title": "CFP franc",
                 "symbol": "\u20a3"
             }
         },
@@ -25253,7 +25253,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Niger",
             "official": "Republic of Niger",
             "native": {
@@ -25275,7 +25275,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -25407,7 +25407,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Norfolk Island",
             "official": "Territory of Norfolk Island",
             "native": {
@@ -25433,7 +25433,7 @@
         "unMember": false,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             }
         },
@@ -25559,7 +25559,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Nigeria",
             "official": "Federal Republic of Nigeria",
             "native": {
@@ -25581,7 +25581,7 @@
         "unMember": true,
         "currencies": {
             "NGN": {
-                "name": "Nigerian naira",
+                "title": "Nigerian naira",
                 "symbol": "\u20a6"
             }
         },
@@ -25712,7 +25712,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Nicaragua",
             "official": "Republic of Nicaragua",
             "native": {
@@ -25734,7 +25734,7 @@
         "unMember": true,
         "currencies": {
             "NIO": {
-                "name": "Nicaraguan c\u00f3rdoba",
+                "title": "Nicaraguan c\u00f3rdoba",
                 "symbol": "C$"
             }
         },
@@ -25862,7 +25862,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Niue",
             "official": "Niue",
             "native": {
@@ -25888,7 +25888,7 @@
         "unMember": false,
         "currencies": {
             "NZD": {
-                "name": "New Zealand dollar",
+                "title": "New Zealand dollar",
                 "symbol": "$"
             }
         },
@@ -26012,7 +26012,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Netherlands",
             "official": "Kingdom of the Netherlands",
             "native": {
@@ -26034,7 +26034,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -26163,7 +26163,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Norway",
             "official": "Kingdom of Norway",
             "native": {
@@ -26193,7 +26193,7 @@
         "unMember": true,
         "currencies": {
             "NOK": {
-                "name": "Norwegian krone",
+                "title": "Norwegian krone",
                 "symbol": "kr"
             }
         },
@@ -26327,7 +26327,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Nepal",
             "official": "Federal Democratic Republic of Nepal",
             "native": {
@@ -26349,7 +26349,7 @@
         "unMember": true,
         "currencies": {
             "NPR": {
-                "name": "Nepalese rupee",
+                "title": "Nepalese rupee",
                 "symbol": "\u20a8"
             }
         },
@@ -26477,7 +26477,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Nauru",
             "official": "Republic of Nauru",
             "native": {
@@ -26503,7 +26503,7 @@
         "unMember": true,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             }
         },
@@ -26631,7 +26631,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "New Zealand",
             "official": "New Zealand",
             "native": {
@@ -26661,7 +26661,7 @@
         "unMember": true,
         "currencies": {
             "NZD": {
-                "name": "New Zealand dollar",
+                "title": "New Zealand dollar",
                 "symbol": "$"
             }
         },
@@ -26787,7 +26787,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Oman",
             "official": "Sultanate of Oman",
             "native": {
@@ -26809,7 +26809,7 @@
         "unMember": true,
         "currencies": {
             "OMR": {
-                "name": "Omani rial",
+                "title": "Omani rial",
                 "symbol": "\u0631.\u0639."
             }
         },
@@ -26938,7 +26938,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Pakistan",
             "official": "Islamic Republic of Pakistan",
             "native": {
@@ -26964,7 +26964,7 @@
         "unMember": true,
         "currencies": {
             "PKR": {
-                "name": "Pakistani rupee",
+                "title": "Pakistani rupee",
                 "symbol": "\u20a8"
             }
         },
@@ -27096,7 +27096,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Panama",
             "official": "Republic of Panama",
             "native": {
@@ -27118,11 +27118,11 @@
         "unMember": true,
         "currencies": {
             "PAB": {
-                "name": "Panamanian balboa",
+                "title": "Panamanian balboa",
                 "symbol": "B\/."
             },
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -27250,7 +27250,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Pitcairn Islands",
             "official": "Pitcairn Group of Islands",
             "native": {
@@ -27272,7 +27272,7 @@
         "unMember": false,
         "currencies": {
             "NZD": {
-                "name": "New Zealand dollar",
+                "title": "New Zealand dollar",
                 "symbol": "$"
             }
         },
@@ -27397,7 +27397,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Peru",
             "official": "Republic of Peru",
             "native": {
@@ -27427,7 +27427,7 @@
         "unMember": true,
         "currencies": {
             "PEN": {
-                "name": "Peruvian sol",
+                "title": "Peruvian sol",
                 "symbol": "S\/."
             }
         },
@@ -27560,7 +27560,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Philippines",
             "official": "Republic of the Philippines",
             "native": {
@@ -27586,7 +27586,7 @@
         "unMember": true,
         "currencies": {
             "PHP": {
-                "name": "Philippine peso",
+                "title": "Philippine peso",
                 "symbol": "\u20b1"
             }
         },
@@ -27712,7 +27712,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Palau",
             "official": "Republic of Palau",
             "native": {
@@ -27738,7 +27738,7 @@
         "unMember": true,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -27864,7 +27864,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Papua New Guinea",
             "official": "Independent State of Papua New Guinea",
             "native": {
@@ -27894,7 +27894,7 @@
         "unMember": true,
         "currencies": {
             "PGK": {
-                "name": "Papua New Guinean kina",
+                "title": "Papua New Guinean kina",
                 "symbol": "K"
             }
         },
@@ -28023,7 +28023,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Poland",
             "official": "Republic of Poland",
             "native": {
@@ -28045,7 +28045,7 @@
         "unMember": true,
         "currencies": {
             "PLN": {
-                "name": "Polish z\u0142oty",
+                "title": "Polish z\u0142oty",
                 "symbol": "z\u0142"
             }
         },
@@ -28178,7 +28178,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Puerto Rico",
             "official": "Commonwealth of Puerto Rico",
             "native": {
@@ -28204,7 +28204,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -28331,7 +28331,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "North Korea",
             "official": "Democratic People's Republic of Korea",
             "native": {
@@ -28353,7 +28353,7 @@
         "unMember": true,
         "currencies": {
             "KPW": {
-                "name": "North Korean won",
+                "title": "North Korean won",
                 "symbol": "\u20a9"
             }
         },
@@ -28487,7 +28487,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Portugal",
             "official": "Portuguese Republic",
             "native": {
@@ -28509,7 +28509,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -28637,7 +28637,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Paraguay",
             "official": "Republic of Paraguay",
             "native": {
@@ -28663,7 +28663,7 @@
         "unMember": true,
         "currencies": {
             "PYG": {
-                "name": "Paraguayan guaran\u00ed",
+                "title": "Paraguayan guaran\u00ed",
                 "symbol": "\u20b2"
             }
         },
@@ -28794,7 +28794,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Palestine",
             "official": "State of Palestine",
             "native": {
@@ -28817,15 +28817,15 @@
         "unMember": false,
         "currencies": {
             "EGP": {
-                "name": "Egyptian pound",
+                "title": "Egyptian pound",
                 "symbol": "E\u00a3"
             },
             "ILS": {
-                "name": "Israeli new shekel",
+                "title": "Israeli new shekel",
                 "symbol": "\u20aa"
             },
             "JOD": {
-                "name": "Jordanian dinar",
+                "title": "Jordanian dinar",
                 "symbol": "JD"
             }
         },
@@ -28955,7 +28955,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "French Polynesia",
             "official": "French Polynesia",
             "native": {
@@ -28977,7 +28977,7 @@
         "unMember": false,
         "currencies": {
             "XPF": {
-                "name": "CFP franc",
+                "title": "CFP franc",
                 "symbol": "\u20a3"
             }
         },
@@ -29103,7 +29103,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Qatar",
             "official": "State of Qatar",
             "native": {
@@ -29126,7 +29126,7 @@
         "unMember": true,
         "currencies": {
             "QAR": {
-                "name": "Qatari riyal",
+                "title": "Qatari riyal",
                 "symbol": "\u0631.\u0642"
             }
         },
@@ -29253,7 +29253,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "R\u00e9union",
             "official": "R\u00e9union Island",
             "native": {
@@ -29275,7 +29275,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -29399,7 +29399,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Romania",
             "official": "Romania",
             "native": {
@@ -29421,7 +29421,7 @@
         "unMember": true,
         "currencies": {
             "RON": {
-                "name": "Romanian leu",
+                "title": "Romanian leu",
                 "symbol": "lei"
             }
         },
@@ -29553,7 +29553,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Russia",
             "official": "Russian Federation",
             "native": {
@@ -29577,7 +29577,7 @@
         "unMember": true,
         "currencies": {
             "RUB": {
-                "name": "Russian ruble",
+                "title": "Russian ruble",
                 "symbol": "\u20bd"
             }
         },
@@ -29721,7 +29721,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Rwanda",
             "official": "Republic of Rwanda",
             "native": {
@@ -29751,7 +29751,7 @@
         "unMember": true,
         "currencies": {
             "RWF": {
-                "name": "Rwandan franc",
+                "title": "Rwandan franc",
                 "symbol": "Fr"
             }
         },
@@ -29884,7 +29884,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saudi Arabia",
             "official": "Kingdom of Saudi Arabia",
             "native": {
@@ -29907,7 +29907,7 @@
         "unMember": true,
         "currencies": {
             "SAR": {
-                "name": "Saudi riyal",
+                "title": "Saudi riyal",
                 "symbol": "\u0631.\u0633"
             }
         },
@@ -30041,7 +30041,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Sudan",
             "official": "Republic of the Sudan",
             "native": {
@@ -30067,7 +30067,7 @@
         "unMember": true,
         "currencies": {
             "SDG": {
-                "name": "Sudanese pound",
+                "title": "Sudanese pound",
                 "symbol": ""
             }
         },
@@ -30201,7 +30201,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Senegal",
             "official": "Republic of Senegal",
             "native": {
@@ -30223,7 +30223,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -30354,7 +30354,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Singapore",
             "official": "Republic of Singapore",
             "native": {
@@ -30390,7 +30390,7 @@
         "unMember": true,
         "currencies": {
             "SGD": {
-                "name": "Singapore dollar",
+                "title": "Singapore dollar",
                 "symbol": "$"
             }
         },
@@ -30515,7 +30515,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "South Georgia",
             "official": "South Georgia and the South Sandwich Islands",
             "native": {
@@ -30537,7 +30537,7 @@
         "unMember": false,
         "currencies": {
             "SHP": {
-                "name": "Saint Helena pound",
+                "title": "Saint Helena pound",
                 "symbol": "\u00a3"
             }
         },
@@ -30661,7 +30661,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Svalbard and Jan Mayen",
             "official": "Svalbard og Jan Mayen",
             "native": {
@@ -30683,7 +30683,7 @@
         "unMember": false,
         "currencies": {
             "NOK": {
-                "name": "krone",
+                "title": "krone",
                 "symbol": "kr"
             }
         },
@@ -30807,7 +30807,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Solomon Islands",
             "official": "Solomon Islands",
             "native": {
@@ -30829,7 +30829,7 @@
         "unMember": true,
         "currencies": {
             "SBD": {
-                "name": "Solomon Islands dollar",
+                "title": "Solomon Islands dollar",
                 "symbol": "$"
             }
         },
@@ -30952,7 +30952,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Sierra Leone",
             "official": "Republic of Sierra Leone",
             "native": {
@@ -30974,7 +30974,7 @@
         "unMember": true,
         "currencies": {
             "SLL": {
-                "name": "Sierra Leonean leone",
+                "title": "Sierra Leonean leone",
                 "symbol": "Le"
             }
         },
@@ -31101,7 +31101,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "El Salvador",
             "official": "Republic of El Salvador",
             "native": {
@@ -31123,7 +31123,7 @@
         "unMember": true,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -31255,7 +31255,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "San Marino",
             "official": "Most Serene Republic of San Marino",
             "native": {
@@ -31277,7 +31277,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -31404,7 +31404,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Somalia",
             "official": "Federal Republic of Somalia",
             "native": {
@@ -31430,7 +31430,7 @@
         "unMember": true,
         "currencies": {
             "SOS": {
-                "name": "Somali shilling",
+                "title": "Somali shilling",
                 "symbol": "Sh"
             }
         },
@@ -31562,7 +31562,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Pierre and Miquelon",
             "official": "Saint Pierre and Miquelon",
             "native": {
@@ -31584,7 +31584,7 @@
         "unMember": false,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -31708,7 +31708,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Serbia",
             "official": "Republic of Serbia",
             "native": {
@@ -31731,7 +31731,7 @@
         "unMember": true,
         "currencies": {
             "RSD": {
-                "name": "Serbian dinar",
+                "title": "Serbian dinar",
                 "symbol": "\u0434\u0438\u043d."
             }
         },
@@ -31867,7 +31867,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "South Sudan",
             "official": "Republic of South Sudan",
             "native": {
@@ -31889,7 +31889,7 @@
         "unMember": true,
         "currencies": {
             "SSP": {
-                "name": "South Sudanese pound",
+                "title": "South Sudanese pound",
                 "symbol": "\u00a3"
             }
         },
@@ -32019,7 +32019,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
             "official": "Democratic Republic of S\u00e3o Tom\u00e9 and Pr\u00edncipe",
             "native": {
@@ -32041,7 +32041,7 @@
         "unMember": true,
         "currencies": {
             "STN": {
-                "name": "S\u00e3o Tom\u00e9 and Pr\u00edncipe dobra",
+                "title": "S\u00e3o Tom\u00e9 and Pr\u00edncipe dobra",
                 "symbol": "Db"
             }
         },
@@ -32167,7 +32167,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Suriname",
             "official": "Republic of Suriname",
             "native": {
@@ -32189,7 +32189,7 @@
         "unMember": true,
         "currencies": {
             "SRD": {
-                "name": "Surinamese dollar",
+                "title": "Surinamese dollar",
                 "symbol": "$"
             }
         },
@@ -32320,7 +32320,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Slovakia",
             "official": "Slovak Republic",
             "native": {
@@ -32342,7 +32342,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -32473,7 +32473,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Slovenia",
             "official": "Republic of Slovenia",
             "native": {
@@ -32495,7 +32495,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -32625,7 +32625,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Sweden",
             "official": "Kingdom of Sweden",
             "native": {
@@ -32647,7 +32647,7 @@
         "unMember": true,
         "currencies": {
             "SEK": {
-                "name": "Swedish krona",
+                "title": "Swedish krona",
                 "symbol": "kr"
             }
         },
@@ -32775,7 +32775,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Eswatini",
             "official": "Kingdom of Eswatini",
             "native": {
@@ -32801,11 +32801,11 @@
         "unMember": true,
         "currencies": {
             "SZL": {
-                "name": "Swazi lilangeni",
+                "title": "Swazi lilangeni",
                 "symbol": "L"
             },
             "ZAR": {
-                "name": "South African rand",
+                "title": "South African rand",
                 "symbol": "R"
             }
         },
@@ -32938,7 +32938,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Sint Maarten",
             "official": "Sint Maarten",
             "native": {
@@ -32968,7 +32968,7 @@
         "unMember": false,
         "currencies": {
             "ANG": {
-                "name": "Netherlands Antillean guilder",
+                "title": "Netherlands Antillean guilder",
                 "symbol": "\u0192"
             }
         },
@@ -33096,7 +33096,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Seychelles",
             "official": "Republic of Seychelles",
             "native": {
@@ -33126,7 +33126,7 @@
         "unMember": true,
         "currencies": {
             "SCR": {
-                "name": "Seychellois rupee",
+                "title": "Seychellois rupee",
                 "symbol": "\u20a8"
             }
         },
@@ -33254,7 +33254,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Syria",
             "official": "Syrian Arab Republic",
             "native": {
@@ -33277,7 +33277,7 @@
         "unMember": true,
         "currencies": {
             "SYP": {
-                "name": "Syrian pound",
+                "title": "Syrian pound",
                 "symbol": "\u00a3"
             }
         },
@@ -33408,7 +33408,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Turks and Caicos Islands",
             "official": "Turks and Caicos Islands",
             "native": {
@@ -33430,7 +33430,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -33553,7 +33553,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Chad",
             "official": "Republic of Chad",
             "native": {
@@ -33579,7 +33579,7 @@
         "unMember": true,
         "currencies": {
             "XAF": {
-                "name": "Central African CFA franc",
+                "title": "Central African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -33717,7 +33717,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Togo",
             "official": "Togolese Republic",
             "native": {
@@ -33739,7 +33739,7 @@
         "unMember": true,
         "currencies": {
             "XOF": {
-                "name": "West African CFA franc",
+                "title": "West African CFA franc",
                 "symbol": "Fr"
             }
         },
@@ -33869,7 +33869,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Thailand",
             "official": "Kingdom of Thailand",
             "native": {
@@ -33892,7 +33892,7 @@
         "unMember": true,
         "currencies": {
             "THB": {
-                "name": "Thai baht",
+                "title": "Thai baht",
                 "symbol": "\u0e3f"
             }
         },
@@ -34025,7 +34025,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Tajikistan",
             "official": "Republic of Tajikistan",
             "native": {
@@ -34051,7 +34051,7 @@
         "unMember": true,
         "currencies": {
             "TJS": {
-                "name": "Tajikistani somoni",
+                "title": "Tajikistani somoni",
                 "symbol": "\u0405\u041c"
             }
         },
@@ -34184,7 +34184,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Tokelau",
             "official": "Tokelau",
             "native": {
@@ -34214,7 +34214,7 @@
         "unMember": false,
         "currencies": {
             "NZD": {
-                "name": "New Zealand dollar",
+                "title": "New Zealand dollar",
                 "symbol": "$"
             }
         },
@@ -34339,7 +34339,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Turkmenistan",
             "official": "Turkmenistan",
             "native": {
@@ -34365,7 +34365,7 @@
         "unMember": true,
         "currencies": {
             "TMT": {
-                "name": "Turkmenistan manat",
+                "title": "Turkmenistan manat",
                 "symbol": "m"
             }
         },
@@ -34494,7 +34494,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Timor-Leste",
             "official": "Democratic Republic of Timor-Leste",
             "native": {
@@ -34520,7 +34520,7 @@
         "unMember": true,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -34652,7 +34652,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Tonga",
             "official": "Kingdom of Tonga",
             "native": {
@@ -34678,7 +34678,7 @@
         "unMember": true,
         "currencies": {
             "TOP": {
-                "name": "Tongan pa\u02bbanga",
+                "title": "Tongan pa\u02bbanga",
                 "symbol": "T$"
             }
         },
@@ -34802,7 +34802,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Trinidad and Tobago",
             "official": "Republic of Trinidad and Tobago",
             "native": {
@@ -34824,7 +34824,7 @@
         "unMember": true,
         "currencies": {
             "TTD": {
-                "name": "Trinidad and Tobago dollar",
+                "title": "Trinidad and Tobago dollar",
                 "symbol": "$"
             }
         },
@@ -34948,7 +34948,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Tunisia",
             "official": "Tunisian Republic",
             "native": {
@@ -34970,7 +34970,7 @@
         "unMember": true,
         "currencies": {
             "TND": {
-                "name": "Tunisian dinar",
+                "title": "Tunisian dinar",
                 "symbol": "\u062f.\u062a"
             }
         },
@@ -35098,7 +35098,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Turkey",
             "official": "Republic of Turkey",
             "native": {
@@ -35120,7 +35120,7 @@
         "unMember": true,
         "currencies": {
             "TRY": {
-                "name": "Turkish lira",
+                "title": "Turkish lira",
                 "symbol": "\u20ba"
             }
         },
@@ -35255,7 +35255,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Tuvalu",
             "official": "Tuvalu",
             "native": {
@@ -35281,11 +35281,11 @@
         "unMember": true,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "title": "Australian dollar",
                 "symbol": "$"
             },
             "TVD": {
-                "name": "Tuvaluan dollar",
+                "title": "Tuvaluan dollar",
                 "symbol": "$"
             }
         },
@@ -35409,7 +35409,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Taiwan",
             "official": "Republic of China (Taiwan)",
             "native": {
@@ -35433,7 +35433,7 @@
         "unMember": false,
         "currencies": {
             "TWD": {
-                "name": "New Taiwan dollar",
+                "title": "New Taiwan dollar",
                 "symbol": "$"
             }
         },
@@ -35557,7 +35557,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Tanzania",
             "official": "United Republic of Tanzania",
             "native": {
@@ -35583,7 +35583,7 @@
         "unMember": true,
         "currencies": {
             "TZS": {
-                "name": "Tanzanian shilling",
+                "title": "Tanzanian shilling",
                 "symbol": "Sh"
             }
         },
@@ -35719,7 +35719,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Uganda",
             "official": "Republic of Uganda",
             "native": {
@@ -35745,7 +35745,7 @@
         "unMember": true,
         "currencies": {
             "UGX": {
-                "name": "Ugandan shilling",
+                "title": "Ugandan shilling",
                 "symbol": "Sh"
             }
         },
@@ -35877,7 +35877,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Ukraine",
             "official": "Ukraine",
             "native": {
@@ -35900,7 +35900,7 @@
         "unMember": true,
         "currencies": {
             "UAH": {
-                "name": "Ukrainian hryvnia",
+                "title": "Ukrainian hryvnia",
                 "symbol": "\u20b4"
             }
         },
@@ -36032,7 +36032,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "United States Minor Outlying Islands",
             "official": "United States Minor Outlying Islands",
             "native": {
@@ -36054,7 +36054,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -36177,7 +36177,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Uruguay",
             "official": "Oriental Republic of Uruguay",
             "native": {
@@ -36199,7 +36199,7 @@
         "unMember": true,
         "currencies": {
             "UYU": {
-                "name": "Uruguayan peso",
+                "title": "Uruguayan peso",
                 "symbol": "$"
             }
         },
@@ -36327,7 +36327,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "United States",
             "official": "United States of America",
             "native": {
@@ -36349,7 +36349,7 @@
         "unMember": true,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -36793,7 +36793,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Uzbekistan",
             "official": "Republic of Uzbekistan",
             "native": {
@@ -36819,7 +36819,7 @@
         "unMember": true,
         "currencies": {
             "UZS": {
-                "name": "Uzbekistani so\u02bbm",
+                "title": "Uzbekistani so\u02bbm",
                 "symbol": "so'm"
             }
         },
@@ -36952,7 +36952,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Vatican City",
             "official": "Vatican City State",
             "native": {
@@ -36978,7 +36978,7 @@
         "unMember": true,
         "currencies": {
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             }
         },
@@ -37108,7 +37108,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Saint Vincent and the Grenadines",
             "official": "Saint Vincent and the Grenadines",
             "native": {
@@ -37130,7 +37130,7 @@
         "unMember": true,
         "currencies": {
             "XCD": {
-                "name": "Eastern Caribbean dollar",
+                "title": "Eastern Caribbean dollar",
                 "symbol": "$"
             }
         },
@@ -37253,7 +37253,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Venezuela",
             "official": "Bolivarian Republic of Venezuela",
             "native": {
@@ -37275,7 +37275,7 @@
         "unMember": true,
         "currencies": {
             "VES": {
-                "name": "Venezuelan bol\u00edvar soberano",
+                "title": "Venezuelan bol\u00edvar soberano",
                 "symbol": "Bs.S."
             }
         },
@@ -37405,7 +37405,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "British Virgin Islands",
             "official": "Virgin Islands",
             "native": {
@@ -37427,7 +37427,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -37551,7 +37551,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "United States Virgin Islands",
             "official": "Virgin Islands of the United States",
             "native": {
@@ -37573,7 +37573,7 @@
         "unMember": false,
         "currencies": {
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             }
         },
@@ -37697,7 +37697,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Vietnam",
             "official": "Socialist Republic of Vietnam",
             "native": {
@@ -37719,7 +37719,7 @@
         "unMember": true,
         "currencies": {
             "VND": {
-                "name": "Vietnamese \u0111\u1ed3ng",
+                "title": "Vietnamese \u0111\u1ed3ng",
                 "symbol": "\u20ab"
             }
         },
@@ -37849,7 +37849,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Vanuatu",
             "official": "Republic of Vanuatu",
             "native": {
@@ -37879,7 +37879,7 @@
         "unMember": true,
         "currencies": {
             "VUV": {
-                "name": "Vanuatu vatu",
+                "title": "Vanuatu vatu",
                 "symbol": "Vt"
             }
         },
@@ -38007,7 +38007,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Wallis and Futuna",
             "official": "Territory of the Wallis and Futuna Islands",
             "native": {
@@ -38029,7 +38029,7 @@
         "unMember": false,
         "currencies": {
             "XPF": {
-                "name": "CFP franc",
+                "title": "CFP franc",
                 "symbol": "\u20a3"
             }
         },
@@ -38154,7 +38154,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Samoa",
             "official": "Independent State of Samoa",
             "native": {
@@ -38180,7 +38180,7 @@
         "unMember": true,
         "currencies": {
             "WST": {
-                "name": "Samoan t\u0101l\u0101",
+                "title": "Samoan t\u0101l\u0101",
                 "symbol": "T"
             }
         },
@@ -38306,7 +38306,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Yemen",
             "official": "Republic of Yemen",
             "native": {
@@ -38328,7 +38328,7 @@
         "unMember": true,
         "currencies": {
             "YER": {
-                "name": "Yemeni rial",
+                "title": "Yemeni rial",
                 "symbol": "\ufdfc"
             }
         },
@@ -38456,7 +38456,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "South Africa",
             "official": "Republic of South Africa",
             "native": {
@@ -38518,7 +38518,7 @@
         "unMember": true,
         "currencies": {
             "ZAR": {
-                "name": "South African rand",
+                "title": "South African rand",
                 "symbol": "R"
             }
         },
@@ -38663,7 +38663,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Zambia",
             "official": "Republic of Zambia",
             "native": {
@@ -38685,7 +38685,7 @@
         "unMember": true,
         "currencies": {
             "ZMW": {
-                "name": "Zambian kwacha",
+                "title": "Zambian kwacha",
                 "symbol": "ZK"
             }
         },
@@ -38818,7 +38818,7 @@
         }
     },
     {
-        "name": {
+        "title": {
             "common": "Zimbabwe",
             "official": "Republic of Zimbabwe",
             "native": {
@@ -38896,39 +38896,39 @@
         "unMember": true,
         "currencies": {
             "BWP": {
-                "name": "Botswana pula",
+                "title": "Botswana pula",
                 "symbol": "P"
             },
             "CNY": {
-                "name": "Chinese yuan",
+                "title": "Chinese yuan",
                 "symbol": "\u00a5"
             },
             "EUR": {
-                "name": "Euro",
+                "title": "Euro",
                 "symbol": "\u20ac"
             },
             "GBP": {
-                "name": "British pound",
+                "title": "British pound",
                 "symbol": "\u00a3"
             },
             "INR": {
-                "name": "Indian rupee",
+                "title": "Indian rupee",
                 "symbol": "\u20b9"
             },
             "JPY": {
-                "name": "Japanese yen",
+                "title": "Japanese yen",
                 "symbol": "\u00a5"
             },
             "USD": {
-                "name": "United States dollar",
+                "title": "United States dollar",
                 "symbol": "$"
             },
             "ZAR": {
-                "name": "South African rand",
+                "title": "South African rand",
                 "symbol": "Rs"
             },
             "ZWB": {
-                "name": "Zimbabwean bonds",
+                "title": "Zimbabwean bonds",
                 "symbol": "$"
             }
         },

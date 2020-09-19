@@ -1,0 +1,93 @@
+[
+  {
+    "model": "sort",
+    "fields": {
+      "id": 0,
+      "title": "popularity"
+    }
+  },
+  {
+    "model": "sort",
+    "fields": {
+      "id": 1,
+      "title": "registration date"
+    }
+  },
+  {
+    "model": "sex",
+    "fields": {
+      "id": 0,
+      "title": "no sex"
+    }
+  },
+  {
+    "model": "sex",
+    "fields": {
+      "id": 1,
+      "title": "female"
+    }
+  },
+  {
+    "model": "sex",
+    "fields": {
+      "id": 2,
+      "title": "male"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 1,
+      "title": "single"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 2,
+      "title": "dating"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 3,
+      "title": "engaged"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 4,
+      "title": "married"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 5,
+      "title": "everything's complex"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 6,
+      "title": "in active search"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 7,
+      "title": "in love"
+    }
+  },
+  {
+    "model": "status",
+    "fields": {
+      "id": 8,
+      "title": "has a partner"
+    }
+  }
+]

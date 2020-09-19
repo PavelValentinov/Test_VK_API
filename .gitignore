@@ -133,9 +133,11 @@ dmypy.json
 /Advanced_Python_Diploma/access_token.json
 .idea/
 ../.idea/
-/Advanced_Python_Diploma/VKINDER/VK_SCOPE/cities.json
-/Advanced_Python_Diploma/VKINDER/VK_SCOPE/countries.json
-/Advanced_Python_Diploma/VKINDER/VK_SCOPE/regions.json
+/Advanced_Python_Diploma/VKINDER/DB/Fixtures/cities.json
+/Advanced_Python_Diploma/VKINDER/DB/Fixtures/countries.json
+/Advanced_Python_Diploma/VKINDER/DB/Fixtures/regions.json
 /Advanced_Python_Diploma/VKINDER/VK_SCOPE/vk_config.v2.json
 /Advanced_Python_Diploma/VKINDER/VK_SCOPE/Книга1.xlsx
 vk_config.v2.json
+/Advanced_Python_Diploma/VKINDER/DB/Fixtures/cities.json
+/Advanced_Python_Diploma/VKINDER/DB/Fixtures/cities.json
