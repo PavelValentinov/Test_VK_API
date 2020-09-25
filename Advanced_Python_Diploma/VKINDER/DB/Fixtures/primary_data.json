@@ -3,91 +3,91 @@
     "model": "sort",
     "fields": {
       "id": 0,
-      "title": "popularity"
+      "title": "по популярности"
     }
   },
   {
     "model": "sort",
     "fields": {
       "id": 1,
-      "title": "registration date"
+      "title": "по дате регистрации"
     }
   },
   {
     "model": "sex",
     "fields": {
       "id": 0,
-      "title": "no sex"
+      "title": "пол не указан"
     }
   },
   {
     "model": "sex",
     "fields": {
       "id": 1,
-      "title": "female"
+      "title": "женский"
     }
   },
   {
     "model": "sex",
     "fields": {
       "id": 2,
-      "title": "male"
+      "title": "мужской"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 1,
-      "title": "single"
+      "title": "не женат (не замужем)"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 2,
-      "title": "dating"
+      "title": "встречается"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 3,
-      "title": "engaged"
+      "title": "помолвлен(-а)"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 4,
-      "title": "married"
+      "title": "женат (замужем)"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 5,
-      "title": "everything's complex"
+      "title": "всё сложно"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 6,
-      "title": "in active search"
+      "title": "в активном поиске"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 7,
-      "title": "in love"
+      "title": "влюблен(-а)"
     }
   },
   {
     "model": "status",
     "fields": {
       "id": 8,
-      "title": "has a partner"
+      "title": "в гражданском браке"
     }
   }
 ]

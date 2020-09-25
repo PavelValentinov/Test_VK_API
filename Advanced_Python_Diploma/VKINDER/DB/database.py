@@ -40,44 +40,45 @@ class Connect:
             for entity_dict in data:
                 Model = table_to_model_mapping[entity_dict['model']]
                 fields = entity_dict['fields']
-                if not self.select_from_db(Model, Model.id == fields['id']).first():
-                    entity = Model(**fields)
-                    print(entity)
-                    self.session.add(entity)
-                    self.session.commit()
+                if Model != City:
+                    if not self.select_from_db(Model.id, Model.id == fields['id']).first():
+                        entity = Model(**fields)
+                        print(entity)
+                        self.session.add(entity)
+                        self.session.commit()
+                    else:
+                        continue
                 else:
-                    continue
+                    if not self.select_from_db(Model.id, Model.id == fields['id']).first():
+                        entity = Model(**fields)
+                        print(entity)
+                        self.session.add(entity)
+                        self.session.commit()
+                    else:
+                        if self.select_from_db(Model.id, Model.id == fields['id'] and Model.region_id is None).first() is None:
+                            self.update_data(Model.id, Model.id == fields['id'] and Model.region_id is None, {Model.region_id: fields['region_id']})
+                            self.update_data(Model.id, Model.id == fields['id'], {Model.area: fields.get('area')})
+
+                        else:
+                            continue
         print('All basics are inserted')
 
-    def select_from_db(self, model_fields, expression):
+    def select_from_db(self, model_field, expression):
         """Метод проверки наличия записей в БД"""
-        return self.session.query(model_fields).filter(expression)
+        return self.session.query(model_field).filter(expression)
 
     def update_data(self, model_field, filter_expression, fields):
         self.session.query(model_field).filter(filter_expression).update(fields)
         self.session.commit()
         print(f'{model_field} updated successfully ')
 
-    def insert_user(self, model, fields):
-        """Метод для записи в БД данных о пользователях"""
+    def insert_to_db(self, model, fields):
+        """Общий метод для записи в БД новых данных"""
         entity = model(**fields)
         # print(entity)
         self.session.add(entity)
         self.session.commit()
 
-    def insert_city(self, city):
-        """Метод для записи в БД данных о городе"""
-        entity = City(**city)
-        # print(entity)
-        self.session.add(entity)
-        self.session.commit()
-
-    def insert_region(self, region):
-        """Метод для записи в БД данных о регионе"""
-        entity = Region(**region)
-        # print(entity)
-        self.session.add(entity)
-        self.session.commit()
 
 
 # id из Вконтакте являются натуральными Primary key для любой таблицы, описывающей соответствующую сущность
@@ -146,11 +147,11 @@ class Query(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
     datetime = Column(DateTime)
     sex_id = Column(Integer, ForeignKey('sex.id'))
+    city_id = Column(Integer, ForeignKey('city.id'))
     age_from = Column(Integer)
     age_to = Column(Integer)
-    city_id = Column(Integer, ForeignKey('city.id'))
-    sort_id = Column(Integer, ForeignKey('sort.id'))
     status_id = Column(Integer, ForeignKey('status.id'))
+    sort_id = Column(Integer, ForeignKey('sort.id'))
     user_id = Column(Integer, ForeignKey('user.id'))
 
 
@@ -163,6 +164,7 @@ class DatingUser(Base):
     city_id = Column(Integer)
     city_title = Column(String)
     link = Column(String)
+    verified = Column(Integer)
     user_id = Column(Integer, ForeignKey('user.id'))
     query_id = Column(Integer, ForeignKey('query.id'))
     viewed = Column(Boolean, default=False)

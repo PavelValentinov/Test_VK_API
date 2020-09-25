@@ -1,18 +1,18 @@
 import json
 import os
 import time
-# from pprint import pprint
 from datetime import datetime
-from typing import List, Dict, Any
+from pprint import pprint
+from typing import List, Dict, Any, Tuple
 
 import vk_api
 from tqdm import tqdm
 
-from DB.database import Connect, User, City, Region
+from DB.database import Connect, User, City, Region, Query
 
 
 class VKAuth:
-    # FIXME: если нет токена, то нужно закомментировать строку 15, а строки 19-26 раскомментировать
+    # FIXME: если нет токена, то нужно закомментировать строку 17, а строки 19-26 раскомментировать
     #        и указать свои данные для авторизации
     vk_session = vk_api.VkApi(token=os.getenv("VK_USER_TOKEN"))
 
@@ -176,8 +176,9 @@ class VKAuth:
             json.dump(cities, f)
         return cities
 
-    def get_city(self, country_id: int, city_title: str):
-        def get_region(country_id: int, region_title: str):
+    def get_city(self, country_id: int, city_title: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+
+        def get_region(country_id: int, region_title: str) -> Dict[str, Any]:
             search_values = {'country_id': country_id, 'q': region_title}
             return self.vk_session.method('database.getRegions', values=search_values)
 
@@ -195,8 +196,8 @@ class VKAuth:
 # noinspection SpellCheckingInspection
 class VKUser(VKAuth, Connect):
     def __init__(self, id: int):
-        self.id = id
-        info = self.get_self_info(self.id)
+        self.user_id = id
+        info = self.get_self_info(self.user_id)
         # print(info)
         self.first_name = info[0].get('first_name')
         self.last_name = info[0].get('last_name')
@@ -216,18 +217,18 @@ class VKUser(VKAuth, Connect):
         }
         return self.vk_session.method('users.get', values=search_values)
 
-    def check_city_and_region(self):
+    def check_city_and_region(self) -> None:
         """Метод проверки наличия города и региона в БД. При отсутствии - собираем и дописываем"""
         if self.select_from_db(City.id, City.id == self.city['id']).first() is None:
             city, region = self.get_city(self.country['id'], self.city['title'])
             if self.select_from_db(Region.id, Region.id == region['id']).first() is None:
-                self.insert_region(region)
-            self.insert_city(city)
+                self.insert_to_db(Region, region)
+            self.insert_to_db(City, city)
 
-    def insert_self_to_db(self):
+    def insert_self_to_db(self) -> None:
         """ Метод записи в БД информации о юзере из чата """
         fields = {
-            'id': self.id,
+            'id': self.user_id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'date_of_birth': self.birthday,
@@ -238,46 +239,84 @@ class VKUser(VKAuth, Connect):
         # если нового города юзера вдруг нет в БД
         self.check_city_and_region()
         # проверяем юзера на наличие в БД
-        if self.select_from_db(User.id, User.id == self.id).first() is None:
-            self.insert_user(User, fields)
+        if self.select_from_db(User.id, User.id == self.user_id).first() is None:
+            self.insert_to_db(User, fields)
         else:
             # проверяем не поменялся ли у юзера его город
-            user_db_city = self.select_from_db(User.city_id, User.id == self.id).first()[0]
+            user_db_city = self.select_from_db(User.city_id, User.id == self.user_id).first()[0]
             if user_db_city != self.city['id']:
                 self.check_city_and_region()  # если нового города юзера вдруг нет в БД
-                self.update_data(User.id, User.id == self.id, {User.city_id: self.city['id']})
+                self.update_data(User.id, User.id == self.user_id, {User.city_id: self.city['id']})
 
-    def search_users(self, values: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+    def insert_query(self, user_id, search_values) -> int:
+        try:
+            start_id = self.select_from_db(Query.id, Query.id == Query.id).all()
+        except IndexError:
+            start_id = self.select_from_db(Query.id, Query.id == Query.id).first()[0]
+
+        if not start_id or start_id is None:
+            start_id = 1
+        else:
+            start_id += 1
+
+        fields = {
+            'id': start_id,
+            'datetime': datetime.timestamp(datetime.now()),
+            'sex_id': search_values['sex'],
+            'city_id': search_values['city'],
+            'age_from': search_values['age_from'],
+            'age_to': search_values['age_to'],
+            'status_id': search_values['status'],
+            'sort_id': search_values['sort'],
+            'user_id': user_id
+        }
+        pprint(fields)
+        # self.insert_to_db(Query, fields)
+        return start_id
+
+    def search_users(self, vk_user, values: Dict[str, Any] = None) -> None:
         """ Метод поиска подходящих пользователей по запросу юзера"""
+
         search_values = {
-            'count': 1000,
             'city': 1,
             'sex': 1,
             'age_from': 33,
             'age_to': 43,
-            'has_photo': 1,
             'status': 6,
             'sort': 1,
+            'count': 1000,
+            'has_photo': 1,
             'is_closed': 0,
             'can_access_closed': 1,
-            'fields': 'id, verified, bdate, domain, city, status'
+            'fields': 'id, city, verified, domain'
         }
 
         if values:
-            search_values.fromkeys(values)
-
+            search_values.update(values)
         users_list = self.vk_session.method('users.search', values=search_values)['items']
-        return users_list
+        query_id = self.insert_query(vk_user.user_id, search_values)
+        for user in users_list[:1]:
+            user['city_id'] = user['city']['id']
+            user['city_title'] = user['city']['title']
+            user['link'] = 'https://vk.com/' + user.get('domain')
+            user['verified'] = user.get('verified')
+            user['user_id'] = vk_user.user_id
+            user['query_id'] = query_id
+            user.pop('is_closed'); user.pop('can_access_closed'); user.pop('track_code'); user.pop('city')
+            pprint(user)
+
 
 
 class Dating_User(VKAuth, Connect):
-    def __init__(self, user_id: int, first_name: str, last_name: str, birthday: str, vk_link: str):
+    def __init__(self, user_id: int, first_name: str, last_name: str, birthday: str, vk_link: str, city: str, verified: str):
         super(VKAuth, self).__init__()
         self.id = user_id
         self.first_name = first_name
         self.last_name = last_name
         self.birthday = birthday
         self.link = vk_link
+        self.city = city
+        self.verified = verified
 
     def get_photo(self):
         search_values = {'owner_id': self.id, 'album_id': 'profile', 'count': 1000, 'extended': 1,
@@ -289,13 +328,14 @@ class Dating_User(VKAuth, Connect):
         return top3_photos
 
 
-if __name__ == '__main__':
-    # user = VKUser()
+# if __name__ == '__main__':
+    user = VKAuth()
 
     now = datetime.now()
-    # user._get_countries()
-    # user._get_regions()
-    # user._get_cities()
+    print(now)
+    user._get_countries()
+    user._get_regions()
+    user._get_cities()
     print(datetime.now() - now)
 
     # print(user.get_self_info())
