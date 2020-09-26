@@ -1,8 +1,10 @@
 import json
+from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from tqdm import tqdm
 
 Base = declarative_base()
 
@@ -19,9 +21,9 @@ class Connect:
 
         files = [
             "../DB/Fixtures/primary_data.json",
-            "../DB/Fixtures/countries.json",
-            "../DB/Fixtures/regions.json",
-            "../DB/Fixtures/cities.json"
+            # "../DB/Fixtures/countries.json",
+            # "../DB/Fixtures/regions.json",
+            # "../DB/Fixtures/cities.json"
         ]
 
         table_to_model_mapping = {
@@ -34,16 +36,16 @@ class Connect:
         }
 
         for file in files:
-            with open(file) as f:
+            with open(file, encoding='utf-8') as f:
                 data = json.load(f)
 
-            for entity_dict in data:
+            for entity_dict in tqdm(data, desc=f'Пишем в БД файл {file}'):
                 Model = table_to_model_mapping[entity_dict['model']]
                 fields = entity_dict['fields']
                 if Model != City:
                     if not self.select_from_db(Model.id, Model.id == fields['id']).first():
                         entity = Model(**fields)
-                        print(entity)
+                        # print(entity)
                         self.session.add(entity)
                         self.session.commit()
                     else:
@@ -51,17 +53,25 @@ class Connect:
                 else:
                     if not self.select_from_db(Model.id, Model.id == fields['id']).first():
                         entity = Model(**fields)
-                        print(entity)
+                        # print(entity)
                         self.session.add(entity)
                         self.session.commit()
                     else:
-                        if self.select_from_db(Model.id, Model.id == fields['id'] and Model.region_id is None).first() is None:
-                            self.update_data(Model.id, Model.id == fields['id'] and Model.region_id is None, {Model.region_id: fields['region_id']})
+                        if self.select_from_db(Model.id,
+                                               Model.id == fields['id'] and Model.region_id is None).first() is None:
+                            self.update_data(Model.id, Model.id == fields['id'] and Model.region_id is None,
+                                             {Model.region_id: fields['region_id']})
                             self.update_data(Model.id, Model.id == fields['id'], {Model.area: fields.get('area')})
 
                         else:
                             continue
-        print('All basics are inserted')
+
+    def _update_cities(self):
+        no_region_title_cities = self.select_from_db(City.id, City.region == None).all()
+        for city in tqdm(no_region_title_cities, desc=f'Исправляем таблицу городов'):
+            region_id = self.select_from_db(City.region_id, City.id == city[0] and City.region == None).first()[0]
+            region_title = self.select_from_db(Region.title, Region.id == region_id).first()[0]
+            self.update_data(City.id, City.id == city[0], {City.region: region_title})
 
     def select_from_db(self, model_field, expression):
         """Метод проверки наличия записей в БД"""
@@ -78,7 +88,6 @@ class Connect:
         # print(entity)
         self.session.add(entity)
         self.session.commit()
-
 
 
 # id из Вконтакте являются натуральными Primary key для любой таблицы, описывающей соответствующую сущность
@@ -158,7 +167,8 @@ class Query(Base):
 # таблица, хранящая информацию о результатах поиска
 class DatingUser(Base):
     __tablename__ = 'datinguser'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
+    vk_id = Column(Integer)
     first_name = Column(String)
     last_name = Column(String)
     city_id = Column(Integer)
@@ -181,7 +191,10 @@ class Photos(Base):
 
 
 if __name__ == '__main__':
+    now = datetime.now()
     Base.metadata.create_all(Connect.engine)
     print("All tables are created successfully")
     Connect()._insert_basics()
+    Connect()._update_cities()
     print("Primary inserts done")
+    print(datetime.now() - now)

@@ -2,13 +2,12 @@ import json
 import os
 import time
 from datetime import datetime
-from pprint import pprint
 from typing import List, Dict, Any, Tuple
 
 import vk_api
 from tqdm import tqdm
 
-from DB.database import Connect, User, City, Region, Query
+from DB.database import Connect, User, City, Region, Query, DatingUser
 
 
 class VKAuth:
@@ -65,22 +64,39 @@ class VKAuth:
             time.sleep(0.3)
             regions_quantity = \
                 self.vk_session.method('database.getRegions', values={'country_id': country['fields']['id'],
-                                                                      'count': 1000})['count']
+                                                                      'count': 100})['count']
             if not regions_quantity:
                 continue
             else:
                 time.sleep(0.3)
-                region_list = \
-                    self.vk_session.method('database.getRegions', values={'country_id': country['fields']['id'],
-                                                                          'count': 1000})['items']
-                if region_list:
-                    for region in region_list:
-                        region.update({'country_id': country['fields']['id']})
-                        new_dic = {'model': 'region', 'fields': region}
-                        regions.append(new_dic)
+                search_values = {'country_id': country['fields']['id'], 'count': 100}
+                regions_quantity = self.vk_session.method('database.getRegions', values=search_values)['count']
+                if regions_quantity > 100:
+                    queries = regions_quantity // 100 + 1
+                    values = {'country_id': country['fields']['id'], 'count': 100, 'offset': 0}
+                    for query in tqdm(range(queries), desc=f"Обходим города в стране {country['fields']['title']}"):
+                        time.sleep(0.3)
+                        values['offset'] = 100 * query
+                        regions_list = self.vk_session.method('database.getRegions', values=values)['items']
+                        if regions_list:
+                            for region in regions_list:
+                                region.update({'country_id': country['fields']['id']})
+                                new_dic = {'model': 'region', 'fields': region}
+                                regions.append(new_dic)
+                        else:
+                            continue
+
+
 
                 else:
-                    continue
+                    regions_list = self.vk_session.method('database.getRegions', values=search_values)['items']
+                    if regions_list:
+                        for region in regions_list:
+                            region.update({'country_id': country['fields']['id']})
+                            new_dic = {'model': 'region', 'fields': region}
+                            regions.append(new_dic)
+                    else:
+                        continue
 
         with open('../DB/Fixtures/regions.json', 'w', encoding='utf-8') as f:
             json.dump(regions, f)
@@ -94,44 +110,45 @@ class VKAuth:
 
         print('Города')
         cities = []
-        if not countries:
-            try:
-                with open('../DB/Fixtures/countries.json', 'r', encoding='utf-8') as f:
-                    countries = json.load(f)
-            except (FileNotFoundError, FileExistsError):
-                countries = self._get_regions()
-        for country in countries:
-            print(".", end='')
-            time.sleep(0.3)
-            search_values = {'country_id': country['fields']['id'], 'need_all': 1, 'count ': 1000}
-            cities_quantity = self.vk_session.method('database.getCities', values=search_values)['count']
+        # if not countries:
+        #     try:
+        #         with open('../DB/Fixtures/countries.json', 'r', encoding='utf-8') as f:
+        #             countries = json.load(f)
+        #     except (FileNotFoundError, FileExistsError):
+        #         countries = self._get_regions()
+        # for country in countries:
+        #     print(".", end='')
+        #     time.sleep(0.3)
+        #     search_values = {'country_id': country['fields']['id'], 'need_all': 1, 'count ': 1000}
+        #     cities_quantity = self.vk_session.method('database.getCities', values=search_values)['count']
+        #
+        #     if not cities_quantity:
+        #         continue
+        #     elif cities_quantity > 1000:
+        #         queries = cities_quantity // 1000 + 1
+        #         values = {'country_id': country['fields']['id'], 'offset': 0, 'need_all': 1, 'count ': 1000}
+        #         for query in tqdm(range(queries), desc=f"Обходим города в стране {country['fields']['title']}"):
+        #             time.sleep(0.3)
+        #             values['offset'] = 1000 * query
+        #             cities_list = self.vk_session.method('database.getCities', values=values)['items']
+        #             if cities_list:
+        #                 for city in cities_list:
+        #                     city.update({'region_id': None})
+        #                     new_dic = {'model': 'city', 'fields': city}
+        #                     cities.append(new_dic)
+        #             else:
+        #                 continue
+        #     else:
+        #         time.sleep(0.3)
+        #         cities_list = self.vk_session.method('database.getCities', values=search_values)['items']
+        #         if cities_list:
+        #             for city in cities_list:
+        #                 city.update({'region_id': None})
+        #                 new_dic = {'model': 'city', 'fields': city}
+        #                 cities.append(new_dic)
+        #         else:
+        #             continue
 
-            if not cities_quantity:
-                continue
-            elif cities_quantity > 1000:
-                queries = cities_quantity // 1000 + 1
-                values = {'country_id': country['fields']['id'], 'offset': 0, 'need_all': 1, 'count ': 1000}
-                for query in tqdm(range(queries), desc=f"Обходим города в стране {country['fields']['title']}"):
-                    time.sleep(0.3)
-                    values['offset'] = 1000 * query
-                    cities_list = self.vk_session.method('database.getCities', values=values)['items']
-                    if cities_list:
-                        for city in cities_list:
-                            city.update({'region_id': None})
-                            new_dic = {'model': 'city', 'fields': city}
-                            cities.append(new_dic)
-                    else:
-                        continue
-            else:
-                time.sleep(0.3)
-                cities_list = self.vk_session.method('database.getCities', values=search_values)['items']
-                if cities_list:
-                    for city in cities_list:
-                        city.update({'region_id': None})
-                        new_dic = {'model': 'city', 'fields': city}
-                        cities.append(new_dic)
-                else:
-                    continue
         if not regions:
             try:
                 with open('../DB/Fixtures/regions.json', 'r', encoding='utf-8') as f:
@@ -142,18 +159,18 @@ class VKAuth:
             print(".", end='')
             time.sleep(0.3)
             search_values = {'country_id': region['fields']['country_id'], 'region_id': region['fields']['id'],
-                             'need_all': 1, 'count ': 1000}
+                             'need_all': 1, 'count ': 100}
             cities_quantity = self.vk_session.method('database.getCities', values=search_values)['count']
 
             if not cities_quantity:
                 continue
-            elif cities_quantity > 1000:
-                queries = cities_quantity // 1000 + 1
+            elif cities_quantity > 100:
+                queries = cities_quantity // 100 + 1
                 values = {'country_id': region['fields']['country_id'], 'region_id': region['fields']['id'],
-                          'offset': 0, 'need_all': 1, 'count ': 1000}
+                          'offset': 0, 'need_all': 1, 'count ': 100}
                 for query in tqdm(range(queries), desc=f"Обходим города в регионе {region['fields']['title']}"):
                     time.sleep(0.3)
-                    values['offset'] = 1000 * query
+                    values['offset'] = 100 * query
                     cities_list = self.vk_session.method('database.getCities', values=values)['items']
                     if cities_list:
                         for city in cities_list:
@@ -249,19 +266,9 @@ class VKUser(VKAuth, Connect):
                 self.update_data(User.id, User.id == self.user_id, {User.city_id: self.city['id']})
 
     def insert_query(self, user_id, search_values) -> int:
-        try:
-            start_id = self.select_from_db(Query.id, Query.id == Query.id).all()
-        except IndexError:
-            start_id = self.select_from_db(Query.id, Query.id == Query.id).first()[0]
-
-        if not start_id or start_id is None:
-            start_id = 1
-        else:
-            start_id += 1
-
         fields = {
-            'id': start_id,
-            'datetime': datetime.timestamp(datetime.now()),
+            # 'id': start_id,
+            'datetime': datetime.utcnow(),
             'sex_id': search_values['sex'],
             'city_id': search_values['city'],
             'age_from': search_values['age_from'],
@@ -270,11 +277,11 @@ class VKUser(VKAuth, Connect):
             'sort_id': search_values['sort'],
             'user_id': user_id
         }
-        pprint(fields)
-        # self.insert_to_db(Query, fields)
-        return start_id
+        self.insert_to_db(Query, fields)
 
-    def search_users(self, vk_user, values: Dict[str, Any] = None) -> None:
+        return self.select_from_db(Query.id, Query.id == Query.id).all()[-1][0]
+
+    def search_users(self, vk_user, values: Dict[str, Any] = None) -> int or None:
         """ Метод поиска подходящих пользователей по запросу юзера"""
 
         search_values = {
@@ -288,27 +295,42 @@ class VKUser(VKAuth, Connect):
             'has_photo': 1,
             'is_closed': 0,
             'can_access_closed': 1,
-            'fields': 'id, city, verified, domain'
+            'fields': 'id, verified, domain'
         }
 
         if values:
             search_values.update(values)
+        else:
+            pass
+
         users_list = self.vk_session.method('users.search', values=search_values)['items']
+
+        if not users_list:
+            return
         query_id = self.insert_query(vk_user.user_id, search_values)
-        for user in users_list[:1]:
-            user['city_id'] = user['city']['id']
-            user['city_title'] = user['city']['title']
+        # pprint(users_list)
+        for user in users_list:
+            user['vk_id'] = user['id']
+            user['city_id'] = search_values['city']
+            user['city_title'] = self.select_from_db(City.title, City.id == search_values['city']).first()[0]
             user['link'] = 'https://vk.com/' + user.get('domain')
             user['verified'] = user.get('verified')
             user['user_id'] = vk_user.user_id
             user['query_id'] = query_id
-            user.pop('is_closed'); user.pop('can_access_closed'); user.pop('track_code'); user.pop('city')
-            pprint(user)
 
+            user.pop('is_closed')
+            user.pop('can_access_closed')
+            user.pop('track_code')
+            user.pop('domain')
+            user.pop('id')
+
+            self.insert_to_db(DatingUser, user)
+        return len(users_list)
 
 
 class Dating_User(VKAuth, Connect):
-    def __init__(self, user_id: int, first_name: str, last_name: str, birthday: str, vk_link: str, city: str, verified: str):
+    def __init__(self, user_id: int, first_name: str, last_name: str, birthday: str, vk_link: str, city: str,
+                 verified: str):
         super(VKAuth, self).__init__()
         self.id = user_id
         self.first_name = first_name
@@ -328,18 +350,17 @@ class Dating_User(VKAuth, Connect):
         return top3_photos
 
 
-# if __name__ == '__main__':
-    user = VKAuth()
-
-    now = datetime.now()
-    print(now)
-    user._get_countries()
-    user._get_regions()
-    user._get_cities()
-    print(datetime.now() - now)
+if __name__ == '__main__':
+    auth = VKAuth()
+    # now = datetime.now()
+    # print(now)
+    # auth._get_countries()
+    # auth._get_regions()
+    # auth._get_cities()
+    # print(datetime.now() - now)
 
     # print(user.get_self_info())
-    # user.insert_self_to_db()
+    # auth.insert_self_to_db()
 
     # print(user.search_users())
 

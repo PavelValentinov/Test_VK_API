@@ -24,7 +24,7 @@ class Bot(VKUser):
         """Отправка сообщения пользователю"""
         self.vk_bot.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': randrange(10 ** 7)})
 
-    def listen_msg(self):
+    def listen_msg(self, scan=True):
         """Ожидание сообщений от пользователя и их обработка"""
 
         def scan_request(event):
@@ -54,7 +54,10 @@ class Bot(VKUser):
                     user = self.users[event.user_id][0]
                 if event.type == VkEventType.MESSAGE_NEW:
                     if event.to_me:
-                        return scan_request(event), user
+                        if scan is True:
+                            return scan_request(event), user
+                        else:
+                            return event.text, user
             except AttributeError:
                 pass
 
@@ -63,60 +66,88 @@ class Bot(VKUser):
 
         def initial_questionnaire():
             expected_answers = ['да', 'нет']
-            answer = self.listen_msg()[0]
+            answer = self.listen_msg()[0].strip()
             while answer not in expected_answers:
                 self.write_msg(user.user_id, '&#129300; Не понимаю... Просто скажи "да" или "нет".')
-                answer = self.listen_msg()[0]
+                answer = self.listen_msg()[0].strip()
             else:
                 if answer == 'да':
                     self.write_msg(user.user_id, f"Какой поиск будем использовать:\n"
                                                  f"1 - стандартный или\n"
                                                  f"2 - детализированный?")
-                    answer1 = self.listen_msg()[0]
+                    answer1 = self.listen_msg()[0].strip()
                     if answer1 == '1' or answer1 == "стандартный":
                         self.write_msg(user.user_id, f"&#128077; Прекрасный выбор!")
-                        self.search_users(user, search_values)
-                        # self.show_results()
+                        return self.search_users(user, search_values)
                     elif answer1 == '2' or answer1 == "детализированный":
                         self.write_msg(user.user_id,
                                        f"&#128076; Ок! Тогда тебе нужно будет ответить на несколько вопросов.")
-                        short_questionnaire(user, search_values)
-                        # self.show_results()
+                        return short_questionnaire(user, search_values)
                 elif answer == 'нет':
-                    full_questionnaire(user, search_values)
+                    return full_questionnaire(user, search_values)
 
         def short_questionnaire(user, search_values):
             search_values = search_values
 
             # город
             self.write_msg(user.user_id, f'В каком городе будем искать?')
-            answer = self.listen_msg()[0]
-            try:
-                city = user.select_from_db(City.id, City.title == answer.lower().capitalize()).all()
-            except IndexError:
-                city = None
-            if city is None:
-                self.write_msg(user.user_id, f'Я пока не знаю такого города.')
-                return
-            elif len(city) == 1:
-                search_values['city'] = city[0]
+            while True:
+                answer = self.listen_msg(scan=False)[0].strip().lower()
+
+                try:
+                    symbol = re.search(r'\W', answer)[0]
+                    words = re.split(symbol, answer)
+                    if len(words) < 3:
+                        for word in words:
+                            words[words.index(word)] = word.capitalize()
+                        answer = symbol.join(words)
+                    else:
+                        if '-' == symbol:
+                            words[0] = words[0].capitalize()
+                            words[-1] = words[-1].capitalize()
+                            answer = symbol.join(words)
+                        else:
+                            answer = answer.title()
+                except TypeError:
+                    answer = answer.lower().capitalize()
+
+                try:
+                    city = user.select_from_db(City.id, City.title == answer).all()
+                    if city is None or not city:
+                        self.write_msg(user.user_id, f'&#128530; Я пока не знаю такого города. '
+                                                     f'Выбери другой или попробуй написать иначе. '
+                                                     f'Пробелы и дефисы в названии играют большую роль.')
+                    else:
+                        break
+                except IndexError:
+                    city = user.select_from_db(City.id, City.title == answer).first()
+                    if city is None or not city:
+                        self.write_msg(user.user_id, f'&#128530; Я пока не знаю такого города. '
+                                                     f'Выбери другой или попробуй написать иначе. '
+                                                     f'Пробелы и дефисы в названии играют большую роль.')
+                    else:
+                        break
+            if len(city) == 1:
+                search_values['city'] = city[0][0]
             elif len(city) > 1:
                 self.write_msg(user.user_id, f'Нужно уточнить, город в каком именно регионе ты имеешь в виду:')
                 ids = sorted([city[0] for city in city])
                 regions = {}
+                message = ''
                 for num, id in enumerate(ids, start=1):
                     region_name = user.select_from_db(City.region, City.id == id).first()[0]
                     regions[str(num)] = region_name
                     area = user.select_from_db(City.area, City.id == id).first()[0]
                     if area:
-                        self.write_msg(user.user_id, f'{num} - {region_name}, {area}')
+                        message += f'{num} - {region_name}, {area}\n'
                     else:
-                        self.write_msg(user.user_id, f'{num} - {region_name}')
+                        message += f'{num} - {region_name}\n'
+                self.write_msg(user.user_id, message)
                 expected_answers = [str(i) for i in range(1, len(city) + 1)]
-                answer = self.listen_msg()[0]
+                answer = self.listen_msg()[0].strip()
                 while answer not in expected_answers:
                     self.write_msg(user.user_id, f'Мне нужен один из порядковых номеров, которые ты видишь чуть выше.')
-                    answer = self.listen_msg()[0]
+                    answer = self.listen_msg()[0].strip()
                 else:
                     city = user.select_from_db(City.id, City.region == regions[answer]).first()[0]
                     search_values['city'] = city
@@ -125,7 +156,7 @@ class Bot(VKUser):
             self.write_msg(user.user_id, f'Укажи минимальный возраст в цифрах.')
             while True:
                 try:
-                    answer = int(self.listen_msg()[0])
+                    answer = int(self.listen_msg()[0].strip())
                 except ValueError:
                     self.write_msg(user.user_id, f'Укажи минимальный возраст в цифрах.')
                 else:
@@ -136,7 +167,7 @@ class Bot(VKUser):
             self.write_msg(user.user_id, f'Укажи максимальный возраст в цифрах или отправь 0, если тебе это важно .')
             while True:
                 try:
-                    answer = int(self.listen_msg()[0])
+                    answer = int(self.listen_msg()[0].strip())
                 except ValueError:
                     self.write_msg(user.user_id, f'Укажи максимальный возраст в цифрах.')
                 else:
@@ -156,7 +187,7 @@ class Bot(VKUser):
             expected_answers = range(1, len(db_status_names) + 1)
             while True:
                 try:
-                    answer = int(self.listen_msg()[0])
+                    answer = int(self.listen_msg()[0].strip())
                 except ValueError:
                     self.write_msg(user.user_id, f'Мне нужен один из порядковых номеров, указанных выше.')
                 else:
@@ -177,7 +208,7 @@ class Bot(VKUser):
             expected_answers = range(len(db_sort_names))
             while True:
                 try:
-                    answer = int(self.listen_msg()[0])
+                    answer = int(self.listen_msg()[0].strip())
                 except ValueError:
                     self.write_msg(user.user_id, f'Мне нужен один из номеров, указанных выше.')
                 else:
@@ -187,7 +218,7 @@ class Bot(VKUser):
                     else:
                         search_values['sort'] = answer
                         break
-            return self.search_users(search_values)
+            return self.search_users(user, search_values)
 
         def full_questionnaire(user, search_values):
             # пол
@@ -201,7 +232,7 @@ class Bot(VKUser):
             expected_answers = range(len(db_sex_names))
             while True:
                 try:
-                    answer = int(self.listen_msg()[0])
+                    answer = int(self.listen_msg()[0].strip())
                 except ValueError:
                     self.write_msg(user.user_id, f'Мне нужен один из номеров, указанных выше.')
                 else:
@@ -232,16 +263,18 @@ class Bot(VKUser):
             if user.sex == 2:
                 search_values['sex'] = 1
                 self.write_msg(user.user_id, f"Хочешь найти девушку?")
-                initial_questionnaire()
-
+                results = initial_questionnaire()
+                self.show_results(results, user)
             elif user.sex == 1:
                 search_values['sex'] = 2
                 self.write_msg(user.user_id, f"Хочешь найти парня?")
-                initial_questionnaire()
+                results = initial_questionnaire()
+                self.show_results(results, user)
             else:
                 search_values['sex'] = 0
                 self.write_msg(user.user_id, f"Кого ты хочешь найти?")
-                full_questionnaire(user, search_values)
+                results = full_questionnaire(user, search_values)
+                self.show_results(results, user)
 
         elif query in bye:
             self.write_msg(user.user_id, "Пока!")
@@ -256,20 +289,35 @@ class Bot(VKUser):
             self.write_msg(user.user_id, f"Какой поиск будем использовать:\n"
                                          f"1 - стандартный или\n"
                                          f"2 - детализированный?")
-            answer = self.listen_msg()[0]
+            answer = self.listen_msg()[0].strip()
             if answer == '1' or answer == "стандартный":
                 self.write_msg(user.user_id, f"&#128077; Прекрасный выбор!")
-                self.search_users(search_values)
+                results = self.search_users(user, search_values)
+                self.show_results(results, user)
             elif answer == '2' or answer == "детализированный":
                 self.write_msg(user.user_id, f"&#128076; Ок! Тогда тебе нужно будет ответить на несколько вопросов.")
-                short_questionnaire(user, search_values)
+                results = short_questionnaire(user, search_values)
+                self.show_results(results, user)
             else:
                 self.write_msg(user.user_id, "&#129300; Не понимаю... Попробуй выразить свою мысль иначе.")
         else:
             self.write_msg(user.user_id, "&#129300; Не понимаю... Попробуй выразить свою мысль иначе.")
 
-    def show_results(self):
-        pass
+    def show_results(self, results, user):
+        if not results:
+            self.write_msg(user.user_id, f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
+                                         f'условиям поиска.\nПопробуй использовать детализированный поиск или '
+                                         f'изменить условия запроса.')
+        else:
+            remainder = results % 10
+            if remainder == 0 or remainder >= 5 or (10 <= results <= 19):
+                var = 'вариантов'
+            elif remainder == 1:
+                var = 'вариант'
+            else:
+                var = 'варианта'
+            self.write_msg(user.user_id, f'&#128515; Мы нашли {results} {var}!!!')
+
 
 
 def main():
