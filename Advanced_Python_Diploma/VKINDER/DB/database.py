@@ -73,14 +73,18 @@ class Connect:
             region_title = self.select_from_db(Region.title, Region.id == region_id).first()[0]
             self.update_data(City.id, City.id == city[0], {City.region: region_title})
 
-    def select_from_db(self, model_field, expression):
+    def select_from_db(self, model_fields, expression):
         """Метод проверки наличия записей в БД"""
-        return self.session.query(model_field).filter(expression)
+        if isinstance(model_fields, tuple):
+            return self.session.query(*model_fields).filter(expression)
+        else:
+            return self.session.query(model_fields).filter(expression)
 
     def update_data(self, model_field, filter_expression, fields):
         self.session.query(model_field).filter(filter_expression).update(fields)
         self.session.commit()
-        print(f'{model_field} updated successfully ')
+
+        print(f'{fields} updated successfully ')
 
     def insert_to_db(self, model, fields):
         """Общий метод для записи в БД новых данных"""
@@ -175,26 +179,16 @@ class DatingUser(Base):
     city_title = Column(String)
     link = Column(String)
     verified = Column(Integer)
-    user_id = Column(Integer, ForeignKey('user.id'))
     query_id = Column(Integer, ForeignKey('query.id'))
     viewed = Column(Boolean, default=False)
     black_list = Column(Boolean, nullable=True)
-
-
-# таблица, хранящая информацию о фотографиях
-class Photos(Base):
-    __tablename__ = 'photos'
-    id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
-    DatingUser_id = Column(Integer, ForeignKey('datinguser.id'))
-    link_photo = Column(String, nullable=False)
-    count_likes = Column(Integer)
 
 
 if __name__ == '__main__':
     now = datetime.now()
     Base.metadata.create_all(Connect.engine)
     print("All tables are created successfully")
-    Connect()._insert_basics()
-    Connect()._update_cities()
-    print("Primary inserts done")
-    print(datetime.now() - now)
+    # Connect()._insert_basics()
+    # Connect()._update_cities()
+    # print("Primary inserts done")
+    # print(datetime.now() - now)

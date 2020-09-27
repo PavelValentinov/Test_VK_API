@@ -1,4 +1,5 @@
 import json
+import operator
 import os
 import time
 from datetime import datetime
@@ -23,9 +24,6 @@ class VKAuth:
     #     vk_session.auth(token_only=True)
     # except vk_api.AuthError as error_msg:
     #     print(error_msg)
-
-    def __init__(self):
-        pass
 
     def _get_countries(self) -> List[Dict[str, Any]]:
         """Служебный метод для сбора всех стран.
@@ -86,8 +84,6 @@ class VKAuth:
                         else:
                             continue
 
-
-
                 else:
                     regions_list = self.vk_session.method('database.getRegions', values=search_values)['items']
                     if regions_list:
@@ -102,52 +98,13 @@ class VKAuth:
             json.dump(regions, f)
         return regions
 
-    def _get_cities(self, countries: List[Dict[str, Any]] = None,
-                    regions: List[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+    def _get_cities(self, regions: List[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
         """Служебный метод для сбора всех городов во всех странах.
         Используется для заполнения БД.
         По факту ВК отдаёт не все города. Уроды."""
 
         print('Города')
         cities = []
-        # if not countries:
-        #     try:
-        #         with open('../DB/Fixtures/countries.json', 'r', encoding='utf-8') as f:
-        #             countries = json.load(f)
-        #     except (FileNotFoundError, FileExistsError):
-        #         countries = self._get_regions()
-        # for country in countries:
-        #     print(".", end='')
-        #     time.sleep(0.3)
-        #     search_values = {'country_id': country['fields']['id'], 'need_all': 1, 'count ': 1000}
-        #     cities_quantity = self.vk_session.method('database.getCities', values=search_values)['count']
-        #
-        #     if not cities_quantity:
-        #         continue
-        #     elif cities_quantity > 1000:
-        #         queries = cities_quantity // 1000 + 1
-        #         values = {'country_id': country['fields']['id'], 'offset': 0, 'need_all': 1, 'count ': 1000}
-        #         for query in tqdm(range(queries), desc=f"Обходим города в стране {country['fields']['title']}"):
-        #             time.sleep(0.3)
-        #             values['offset'] = 1000 * query
-        #             cities_list = self.vk_session.method('database.getCities', values=values)['items']
-        #             if cities_list:
-        #                 for city in cities_list:
-        #                     city.update({'region_id': None})
-        #                     new_dic = {'model': 'city', 'fields': city}
-        #                     cities.append(new_dic)
-        #             else:
-        #                 continue
-        #     else:
-        #         time.sleep(0.3)
-        #         cities_list = self.vk_session.method('database.getCities', values=search_values)['items']
-        #         if cities_list:
-        #             for city in cities_list:
-        #                 city.update({'region_id': None})
-        #                 new_dic = {'model': 'city', 'fields': city}
-        #                 cities.append(new_dic)
-        #         else:
-        #             continue
 
         if not regions:
             try:
@@ -194,6 +151,7 @@ class VKAuth:
         return cities
 
     def get_city(self, country_id: int, city_title: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        """Метод для поиска города и региона юзера, если их вдруг нет в БД"""
 
         def get_region(country_id: int, region_title: str) -> Dict[str, Any]:
             search_values = {'country_id': country_id, 'q': region_title}
@@ -215,7 +173,6 @@ class VKUser(VKAuth, Connect):
     def __init__(self, id: int):
         self.user_id = id
         info = self.get_self_info(self.user_id)
-        # print(info)
         self.first_name = info[0].get('first_name')
         self.last_name = info[0].get('last_name')
         self.sex = info[0].get('sex')
@@ -266,8 +223,8 @@ class VKUser(VKAuth, Connect):
                 self.update_data(User.id, User.id == self.user_id, {User.city_id: self.city['id']})
 
     def insert_query(self, user_id, search_values) -> int:
+        """ Метод записи в БД информации об условиях поиска пользователя """
         fields = {
-            # 'id': start_id,
             'datetime': datetime.utcnow(),
             'sex_id': search_values['sex'],
             'city_id': search_values['city'],
@@ -281,8 +238,8 @@ class VKUser(VKAuth, Connect):
 
         return self.select_from_db(Query.id, Query.id == Query.id).all()[-1][0]
 
-    def search_users(self, vk_user, values: Dict[str, Any] = None) -> int or None:
-        """ Метод поиска подходящих пользователей по запросу юзера"""
+    def search_users(self, vk_user, values: Dict[str, Any] = None) -> Tuple[int, int] or None:
+        """ Метод поиска подходящих юзеров по запросу пользователя"""
 
         search_values = {
             'city': 1,
@@ -308,45 +265,70 @@ class VKUser(VKAuth, Connect):
         if not users_list:
             return
         query_id = self.insert_query(vk_user.user_id, search_values)
-        # pprint(users_list)
+        dusers = 0
         for user in users_list:
-            user['vk_id'] = user['id']
-            user['city_id'] = search_values['city']
-            user['city_title'] = self.select_from_db(City.title, City.id == search_values['city']).first()[0]
-            user['link'] = 'https://vk.com/' + user.get('domain')
-            user['verified'] = user.get('verified')
-            user['user_id'] = vk_user.user_id
-            user['query_id'] = query_id
+            if user['is_closed'] == 1:
+                continue
+            else:
+                user['vk_id'] = user['id']
+                user['city_id'] = search_values['city']
+                user['city_title'] = self.select_from_db(City.title, City.id == search_values['city']).first()[0]
+                user['link'] = 'https://vk.com/' + user.get('domain')
+                user['verified'] = user.get('verified')
+                user['query_id'] = query_id
+                user['viewed'] = False
 
-            user.pop('is_closed')
-            user.pop('can_access_closed')
-            user.pop('track_code')
-            user.pop('domain')
-            user.pop('id')
+                user.pop('is_closed')
+                user.pop('can_access_closed')
+                user.pop('track_code')
+                user.pop('domain')
+                user.pop('id')
 
-            self.insert_to_db(DatingUser, user)
-        return len(users_list)
+                self.insert_to_db(DatingUser, user)
+                dusers += 1
+
+        return dusers, query_id
+
+    def get_datingusers_from_db(self, query_id):
+        """ Метод получения юзеров из БД """
+        fields = (
+            DatingUser.id,
+            DatingUser.vk_id,
+            DatingUser.first_name,
+            DatingUser.last_name,
+            DatingUser.link,
+            DatingUser.city_title,
+            DatingUser.verified,
+        )
+        vk_users = self.select_from_db(fields, DatingUser.query_id == query_id and DatingUser.viewed == False).all()
+        datingusers = [Dating_User(user[0], user[1], user[2], user[3], user[4], user[5], user[6]) for user in vk_users]
+        return datingusers
 
 
 class Dating_User(VKAuth, Connect):
-    def __init__(self, user_id: int, first_name: str, last_name: str, birthday: str, vk_link: str, city: str,
+    def __init__(self, db_id: int, user_id: int, first_name: str, last_name: str, vk_link: str, city: str,
                  verified: str):
         super(VKAuth, self).__init__()
+        self.db_id = db_id,
         self.id = user_id
         self.first_name = first_name
         self.last_name = last_name
-        self.birthday = birthday
         self.link = vk_link
         self.city = city
         self.verified = verified
 
+    def __repr__(self):
+        return self.first_name + ' ' + self.last_name + ' ' + self.link
+
     def get_photo(self):
+        """Метод получения топ-3 фото юзера"""
         search_values = {'owner_id': self.id, 'album_id': 'profile', 'count': 1000, 'extended': 1,
-                         'photo_sizes': 1}
+                         'photo_sizes': 1, 'type': 'm'}
         response = self.vk_session.method('photos.get', values=search_values)
-        count_likes = [likes['likes']['count'] for likes in response['items']]
-        link_photos = [photo['sizes'][-1]['url'] for photo in response['items']]
-        top3_photos = sorted(zip(count_likes, link_photos), reverse=True)[:3]
+        photos = []
+        for photo in response['items']:
+            photos.append((photo['id'], photo['owner_id'], photo['likes']['count'], photo['sizes'][-1]['url']))
+        top3_photos = sorted(photos, key=operator.itemgetter(2), reverse=True)[:3]
         return top3_photos
 
 
@@ -358,11 +340,3 @@ if __name__ == '__main__':
     # auth._get_regions()
     # auth._get_cities()
     # print(datetime.now() - now)
-
-    # print(user.get_self_info())
-    # auth.insert_self_to_db()
-
-    # print(user.search_users())
-
-    # dating = DatingUser(427195814, 'Ярослава', 'Викторианская', '7.7', 'https://vk.com/id427195814')
-    # print(dating.get_photo())
