@@ -7,18 +7,20 @@ from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 from DB.database import User, City, Status, Sex, Sort, Query, DatingUser
-from VK_SCOPE.conversation import hello, bye, find
 from VK_SCOPE.vk_scope import VKUser
 
 
+# noinspection SpellCheckingInspection
 class Bot(VKUser):
 
     def __init__(self):
         """Инициализация бота"""
         # noinspection SpellCheckingInspection
+        # FIXME: укажите Ваш токен сообщества (группы) Вконтакте вместо os.getenv("VKINDER_TOKEN")
         self.vk_bot = vk_api.VkApi(token=os.getenv("VKINDER_TOKEN"), api_version='5.124')
         # noinspection SpellCheckingInspection
         self.longpoll = VkLongPoll(self.vk_bot)
+        self.empty_keyboard = VkKeyboard().get_empty_keyboard()
         self.users = {}
 
     def write_msg(self, user_id, message, attachment=None, keyboard=None):
@@ -52,11 +54,41 @@ class Bot(VKUser):
                 if event.user_id not in self.users:
                     self.users[event.user_id] = [VKUser(event.user_id)]
                     user = self.users[event.user_id][0]
-                    if user.select_from_db(User.id, User.id == user.user_id).first() is None:
-                        self.write_msg(user.user_id, f"&#128522; Привет, {user.first_name.capitalize()}!")
+
+                    keyboard = VkKeyboard(one_time=False)
+
+                    check_user = user.select_from_db(User.id, User.id == user.user_id).first()
+
+                    if check_user is None or not check_user:
+                        user.insert_self_to_db()
+
+                        keyboard.add_button("Привет", color=VkKeyboardColor.PRIMARY)
+                        keyboard.add_button("Новый поиск", color=VkKeyboardColor.SECONDARY)
+
+                        self.write_msg(user.user_id, f"&#128522; Привет, {user.first_name.capitalize()}!",
+                                       keyboard=keyboard.get_keyboard())
+
                     else:
-                        self.write_msg(user.user_id,
-                                       f"&#128522; Привет, {user.first_name.capitalize()}! Давно не виделись!")
+                        check_query = user.select_from_db(Query.id, Query.user_id == user.user_id).all()
+                        if check_query is None or not check_query:
+
+                            keyboard.add_button("Привет", color=VkKeyboardColor.PRIMARY)
+                            keyboard.add_button("Новый поиск", color=VkKeyboardColor.SECONDARY)
+
+                            self.write_msg(user.user_id,
+                                           f"&#128522; Привет, {user.first_name.capitalize()}! Давно не виделись!",
+                                           keyboard=keyboard.get_keyboard())
+                        else:
+                            keyboard.add_button("Привет", color=VkKeyboardColor.POSITIVE)
+                            keyboard.add_button("Новый поиск", color=VkKeyboardColor.SECONDARY)
+                            keyboard.add_line()
+                            keyboard.add_button(f"Результаты последнего поиска", color=VkKeyboardColor.PRIMARY)
+                            keyboard.add_line()
+                            keyboard.add_button(f"Все лайкнутые", color=VkKeyboardColor.POSITIVE)
+                            keyboard.add_button(f"Все непонравившиеся", color=VkKeyboardColor.NEGATIVE)
+                            self.write_msg(user.user_id,
+                                           f"&#128522; Привет, {user.first_name.capitalize()}! Давно не виделись!",
+                                           keyboard=keyboard.get_keyboard())
                 else:
                     user = self.users[event.user_id][0]
                 if event.type == VkEventType.MESSAGE_NEW:
@@ -68,13 +100,15 @@ class Bot(VKUser):
             except AttributeError:
                 pass
 
-    def short_questionnaire(self, user, search_values):  # Smile =)
-        search_values = search_values
+    def short_questionnaire(self, user, values):  # Smile =)
+        search_values = values
 
         # город
-        self.write_msg(user.user_id, f'В каком городе будем искать?\n Названия зарубежных городов, таких как Лондон '
-                                     f'или Париж, должны быть написаны латиницей и полностью.\nНа всякий случай: тот самый '
-                                     f'Нью-Йорк, о котором ты так много слышал, правильно пишется New York City.')
+        self.write_msg(user.user_id, f'В каком городе будем искать?\n\nНазвания зарубежных городов, таких как Лондон '
+                                     f'или Париж, должны быть написаны латиницей и полностью.\n\nНа всякий случай: '
+                                     f'тот самый Нью-Йорк, о котором все так много слышали, правильно пишется '
+                                     f'New York City.',
+                       keyboard=self.empty_keyboard)
         while True:
             answer = self.listen_msg(scan=False)[0].strip().lower()
 
@@ -163,115 +197,121 @@ class Bot(VKUser):
                 break
 
         # семейное положение
-        message = ''
-        db_status_names = [name[0] for name in user.select_from_db(Status.title, Status.id == Status.id).all()]
-        for num, name in enumerate(db_status_names, start=1):
-            message += f'{num} - {name}\n'
-        self.write_msg(user.user_id, f'Какой из статусов тебя интересует:\n'
-                                     f'{message}?')
-        expected_answers = range(1, len(db_status_names) + 1)
-        while True:
-            try:
-                answer = int(self.listen_msg()[0].strip())
-            except ValueError:
-                self.write_msg(user.user_id, f'Мне нужен один из порядковых номеров, указанных выше.')
-            else:
-                while answer not in expected_answers:
-                    self.write_msg(user.user_id, f'Мне нужен один из порядковых номеров, указанных выше.')
-                    break
-                else:
-                    search_values['status'] = answer
-                    break
+        statuses = [name[0] for name in user.select_from_db(Status.title, Status.id == Status.id).all()]
+
+        keyboard = VkKeyboard(one_time=False)
+        keyboard.add_button(statuses[0], VkKeyboardColor.POSITIVE)
+        keyboard.add_button(statuses[1], VkKeyboardColor.PRIMARY)
+        keyboard.add_line()
+        keyboard.add_button(statuses[2], VkKeyboardColor.SECONDARY)
+        keyboard.add_button(statuses[3], VkKeyboardColor.NEGATIVE)
+        keyboard.add_line()
+        keyboard.add_button(statuses[5], VkKeyboardColor.POSITIVE)
+        keyboard.add_button(statuses[4], VkKeyboardColor.PRIMARY)
+        keyboard.add_line()
+        keyboard.add_button(statuses[6], VkKeyboardColor.SECONDARY)
+        keyboard.add_button(statuses[7], VkKeyboardColor.NEGATIVE)
+        keyboard = keyboard.get_keyboard()
+
+        self.write_msg(user.user_id, f'Какой из статусов тебя интересует?', keyboard=keyboard)
+
+        answer = self.listen_msg(scan=False)[0].strip()
+
+        while answer not in statuses:
+            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071;')
+            answer = self.listen_msg()[0].strip()
+        else:
+            print('statuses.index(answer)+1', statuses.index(answer) + 1)
+            search_values['status'] = statuses.index(answer) + 1
 
         # сортировка
-        message = ''
-        db_sort_names = [name[0] for name in user.select_from_db(Sort.title, Sort.id == Sort.id).all()]
-        for num, name in enumerate(db_sort_names, start=0):
-            message += f'{num} - {name}\n'
-        self.write_msg(user.user_id, f'Как отсортировать поиск:\n'
-                                     f'{message}?')
-        expected_answers = range(len(db_sort_names))
-        while True:
-            try:
-                answer = int(self.listen_msg()[0].strip())
-            except ValueError:
-                self.write_msg(user.user_id, f'Мне нужен один из номеров, указанных выше.')
-            else:
-                while answer not in expected_answers:
-                    self.write_msg(user.user_id, f'Мне нужен один из номеров, указанных выше.')
-                    break
-                else:
-                    search_values['sort'] = answer
-                    break
+        sort_names = [name[0] for name in user.select_from_db(Sort.title, Sort.id == Sort.id).all()]
+
+        keyboard = VkKeyboard(one_time=False)
+        keyboard.add_button(sort_names[0], VkKeyboardColor.POSITIVE)
+        keyboard.add_button(sort_names[1], VkKeyboardColor.PRIMARY)
+        keyboard = keyboard.get_keyboard()
+        self.write_msg(user.user_id, f'Как отсортировать пользователей?', keyboard=keyboard)
+
+        answer = self.listen_msg()[0].strip()
+        while answer not in sort_names:
+            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071')
+            answer = self.listen_msg()[0].strip()
+        else:
+            search_values['sort'] = sort_names.index(answer)
+
         return self.search_users(user, search_values)
 
-    def full_questionnaire(self, user, values=None):
+    def full_questionnaire(self, user):
+
+        search_values = {
+            'city': None,
+            'sex': None,
+            'age_from': None,
+            'age_to': None,
+            'status': None,
+            'sort': None,
+        }
 
         # пол
-        if values:
-            search_values = values
-        else:
-            search_values = {
-                'city': None,
-                'sex': None,
-                'age_from': None,
-                'age_to': None,
-                'status': None,
-                'sort': None,
-            }
+        sex = [name[0] for name in user.select_from_db(Sex.title, Sex.id == Sex.id).all()]
 
-        message = ''
-        db_sex_names = [name[0] for name in user.select_from_db(Sex.title, Sex.id == Sex.id).all()]
-        for num, name in enumerate(db_sex_names, start=0):
-            message += f'{num} - {name}\n'
-        self.write_msg(user.user_id, f'Людей какого пола мы будем искать:\n'
-                                     f'{message}?')
-        expected_answers = range(len(db_sex_names))
-        while True:
-            try:
-                answer = int(self.listen_msg()[0].strip())
-            except ValueError:
-                self.write_msg(user.user_id, f'Мне нужен один из номеров, указанных выше.')
-            else:
-                while answer not in expected_answers:
-                    self.write_msg(user.user_id, f'Мне нужен один из номеров, указанных выше.')
-                    break
-                else:
-                    search_values['sex'] = answer
-                    break
+        keyboard = VkKeyboard(one_time=False)
+        keyboard.add_button(sex[1], VkKeyboardColor.NEGATIVE)
+        keyboard.add_button(sex[2], VkKeyboardColor.PRIMARY)
+        keyboard.add_line()
+        keyboard.add_button(sex[0], VkKeyboardColor.SECONDARY)
+        keyboard = keyboard.get_keyboard()
+
+        self.write_msg(user.user_id, f'Людей какого пола мы будем искать?', keyboard=keyboard)
+
+        expected_answers = sex
+        answer = self.listen_msg()[0].strip()
+        while answer not in expected_answers:
+            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071')
+            answer = self.listen_msg()[0].strip()
+        else:
+            search_values['sex'] = sex.index(answer)
+
         return self.short_questionnaire(user, search_values)
 
-    def main(self):
+    def start(self):
         """Метод общения с юзером в целях получения его требований к поиску"""
 
         def initial_questionnaire():
             expected_answers = ['да', 'нет']
             answer = self.listen_msg()[0].strip()
             while answer not in expected_answers:
-                self.write_msg(user.user_id, '&#129300; Не понимаю... Просто скажи "да" или "нет".')
+                self.write_msg(user.user_id, '&#129300; Не понимаю... Просто скажи "да" или "нет" '
+                                             'или используй кнопки. &#128071;')
                 answer = self.listen_msg()[0].strip()
             else:
                 if answer == 'да':
-                    self.write_msg(user.user_id, f"Какой поиск будем использовать:\n"
-                                                 f"1 - стандартный или\n"
-                                                 f"2 - детализированный?")
-                    answer1 = self.listen_msg()[0].strip()
-                    if answer1 == '1' or answer1 == "стандартный":
-                        self.write_msg(user.user_id, f"&#128077; Прекрасный выбор!")
-                        return self.search_users(user, search_values)
-                    elif answer1 == '2' or answer1 == "детализированный":
-                        self.write_msg(user.user_id,
-                                       f"&#128076; Ок! Тогда тебе нужно будет ответить на несколько вопросов.")
-                        return self.short_questionnaire(user, search_values)
+
+                    keyboard = VkKeyboard(one_time=False)
+                    keyboard.add_button("стандартный", VkKeyboardColor.PRIMARY)
+                    keyboard.add_button("детализированный", VkKeyboardColor.SECONDARY)
+                    keyboard = keyboard.get_keyboard()
+                    self.write_msg(user.user_id, f"Какой вид поиска будем использовать? &#128071;", keyboard=keyboard)
+
+                    expected_answers = ["стандартный", "детализированный"]
+                    answer = self.listen_msg()[0].strip()
+                    while answer not in expected_answers:
+                        self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071;')
+                        answer = self.listen_msg()[0].strip()
+                    else:
+                        if answer == "стандартный":
+                            self.write_msg(user.user_id, f"&#128077; Прекрасный выбор!")
+                            return self.search_users(user, search_values)
+                        elif answer == "детализированный":
+                            self.write_msg(user.user_id,
+                                           f"&#128076; Ок! Тогда тебе нужно будет ответить на несколько вопросов.")
+                            return self.short_questionnaire(user, search_values)
                 elif answer == 'нет':
-                    return self.full_questionnaire(user, search_values)
+                    return self.full_questionnaire(user)
 
-        find_values = []
-        for val in find.values():
-            for item in val:
-                find_values.append(item)
+        answer, user = self.listen_msg()
 
-        query, user = self.listen_msg()
         search_values = {
             'city': user.city['id'],
             'sex': None,
@@ -281,84 +321,73 @@ class Bot(VKUser):
             'sort': 0,
         }
 
-        if query in hello:
-            if user.sex == 2:
-                search_values['sex'] = 1
-                self.write_msg(user.user_id, f"Хочешь найти девушку?")
-                results = initial_questionnaire()
-                if not results:
-                    self.write_msg(user.user_id,
-                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
-                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
-                                   f'изменить условия запроса.')
-                else:
-                    self.show_results(user, results=results)
-            elif user.sex == 1:
-                search_values['sex'] = 2
-                self.write_msg(user.user_id, f"Хочешь найти парня?")
-                results = initial_questionnaire()
-                if not results:
-                    self.write_msg(user.user_id,
-                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
-                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
-                                   f'изменить условия запроса.')
-                else:
-                    self.show_results(user, results=results)
-            else:
-                search_values['sex'] = 0
-                self.write_msg(user.user_id, f"Кого ты хочешь найти?")
-                results = self.full_questionnaire(user, search_values)
-                if not results:
-                    self.write_msg(user.user_id,
-                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
-                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
-                                   f'изменить условия запроса.')
-                else:
-                    self.show_results(user, results=results)
-
-        elif query in bye:
-            self.write_msg(user.user_id, "Пока!")
-
-        elif query in find_values:
-            if query in find['female']:
-                search_values['sex'] = 1
-            elif query in find['male']:
-                search_values['sex'] = 2
-            elif query in find['unisex']:
-                search_values['sex'] = 0
-            self.write_msg(user.user_id, f"Какой поиск будем использовать:\n"
-                                         f"1 - стандартный или\n"
-                                         f"2 - детализированный?")
-            answer = self.listen_msg()[0].strip()
-            if answer == '1' or answer == "стандартный":
-                self.write_msg(user.user_id, f"&#128077; Прекрасный выбор!")
-                results = self.search_users(user, search_values)
-                if not results:
-                    self.write_msg(user.user_id,
-                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
-                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
-                                   f'изменить условия запроса.')
-                else:
-                    self.show_results(user, results=results)
-            elif answer == '2' or answer == "детализированный":
-                self.write_msg(user.user_id, f"&#128076; Ок! Тогда тебе нужно будет ответить на несколько вопросов.")
-                results = self.short_questionnaire(user, search_values)
-                if not results:
-                    self.write_msg(user.user_id,
-                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
-                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
-                                   f'изменить условия запроса.')
-                else:
-                    self.show_results(user, results=results)
-            else:
-                self.write_msg(user.user_id, "&#129300; Не понимаю... Попробуй выразить свою мысль иначе.")
-        elif query == "show":
-            self.show_results(user)
+        expected_answers = ['привет', 'новый поиск', "результаты последнего поиска",
+                            "все лайкнутые", "все непонравившиеся"]
+        while answer not in expected_answers:
+            self.write_msg(user.user_id, "&#129300; Не понимаю... Используй кнопки. &#128071;")
+            answer = self.listen_msg()[0]
         else:
-            self.write_msg(user.user_id, "&#129300; Не понимаю... Попробуй выразить свою мысль иначе.")
+            if answer == "привет":
+                keyboard = VkKeyboard(one_time=False)
+                keyboard.add_button("Да", VkKeyboardColor.POSITIVE)
+                keyboard.add_button("Нет", VkKeyboardColor.NEGATIVE)
 
-    def show_results(self, user, results=None):
-        if results:
+                if user.sex == 2:
+                    search_values['sex'] = 1
+                    self.write_msg(user.user_id, f"Хочешь найти девушку?", keyboard=keyboard.get_keyboard())
+                    results = initial_questionnaire()
+                elif user.sex == 1:
+                    search_values['sex'] = 2
+                    self.write_msg(user.user_id, f"Хочешь найти парня?", keyboard=keyboard.get_keyboard())
+                    results = initial_questionnaire()
+                else:
+                    results = self.full_questionnaire(user)
+
+                if not results:
+                    self.write_msg(user.user_id,
+                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
+                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
+                                   f'изменить условия запроса.', keyboard=self.empty_keyboard)
+                    main()
+
+                else:
+                    self.show_results(user, results=results)
+                    main()
+
+            elif answer == "новый поиск":
+                results = self.full_questionnaire(user)
+                if not results:
+                    self.write_msg(user.user_id,
+                                   f'&#128530; Похоже, что в этом городе нет никого, кто отвечал бы таким '
+                                   f'условиям поиска.\nПопробуй использовать детализированный поиск или '
+                                   f'изменить условия запроса.', keyboard=self.empty_keyboard)
+                    main()
+                else:
+                    self.show_results(user, results=results)
+                    main()
+
+            elif answer == "результаты последнего поиска":
+                self.show_results(user)
+                main()
+
+            elif answer == "все лайкнутые":
+                liked_users = self.get_datingusers_from_db(user.user_id, blacklist=False)
+                message = ''
+                for num, d_user in enumerate(liked_users, start=1):
+                    message += f'{num}. {d_user}\n'
+                self.write_msg(user.user_id, message)
+                self.show_results(user, datingusers=liked_users)
+                main()
+
+            elif answer == "все непонравившиеся":
+                blacklist = self.get_datingusers_from_db(user.user_id, blacklist=True)
+                message = ''
+                for num, d_user in enumerate(blacklist, start=1):
+                    message += f'{num}. {d_user}\n'
+                self.write_msg(user.user_id, message)
+
+    def show_results(self, user, results=None, datingusers=None):
+        if results and not datingusers:
             remainder = results[0] % 10
             if remainder == 0 or remainder >= 5 or (10 <= results[0] <= 19):
                 var = 'вариантов'
@@ -368,62 +397,66 @@ class Bot(VKUser):
                 var = 'варианта'
             self.write_msg(user.user_id, f'&#128515; Мы нашли {results[0]} {var}!!!')
             query_id = results[1]
+            dating_users = self.get_datingusers_from_db(user.user_id, query_id)
+        elif not results and not datingusers:
+            dating_users = self.get_datingusers_from_db(user.user_id)
         else:
-            query_id = self.select_from_db(Query.id, Query.user_id == user.user_id).all()[-1][0]
+            dating_users = datingusers
 
-        # получаем список юзеров из БД
-        dating_users = self.get_datingusers_from_db(query_id)
-        for d_user in dating_users:
-            d_user.photos = d_user.get_photo()
-            name = d_user.first_name + ' ' + d_user.last_name
-            link = d_user.link
-            if len(d_user.photos) > 1:
-                photos_list = []
-                for photo in d_user.photos:
-                    photo_id, owner_id, _, _ = photo
-                    photos_list.append(f'photo{owner_id}_{photo_id}')
-                photos = ','.join(photos_list)
-            else:
-                photo_id, owner_id, _, _ = d_user.photos[0]
-                photos = f'photo{owner_id}_{photo_id}'
-            message = f'{name} {link} \n '
+        if dating_users:
+            # получаем список юзеров из БД
+            for d_user in dating_users:
+                d_user.photos = d_user.get_photo()
+                name = d_user.first_name + ' ' + d_user.last_name
+                link = d_user.link
+                if len(d_user.photos) > 1:
+                    photos_list = []
+                    for photo in d_user.photos:
+                        photo_id, owner_id, _, _ = photo
+                        photos_list.append(f'photo{owner_id}_{photo_id}')
+                    photos = ','.join(photos_list)
+                else:
+                    photo_id, owner_id, _, _ = d_user.photos[0]
+                    photos = f'photo{owner_id}_{photo_id}'
+                message = f'{name} {link} \n '
 
-            keyboard = VkKeyboard(one_time=True)
-            # keyboard = VkKeyboard(inline=True)
+                keyboard = VkKeyboard(one_time=False)
+                keyboard.add_button("Да", color=VkKeyboardColor.POSITIVE)
+                keyboard.add_button("Нет", color=VkKeyboardColor.NEGATIVE)
+                keyboard.add_line()
+                keyboard.add_button("Отмена", color=VkKeyboardColor.SECONDARY)
+                keyboard = keyboard.get_keyboard()
 
-            keyboard.add_button("Да", color=VkKeyboardColor.POSITIVE)
-            keyboard.add_button("Нет", color=VkKeyboardColor.NEGATIVE)
-            keyboard.add_line()
-            keyboard.add_button("Новый поиск", color=VkKeyboardColor.PRIMARY)
-            keyboard.add_button("Отмена", color=VkKeyboardColor.SECONDARY)
-
-            self.write_msg(user.user_id, message=message, attachment=photos)
-            self.write_msg(user.user_id, message='Нравится?', keyboard=keyboard.get_keyboard())
-            expected_answers = ['да', 'нет', 'новый поиск', 'отмена']
-            answer = self.listen_msg()[0]
-            while answer not in expected_answers:
-                self.write_msg(user.user_id, "&#129300; Не понимаю... Используй кнопки.")
+                self.write_msg(user.user_id, message=message, attachment=photos)
+                self.write_msg(user.user_id, message='Нравится?', keyboard=keyboard)
+                expected_answers = ['да', 'нет', 'отмена']
                 answer = self.listen_msg()[0]
-            else:
-                if answer == "да":
-                    fields = {DatingUser.viewed: True, DatingUser.black_list: False}
-                    self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
-                    continue
-                elif answer == "нет":
-                    fields = {DatingUser.viewed: True, DatingUser.black_list: True}
-                    self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
-                    continue
-                elif answer == "новый поиск":
-                    pass
-                    self.full_questionnaire(user, )
-                elif answer == "отмена":
-                    break
+                while answer not in expected_answers:
+                    self.write_msg(user.user_id, "&#129300; Не понимаю... Используй кнопки. &#128071;",
+                                   keyboard=keyboard)
+                    answer = self.listen_msg()[0]
+                else:
+                    if answer == "да":
+                        fields = {DatingUser.viewed: True, DatingUser.black_list: False}
+                        self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
+                        continue
+                    elif answer == "нет":
+                        fields = {DatingUser.viewed: True, DatingUser.black_list: True}
+                        self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
+                        continue
+                    elif answer == "отмена":
+                        self.write_msg(user.user_id, "Заходи ещё! &#128406;",
+                                       keyboard=self.empty_keyboard)
+                        return
+        self.write_msg(user.user_id, "&#128579; Похоже, что ты уже всех посмотрел. Попробуй новый поиск! &#128373;",
+                       keyboard=self.empty_keyboard)
+        return
 
 
 def main():
     bot = Bot()
     while True:
-        bot.main()
+        bot.start()
 
 
 if __name__ == '__main__':

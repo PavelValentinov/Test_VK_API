@@ -9,6 +9,7 @@ from tqdm import tqdm
 Base = declarative_base()
 
 
+# noinspection SpellCheckingInspection
 class Connect:
     engine = create_engine(f'postgresql+psycopg2://vkinder:12345@localhost:5432/vkinder')
     Session = sessionmaker(bind=engine)
@@ -58,8 +59,8 @@ class Connect:
                         self.session.commit()
                     else:
                         if self.select_from_db(Model.id,
-                                               Model.id == fields['id'] and Model.region_id is None).first() is None:
-                            self.update_data(Model.id, Model.id == fields['id'] and Model.region_id is None,
+                                               (Model.id == fields['id'], Model.region_id is None)).first() is None:
+                            self.update_data(Model.id, (Model.id == fields['id'], Model.region_id is None),
                                              {Model.region_id: fields['region_id']})
                             self.update_data(Model.id, Model.id == fields['id'], {Model.area: fields.get('area')})
 
@@ -67,21 +68,33 @@ class Connect:
                             continue
 
     def _update_cities(self):
-        no_region_title_cities = self.select_from_db(City.id, City.region == None).all()
+        no_region_title_cities = self.select_from_db(City.id, City.region.is_(None)).all()
         for city in tqdm(no_region_title_cities, desc=f'Исправляем таблицу городов'):
-            region_id = self.select_from_db(City.region_id, City.id == city[0] and City.region == None).first()[0]
+            region_id = self.select_from_db(City.region_id, (City.id == city[0], City.region.is_(None))).first()[0]
             region_title = self.select_from_db(Region.title, Region.id == region_id).first()[0]
             self.update_data(City.id, City.id == city[0], {City.region: region_title})
 
     def select_from_db(self, model_fields, expression):
         """Метод проверки наличия записей в БД"""
-        if isinstance(model_fields, tuple):
+        if isinstance(model_fields, tuple) and isinstance(expression, tuple):
+            return self.session.query(*model_fields).filter(*expression)
+        elif isinstance(model_fields, tuple):
             return self.session.query(*model_fields).filter(expression)
+        elif isinstance(expression, tuple):
+            return self.session.query(model_fields).filter(*expression)
         else:
             return self.session.query(model_fields).filter(expression)
 
     def update_data(self, model_field, filter_expression, fields):
-        self.session.query(model_field).filter(filter_expression).update(fields)
+        if isinstance(model_field, tuple) and isinstance(filter_expression, tuple):
+            self.session.query(*model_field).filter(*filter_expression).update(fields)
+        elif isinstance(model_field, tuple):
+            self.session.query(*model_field).filter(filter_expression).update(fields)
+        elif isinstance(filter_expression, tuple):
+            self.session.query(model_field).filter(*filter_expression).update(fields)
+        else:
+            self.session.query(model_field).filter(filter_expression).update(fields)
+
         self.session.commit()
 
         print(f'{fields} updated successfully ')
@@ -169,6 +182,7 @@ class Query(Base):
 
 
 # таблица, хранящая информацию о результатах поиска
+# noinspection SpellCheckingInspection
 class DatingUser(Base):
     __tablename__ = 'datinguser'
     id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
@@ -180,6 +194,7 @@ class DatingUser(Base):
     link = Column(String)
     verified = Column(Integer)
     query_id = Column(Integer, ForeignKey('query.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
     viewed = Column(Boolean, default=False)
     black_list = Column(Boolean, nullable=True)
 

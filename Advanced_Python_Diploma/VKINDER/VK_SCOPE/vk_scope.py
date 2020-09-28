@@ -180,7 +180,6 @@ class VKUser(VKAuth, Connect):
         self.country = info[0].get('country')
         self.birthday = info[0].get('bdate')
         self.link = 'https://vk.com/' + str(info[0].get('domain'))
-        self.insert_self_to_db()
 
     def get_self_info(self, user_id: int) -> List[Dict[str, Any]]:
         """Метод получения всей необходимой информации о юзере в чате"""
@@ -259,10 +258,10 @@ class VKUser(VKAuth, Connect):
             search_values.update(values)
         else:
             pass
-
+        print(search_values)
         users_list = self.vk_session.method('users.search', values=search_values)['items']
 
-        if not users_list:
+        if users_list is None or not users_list:
             return
         query_id = self.insert_query(vk_user.user_id, search_values)
         dusers = 0
@@ -270,26 +269,37 @@ class VKUser(VKAuth, Connect):
             if user['is_closed'] == 1:
                 continue
             else:
-                user['vk_id'] = user['id']
+                user['vk_id'] = user.pop('id')
                 user['city_id'] = search_values['city']
                 user['city_title'] = self.select_from_db(City.title, City.id == search_values['city']).first()[0]
-                user['link'] = 'https://vk.com/' + user.get('domain')
+                user['link'] = 'https://vk.com/' + user.pop('domain')
                 user['verified'] = user.get('verified')
                 user['query_id'] = query_id
                 user['viewed'] = False
+                user['user_id'] = vk_user.user_id
 
                 user.pop('is_closed')
                 user.pop('can_access_closed')
                 user.pop('track_code')
-                user.pop('domain')
-                user.pop('id')
 
-                self.insert_to_db(DatingUser, user)
-                dusers += 1
+                shown_user = self.select_from_db(DatingUser.viewed, (DatingUser.vk_id == user['vk_id'],
+                                                                     DatingUser.user_id == vk_user.user_id)).first()
+                if shown_user:
+                    if shown_user[0] is True:
+                        continue
+                    elif shown_user[0] is False:
+                        self.update_data(DatingUser.id, (DatingUser.vk_id == user['vk_id'],
+                                                         DatingUser.user_id == vk_user.user_id,
+                                                         DatingUser.viewed.is_(False)),
+                                         {DatingUser.query_id: query_id})
+                        dusers += 1
+                else:
+                    self.insert_to_db(DatingUser, user)
+                    dusers += 1
 
         return dusers, query_id
 
-    def get_datingusers_from_db(self, query_id):
+    def get_datingusers_from_db(self, user_id, query_id=None, blacklist=None):
         """ Метод получения юзеров из БД """
         fields = (
             DatingUser.id,
@@ -298,24 +308,49 @@ class VKUser(VKAuth, Connect):
             DatingUser.last_name,
             DatingUser.link,
             DatingUser.city_title,
-            DatingUser.verified,
         )
-        vk_users = self.select_from_db(fields, DatingUser.query_id == query_id and DatingUser.viewed == False).all()
-        datingusers = [Dating_User(user[0], user[1], user[2], user[3], user[4], user[5], user[6]) for user in vk_users]
-        return datingusers
+
+        if query_id:
+            vk_users = self.select_from_db(fields, (DatingUser.query_id == query_id,
+                                                    DatingUser.viewed.is_(False))).all()
+            datingusers = [Dating_User(user[0], user[1], user[2], user[3], user[4], user[5])
+                           for user in vk_users]
+            return datingusers
+
+        else:
+            if blacklist is None:
+                query_id = self.select_from_db(Query.id, Query.user_id == user_id).all()[-1][0]
+                vk_users = self.select_from_db(fields, (DatingUser.query_id == query_id,
+                                                        DatingUser.viewed.is_(False))).all()
+                datingusers = [Dating_User(user[0], user[1], user[2], user[3], user[4], user[5])
+                               for user in vk_users]
+                return datingusers
+
+            elif blacklist is not None:
+                if blacklist is False:
+                    print(self.select_from_db(fields, (DatingUser.user_id == user_id,
+                                                       DatingUser.black_list.is_(False))))
+
+                    vk_users = self.select_from_db(fields, (DatingUser.user_id == user_id,
+                                                            DatingUser.black_list.is_(False))).all()
+                # elif blacklist is True:
+                else:
+                    vk_users = self.select_from_db(fields, (DatingUser.user_id == user_id,
+                                                            DatingUser.black_list.is_(True))).all()
+                datingusers = [Dating_User(user[0], user[1], user[2], user[3], user[4], user[5])
+                               for user in vk_users]
+                return datingusers
 
 
 class Dating_User(VKAuth, Connect):
-    def __init__(self, db_id: int, user_id: int, first_name: str, last_name: str, vk_link: str, city: str,
-                 verified: str):
+    def __init__(self, db_id: int, vk_id: int, first_name: str, last_name: str, vk_link: str, city: str):
         super(VKAuth, self).__init__()
         self.db_id = db_id,
-        self.id = user_id
+        self.id = vk_id
         self.first_name = first_name
         self.last_name = last_name
         self.link = vk_link
         self.city = city
-        self.verified = verified
 
     def __repr__(self):
         return self.first_name + ' ' + self.last_name + ' ' + self.link
