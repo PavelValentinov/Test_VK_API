@@ -258,7 +258,6 @@ class VKUser(VKAuth, Connect):
             search_values.update(values)
         else:
             pass
-        print(search_values)
         users_list = self.vk_session.method('users.search', values=search_values)['items']
 
         if users_list is None or not users_list:
@@ -328,9 +327,6 @@ class VKUser(VKAuth, Connect):
 
             elif blacklist is not None:
                 if blacklist is False:
-                    print(self.select_from_db(fields, (DatingUser.user_id == user_id,
-                                                       DatingUser.black_list.is_(False))))
-
                     vk_users = self.select_from_db(fields, (DatingUser.user_id == user_id,
                                                             DatingUser.black_list.is_(False))).all()
                 # elif blacklist is True:

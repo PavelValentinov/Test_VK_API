@@ -97,8 +97,6 @@ class Connect:
 
         self.session.commit()
 
-        print(f'{fields} updated successfully ')
-
     def insert_to_db(self, model, fields):
         """Общий метод для записи в БД новых данных"""
         entity = model(**fields)

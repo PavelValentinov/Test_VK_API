@@ -153,8 +153,8 @@ class Bot(VKUser):
             regions = {}
             message = ''
             for num, id in enumerate(ids, start=1):
+                regions[str(num)] = id
                 region_name = user.select_from_db(City.region, City.id == id).first()[0]
-                regions[str(num)] = region_name
                 area = user.select_from_db(City.area, City.id == id).first()[0]
                 if area:
                     message += f'{num} - {region_name}, {area}\n'
@@ -167,7 +167,7 @@ class Bot(VKUser):
                 self.write_msg(user.user_id, f'Мне нужен один из порядковых номеров, которые ты видишь чуть выше.')
                 answer = self.listen_msg()[0].strip()
             else:
-                city = user.select_from_db(City.id, City.region == regions[answer]).first()[0]
+                city = user.select_from_db(City.id, City.region_id == regions[answer]).first()[0]
                 search_values['city'] = city
 
         # начальный возраст
@@ -221,7 +221,6 @@ class Bot(VKUser):
             self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071;')
             answer = self.listen_msg()[0].strip()
         else:
-            print('statuses.index(answer)+1', statuses.index(answer) + 1)
             search_values['status'] = statuses.index(answer) + 1
 
         # сортировка
