@@ -108,26 +108,28 @@ class Bot(VKUser):
                                      f'или Париж, должны быть написаны латиницей и полностью.\n\nНа всякий случай: '
                                      f'тот самый Нью-Йорк, о котором все так много слышали, правильно пишется '
                                      f'New York City.',
-                       keyboard=self.empty_keyboard)
+                       keyboard=cancel_button())
         while True:
             answer = self.listen_msg(scan=False)[0].strip().lower()
-
-            try:
-                symbol = re.search(r'\W', answer)[0]
-                words = re.split(symbol, answer)
-                if len(words) < 3:
-                    for word in words:
-                        words[words.index(word)] = word.capitalize()
-                    answer = symbol.join(words)
-                else:
-                    if '-' == symbol:
-                        words[0] = words[0].capitalize()
-                        words[-1] = words[-1].capitalize()
+            if answer == "отмена":
+                return -1
+            else:
+                try:
+                    symbol = re.search(r'\W', answer)[0]
+                    words = re.split(symbol, answer)
+                    if len(words) < 3:
+                        for word in words:
+                            words[words.index(word)] = word.capitalize()
                         answer = symbol.join(words)
                     else:
-                        answer = answer.title()
-            except TypeError:
-                answer = answer.lower().capitalize()
+                        if '-' == symbol:
+                            words[0] = words[0].capitalize()
+                            words[-1] = words[-1].capitalize()
+                            answer = symbol.join(words)
+                        else:
+                            answer = answer.title()
+                except TypeError:
+                    answer = answer.capitalize()
 
             try:
                 city = user.select_from_db(City.id, City.title == answer).all()
@@ -170,26 +172,32 @@ class Bot(VKUser):
                 search_values['city'] = regions[answer]
 
         # начальный возраст
-        self.write_msg(user.user_id, f'Укажи минимальный возраст в цифрах.')
+        self.write_msg(user.user_id, f'Укажи минимальный возраст в цифрах.', keyboard=cancel_button())
         while True:
             try:
-                answer = int(self.listen_msg()[0].strip())
+                answer = int(self.listen_msg()[0].strip().lower())
             except ValueError:
                 self.write_msg(user.user_id, f'Укажи минимальный возраст в ЦИФРАХ.')
             else:
-                search_values['age_from'] = abs(answer)
-                break
+                if answer == "отмена":
+                    return -1
+                else:
+                    search_values['age_from'] = abs(answer)
+                    break
 
         # конечный возраст
-        self.write_msg(user.user_id, f'Укажи максимальный возраст в цифрах или отправь 0, если тебе это неважно.')
+        self.write_msg(user.user_id, f'Укажи максимальный возраст в цифрах или отправь 0, если тебе это неважно.',
+                       keyboard=cancel_button())
         while True:
             try:
-                answer = int(self.listen_msg()[0].strip())
+                answer = int(self.listen_msg()[0].strip().lower())
             except ValueError:
                 self.write_msg(user.user_id,
                                f'Укажи максимальный возраст в ЦИФРАХ или отправь 0, если тебе это неважно.')
             else:
-                if answer != 0:
+                if answer == "отмена":
+                    return -1
+                elif answer != 0:
                     search_values['age_to'] = abs(answer)
                 else:
                     search_values['age_to'] = 100
@@ -197,6 +205,7 @@ class Bot(VKUser):
 
         # семейное положение
         statuses = [name[0] for name in user.select_from_db(Status.title, Status.id == Status.id).all()]
+        statuses.append("Отмена")
 
         keyboard = VkKeyboard(one_time=False)
         keyboard.add_button(statuses[0], VkKeyboardColor.POSITIVE)
@@ -210,6 +219,8 @@ class Bot(VKUser):
         keyboard.add_line()
         keyboard.add_button(statuses[6], VkKeyboardColor.SECONDARY)
         keyboard.add_button(statuses[7], VkKeyboardColor.NEGATIVE)
+        keyboard.add_line()
+        keyboard.add_button("Отмена", VkKeyboardColor.NEGATIVE)
         keyboard = keyboard.get_keyboard()
 
         self.write_msg(user.user_id, f'Какой из статусов тебя интересует?', keyboard=keyboard)
@@ -220,23 +231,32 @@ class Bot(VKUser):
             self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071;')
             answer = self.listen_msg()[0].strip()
         else:
-            search_values['status'] = statuses.index(answer) + 1
+            if answer == "Отмена":
+                return -1
+            else:
+                search_values['status'] = statuses.index(answer) + 1
 
         # сортировка
         sort_names = [name[0] for name in user.select_from_db(Sort.title, Sort.id == Sort.id).all()]
-
+        sort_names.append("Отмена")
         keyboard = VkKeyboard(one_time=False)
         keyboard.add_button(sort_names[0], VkKeyboardColor.POSITIVE)
         keyboard.add_button(sort_names[1], VkKeyboardColor.PRIMARY)
+        keyboard.add_line()
+        keyboard.add_button("Отмена", VkKeyboardColor.NEGATIVE)
         keyboard = keyboard.get_keyboard()
         self.write_msg(user.user_id, f'Как отсортировать пользователей?', keyboard=keyboard)
 
         answer = self.listen_msg()[0].strip()
         while answer not in sort_names:
-            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071')
+            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071;')
             answer = self.listen_msg()[0].strip()
         else:
-            search_values['sort'] = sort_names.index(answer)
+            if answer == "Отмена":
+                return -1
+            else:
+                search_values['sort'] = sort_names.index(answer)
+
         return self.search_users(user, search_values)
 
     def full_questionnaire(self, user):
@@ -252,23 +272,28 @@ class Bot(VKUser):
 
         # пол
         sex = [name[0] for name in user.select_from_db(Sex.title, Sex.id == Sex.id).all()]
+        sex.append("отмена")
 
         keyboard = VkKeyboard(one_time=False)
-        keyboard.add_button(sex[1], VkKeyboardColor.NEGATIVE)
-        keyboard.add_button(sex[2], VkKeyboardColor.PRIMARY)
+        keyboard.add_button(sex[1].capitalize(), VkKeyboardColor.NEGATIVE)
+        keyboard.add_button(sex[2].capitalize(), VkKeyboardColor.PRIMARY)
         keyboard.add_line()
-        keyboard.add_button(sex[0], VkKeyboardColor.SECONDARY)
+        keyboard.add_button(sex[0].capitalize(), VkKeyboardColor.SECONDARY)
+        keyboard.add_button('Отмена', VkKeyboardColor.NEGATIVE)
         keyboard = keyboard.get_keyboard()
 
         self.write_msg(user.user_id, f'Людей какого пола мы будем искать?', keyboard=keyboard)
 
-        expected_answers = sex
-        answer = self.listen_msg()[0].strip()
-        while answer not in expected_answers:
-            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071')
-            answer = self.listen_msg()[0].strip()
+        answer = self.listen_msg()[0].strip().lower()
+
+        while answer not in sex:
+            self.write_msg(user.user_id, '&#129300; Не понимаю... Используй кнопки. &#128071;')
+            answer = self.listen_msg()[0].strip().lower()
         else:
-            search_values['sex'] = sex.index(answer)
+            if answer == "отмена":
+                return -1
+            else:
+                search_values['sex'] = sex.index(answer)
 
         return self.short_questionnaire(user, search_values)
 
@@ -348,8 +373,11 @@ class Bot(VKUser):
                     main()
 
                 else:
-                    self.show_results(user, results=results)
-                    main()
+                    if results == -1:
+                        main()
+                    else:
+                        self.show_results(user, results=results)
+                        main()
 
             elif answer == "новый поиск":
                 results = self.full_questionnaire(user)
@@ -360,12 +388,17 @@ class Bot(VKUser):
                                    f'изменить условия запроса.', keyboard=self.empty_keyboard)
                     main()
                 else:
-                    self.show_results(user, results=results)
-                    main()
+                    if results == -1:
+                        main()
+                    else:
+                        self.show_results(user, results=results)
+                        main()
+
 
             elif answer == "результаты последнего поиска":
                 self.show_results(user)
                 main()
+
 
             elif answer == "все лайкнутые":
                 liked_users = self.get_datingusers_from_db(user.user_id, blacklist=False)
@@ -412,19 +445,25 @@ class Bot(VKUser):
                         photo_id, owner_id, _, _ = photo
                         photos_list.append(f'photo{owner_id}_{photo_id}')
                     photos = ','.join(photos_list)
-                else:
+                    message = f'{name} {link} \n '
+                elif len(d_user.photos) == 1:
                     photo_id, owner_id, _, _ = d_user.photos[0]
                     photos = f'photo{owner_id}_{photo_id}'
-                message = f'{name} {link} \n '
+                    message = f'{name} {link} \n '
+                else:
+                    message = f'{name} {link} \n Фоток нет, но вы держитесь!\n'
+                    photos = ''
 
                 keyboard = VkKeyboard(one_time=False)
                 keyboard.add_button("Да", color=VkKeyboardColor.POSITIVE)
                 keyboard.add_button("Нет", color=VkKeyboardColor.NEGATIVE)
                 keyboard.add_line()
-                keyboard.add_button("Отмена", color=VkKeyboardColor.SECONDARY)
+                keyboard.add_button("Отмена", color=VkKeyboardColor.NEGATIVE)
                 keyboard = keyboard.get_keyboard()
-
-                self.write_msg(user.user_id, message=message, attachment=photos)
+                if photos:
+                    self.write_msg(user.user_id, message=message, attachment=photos)
+                else:
+                    self.write_msg(user.user_id, message=message)
                 self.write_msg(user.user_id, message='Нравится?', keyboard=keyboard)
                 expected_answers = ['да', 'нет', 'отмена']
                 answer = self.listen_msg()[0]
@@ -450,9 +489,15 @@ class Bot(VKUser):
         return
 
 
+def cancel_button():
+    keyboard = VkKeyboard(one_time=False)
+    keyboard.add_button("Отмена", color=VkKeyboardColor.NEGATIVE)
+    return keyboard.get_keyboard()
+
+
 def main():
-    bot = Bot()
     while True:
+        bot = Bot()
         bot.start()
 
 

@@ -109,14 +109,14 @@ class Connect:
 # таблица всех стран
 class Country(Base):
     __tablename__ = 'country'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
 
 
 # таблица всех регионов
 class Region(Base):
     __tablename__ = 'region'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
     country_id = Column(Integer, ForeignKey('country.id'))
 
@@ -124,7 +124,7 @@ class Region(Base):
 # таблица всех городов
 class City(Base):
     __tablename__ = 'city'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
     important = Column(Integer, default=0)
     area = Column(String, default=None)
@@ -135,28 +135,28 @@ class City(Base):
 # таблица полов (бесполые/ж/м)
 class Sex(Base):
     __tablename__ = 'sex'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
 
 
 # таблица всех вариантов семейного положения ВК
 class Status(Base):
     __tablename__ = 'status'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
 
 
 # таблица вариантов сортировки поиска (по популярности/по дате регистрации)
 class Sort(Base):
     __tablename__ = 'sort'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
 
 
 # таблица, хранящая информацию о юзере
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True, unique=True)
+    id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
     date_of_birth = Column(String)
@@ -168,7 +168,7 @@ class User(Base):
 # таблица, хранящая условия и дату поиска юзера
 class Query(Base):
     __tablename__ = 'query'
-    id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     datetime = Column(DateTime)
     sex_id = Column(Integer, ForeignKey('sex.id'))
     city_id = Column(Integer, ForeignKey('city.id'))
@@ -183,7 +183,7 @@ class Query(Base):
 # noinspection SpellCheckingInspection
 class DatingUser(Base):
     __tablename__ = 'datinguser'
-    id = Column(Integer, primary_key=True, autoincrement=True, unique=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     vk_id = Column(Integer)
     first_name = Column(String)
     last_name = Column(String)
