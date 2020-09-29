@@ -167,8 +167,7 @@ class Bot(VKUser):
                 self.write_msg(user.user_id, f'Мне нужен один из порядковых номеров, которые ты видишь чуть выше.')
                 answer = self.listen_msg()[0].strip()
             else:
-                city = user.select_from_db(City.id, City.region_id == regions[answer]).first()[0]
-                search_values['city'] = city
+                search_values['city'] = regions[answer]
 
         # начальный возраст
         self.write_msg(user.user_id, f'Укажи минимальный возраст в цифрах.')
@@ -238,7 +237,6 @@ class Bot(VKUser):
             answer = self.listen_msg()[0].strip()
         else:
             search_values['sort'] = sort_names.index(answer)
-
         return self.search_users(user, search_values)
 
     def full_questionnaire(self, user):
