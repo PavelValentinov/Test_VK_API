@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from typing import List, Any, Tuple
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -15,7 +16,7 @@ class Connect:
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    def _insert_basics(self):
+    def _insert_basics(self) -> None:
         """ Метод для записи в БД первичных данных из файлов.
         Если файлов с топонимами нет, то нужно запустить из VK_SCOPE/vk_scope методы _get_countries,
         _get_regions, _get_citiesсбор данных займёт минимум 1 час"""
@@ -46,11 +47,9 @@ class Connect:
                 if Model != City:
                     if not self.select_from_db(Model.id, Model.id == fields['id']).first():
                         entity = Model(**fields)
-                        # print(entity)
                         self.session.add(entity)
                         self.session.commit()
-                    else:
-                        continue
+
                 else:
                     if not self.select_from_db(Model.id, Model.id == fields['id']).first():
                         entity = Model(**fields)
@@ -59,49 +58,48 @@ class Connect:
                         self.session.commit()
                     else:
                         if self.select_from_db(Model.id,
-                                               (Model.id == fields['id'], Model.region_id is None)).first() is None:
-                            self.update_data(Model.id, (Model.id == fields['id'], Model.region_id is None),
+                                               (Model.id == fields['id'], Model.region_id.is_(None))).first() is None:
+                            self.update_data(Model.id, (Model.id == fields['id'], Model.region_id.is_(None)),
                                              {Model.region_id: fields['region_id']})
                             self.update_data(Model.id, Model.id == fields['id'], {Model.area: fields.get('area')})
 
-                        else:
-                            continue
-
-    def _update_cities(self):
+    def _update_cities(self) -> None:
         no_region_title_cities = self.select_from_db(City.id, City.region.is_(None)).all()
         for city in tqdm(no_region_title_cities, desc=f'Исправляем таблицу городов'):
             region_id = self.select_from_db(City.region_id, (City.id == city[0], City.region.is_(None))).first()[0]
             region_title = self.select_from_db(Region.title, Region.id == region_id).first()[0]
             self.update_data(City.id, City.id == city[0], {City.region: region_title})
 
-    def select_from_db(self, model_fields, expression):
+    def select_from_db(self, model_fields, expression, join=None) -> Tuple[Any] or None:
         """Метод проверки наличия записей в БД"""
-        if isinstance(model_fields, tuple) and isinstance(expression, tuple):
-            return self.session.query(*model_fields).filter(*expression)
-        elif isinstance(model_fields, tuple):
-            return self.session.query(*model_fields).filter(expression)
-        elif isinstance(expression, tuple):
-            return self.session.query(model_fields).filter(*expression)
-        else:
-            return self.session.query(model_fields).filter(expression)
+        if not isinstance(model_fields, tuple):
+            model_fields = (model_fields,)
+        if not isinstance(expression, tuple):
+            expression = (expression,)
+        if join:
+            if not isinstance(join, tuple):
+                join = (join,)
+            return self.session.query(*model_fields).join(*join).filter(*expression)
+        return self.session.query(*model_fields).filter(*expression)
 
-    def update_data(self, model_field, filter_expression, fields):
-        if isinstance(model_field, tuple) and isinstance(filter_expression, tuple):
-            self.session.query(*model_field).filter(*filter_expression).update(fields)
-        elif isinstance(model_field, tuple):
-            self.session.query(*model_field).filter(filter_expression).update(fields)
-        elif isinstance(filter_expression, tuple):
-            self.session.query(model_field).filter(*filter_expression).update(fields)
-        else:
-            self.session.query(model_field).filter(filter_expression).update(fields)
-
+    def update_data(self, model_fields, expression, fields) -> None:
+        if not isinstance(model_fields, tuple):
+            model_fields = (model_fields,)
+        if not isinstance(expression, tuple):
+            expression = (expression,)
+        self.session.query(*model_fields).filter(*expression).update(fields)
         self.session.commit()
 
-    def insert_to_db(self, model, fields):
+    def insert_to_db(self, model, fields) -> None:
         """Общий метод для записи в БД новых данных"""
         entity = model(**fields)
-        # print(entity)
         self.session.add(entity)
+        self.session.commit()
+
+    def delete_from_db(self, model_fields, expression, join=None) -> None:
+        """Общий метод для удаления данных из БД"""
+        entry = self.select_from_db(model_fields, expression, join)
+        self.session.delete(entry)
         self.session.commit()
 
 
