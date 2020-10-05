@@ -236,5 +236,5 @@ if __name__ == '__main__':
     # print(now)
     # geo.get_countries()
     # geo.get_regions()
-    # geo.get_cities()
+    geo.get_cities()
     # print(datetime.now() - now)

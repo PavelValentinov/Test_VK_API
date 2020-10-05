@@ -44,17 +44,23 @@ class Bot(VKAuth, Connect):
         search_values = {'country_id': country_id, 'q': region_title}
         return self.vk_session.method('database.getRegions', values=search_values)
 
-    def _get_city(self, country_id: int, city_title: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    def _get_city(self, country_id, city_title):
         """Метод для поиска города юзера, если его вдруг нет в БД"""
         search_values = {'country_id': country_id, 'q': city_title, 'need_all': 1}
         city = self.vk_session.method('database.getCities', values=search_values)
-        city_items = city['items'][0]
-        region_title = city_items['region'].split()[0]
-        region = self._get_region(country_id, region_title)
-        region_items = region['items'][0]
-        region_items.update({'country_id': country_id})
-        city_items['region_id'] = region_items['id']
-        return city_items, region_items
+        city_items = city['items']
+        if city_items:
+            city_items = city_items[0]
+            region_title = city_items.get('region')
+            if region_title:
+                region_title = region_title.split()[0]
+                region = self._get_region(country_id, region_title)
+                region_items = region['items'][0]
+                region_items.update({'country_id': country_id})
+                city_items['region_id'] = region_items['id']
+                return city_items, region_items
+            return city_items, None
+        return None, None
 
     def write_msg(self, user_id, message, attachment=None, keyboard=None) -> None:
         """Отправка сообщения пользователю"""

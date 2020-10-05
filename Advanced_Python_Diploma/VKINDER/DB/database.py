@@ -1,13 +1,23 @@
+import itertools
 import json
 from datetime import datetime
-from typing import List, Any, Tuple
+from typing import Any, Tuple
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, create_engine
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, create_engine, inspect
+from sqlalchemy.dialects import postgresql
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from tqdm import tqdm
 
 Base = declarative_base()
+
+
+def grouper(iterable, n, fillvalue=None):
+    """Collect data into fixed-length chunks or blocks"""
+    # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx"
+    # https://docs.python.org/3/library/itertools.html#itertools-recipes
+    args = [iter(iterable)] * n
+    return itertools.zip_longest(*args, fillvalue=fillvalue)
 
 
 # noinspection SpellCheckingInspection
@@ -22,10 +32,10 @@ class Connect:
         _get_regions, _get_citiesсбор данных займёт минимум 1 час"""
 
         files = [
-            "../DB/Fixtures/primary_data.json",
+            # "../DB/Fixtures/primary_data.json",
             # "../DB/Fixtures/countries.json",
             # "../DB/Fixtures/regions.json",
-            # "../DB/Fixtures/cities.json"
+            "../DB/Fixtures/cities_new.json"
         ]
 
         table_to_model_mapping = {
@@ -37,31 +47,57 @@ class Connect:
             "region": Region
         }
 
+        # дополняем некоторые объекты вот этими данными
+        additional_fields = {
+            "city": {"area": None, "region": None, "important": None}
+        }
+
         for file in files:
             with open(file, encoding='utf-8') as f:
                 data = json.load(f)
 
-            for entity_dict in tqdm(data, desc=f'Пишем в БД файл {file}'):
-                Model = table_to_model_mapping[entity_dict['model']]
-                fields = entity_dict['fields']
-                if Model != City:
-                    if not self.select_from_db(Model.id, Model.id == fields['id']).first():
-                        entity = Model(**fields)
-                        self.session.add(entity)
-                        self.session.commit()
+            # извлекаем объекты группами, так чтобы в одну группу попадали
+            # объекты одной и той же модели
+            by_model = lambda d: d['model']
+            for k, group in itertools.groupby(data, by_model):
+                group = list(group)
 
-                else:
-                    if not self.select_from_db(Model.id, Model.id == fields['id']).first():
-                        entity = Model(**fields)
-                        # print(entity)
-                        self.session.add(entity)
-                        self.session.commit()
-                    else:
-                        if self.select_from_db(Model.id,
-                                               (Model.id == fields['id'], Model.region_id.is_(None))).first() is None:
-                            self.update_data(Model.id, (Model.id == fields['id'], Model.region_id.is_(None)),
-                                             {Model.region_id: fields['region_id']})
-                            self.update_data(Model.id, Model.id == fields['id'], {Model.area: fields.get('area')})
+                Model = table_to_model_mapping[k]
+                table = Model.__table__
+
+                # будем вставлять данные пачками
+                for chunk in grouper(tqdm(group, desc=f"Inserting {k}..."), 1000):
+                    # grouper будет добавлять в "хвост" None, обрежем их
+                    chunk = [item for item in chunk if item]
+
+                    # код дальше частично взят отсюда:
+                    # https://stackoverflow.com/a/51567630/10650942
+
+                    # через ORM невозможно сделать логику ON COFLICT DO UPDATE,
+                    # поэтому придётся писать запрос на SQLAlchemy Core
+                    stmt = postgresql.insert(table)
+
+                    # конфликт по каким столбцам нас интересует -- первичный ключ
+                    primary_keys = [key.name for key in inspect(table).primary_key]
+
+                    # что обновлять при конфликте -- всё, кроме первичного ключа
+                    update_dict = {c.name: c for c in stmt.excluded if
+                                   not c.primary_key}
+
+                    stmt = stmt.on_conflict_do_update(index_elements=primary_keys,
+                                                      set_=update_dict)
+
+                    # в некоторых словарях может не хватать ключей, дополним
+                    rows = [{**additional_fields.get(k, {}), **ent['fields']} for ent in chunk]
+
+                    # вжух
+                    self.session.execute(stmt, rows)
+                    self.session.commit()
+
+        no_reg = (sorted(city for city in self.select_from_db((City.id, City.region_id), City.region.is_(None)).all()))
+        for city, reg in no_reg:
+            region = self.select_from_db(Region.title, Region.id == reg).first()[0]
+            self.update_data(City.region, City.id == city, {'region': region})
 
     def _update_cities(self) -> None:
         no_region_title_cities = self.select_from_db(City.id, City.region.is_(None)).all()
@@ -199,7 +235,8 @@ if __name__ == '__main__':
     now = datetime.now()
     Base.metadata.create_all(Connect.engine)
     print("All tables are created successfully")
-    # Connect()._insert_basics()
+    Connect()._insert_basics()
     # Connect()._update_cities()
     # print("Primary inserts done")
-    # print(datetime.now() - now)
+
+    print(datetime.now() - now)
