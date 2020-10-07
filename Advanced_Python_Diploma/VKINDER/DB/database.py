@@ -32,10 +32,10 @@ class Connect:
         _get_regions, _get_citiesсбор данных займёт минимум 1 час"""
 
         files = [
-            # "../DB/Fixtures/primary_data.json",
-            # "../DB/Fixtures/countries.json",
-            # "../DB/Fixtures/regions.json",
-            "../DB/Fixtures/cities_new.json"
+            "../DB/Fixtures/primary_data.json",
+            "../DB/Fixtures/countries.json",
+            "../DB/Fixtures/regions.json",
+            "../DB/Fixtures/cities.json"
         ]
 
         table_to_model_mapping = {
@@ -93,18 +93,6 @@ class Connect:
                     # вжух
                     self.session.execute(stmt, rows)
                     self.session.commit()
-
-        no_reg = (sorted(city for city in self.select_from_db((City.id, City.region_id), City.region.is_(None)).all()))
-        for city, reg in no_reg:
-            region = self.select_from_db(Region.title, Region.id == reg).first()[0]
-            self.update_data(City.region, City.id == city, {'region': region})
-
-    def _update_cities(self) -> None:
-        no_region_title_cities = self.select_from_db(City.id, City.region.is_(None)).all()
-        for city in tqdm(no_region_title_cities, desc=f'Исправляем таблицу городов'):
-            region_id = self.select_from_db(City.region_id, (City.id == city[0], City.region.is_(None))).first()[0]
-            region_title = self.select_from_db(Region.title, Region.id == region_id).first()[0]
-            self.update_data(City.id, City.id == city[0], {City.region: region_title})
 
     def select_from_db(self, model_fields, expression, join=None) -> Tuple[Any] or None:
         """Метод проверки наличия записей в БД"""
@@ -226,7 +214,6 @@ class DatingUser(Base):
     link = Column(String)
     verified = Column(Integer)
     query_id = Column(Integer, ForeignKey('query.id'))
-    user_id = Column(Integer, ForeignKey('user.id'))
     viewed = Column(Boolean, default=False)
     black_list = Column(Boolean, nullable=True)
 
@@ -236,7 +223,5 @@ if __name__ == '__main__':
     Base.metadata.create_all(Connect.engine)
     print("All tables are created successfully")
     Connect()._insert_basics()
-    # Connect()._update_cities()
-    # print("Primary inserts done")
-
+    print("Primary inserts done")
     print(datetime.now() - now)

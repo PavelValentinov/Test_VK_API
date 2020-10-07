@@ -6,10 +6,14 @@ from DB.database import City, Region, Connect
 from VK_SCOPE.bot import Bot
 from VK_SCOPE.vk_scope import VKUser
 
-short1 = ['Санкт-Петербург', 20, 30, 'в активном поиске', 'по популярности']
-short2 = ['Москва', 1, 18, 0, 'всё сложно', 'по дате регистрации']
-long1 = ['женский'].extend(short1)
-long2 = ['мужской'].extend(short2)
+
+cities = ['санкт-петербург']
+short1 = ['cаНкт-пеТерБург', 20, 30, 'в активном поиске', 'по популярности']
+short2 = ['москва', 1, 18, 0, 'всё сложно', 'по дате регистрации']
+long1 = ['женский']
+long2 = ['мужской']
+long1.extend(short1)
+long2.extend(short2)
 short_questionnaire = (short1, short2)
 long_questionnaire = (long1, long2)
 
@@ -75,6 +79,11 @@ def test_get_city(bot, db):
     assert city is None
     assert region is None
 
+@pytest.mark.parametrize("answer", cities)
+def test_get_user_city(bot, user, answer):
+    with patch('VK_SCOPE.bot.Bot.listen_msg', side_effect=answer) as listen_mock:
+        search_value = bot.get_user_city(user)
+        assert search_value == 2
 
 #
 # @patch('bot.listen_msg', side_effect=short_questionnaire)
