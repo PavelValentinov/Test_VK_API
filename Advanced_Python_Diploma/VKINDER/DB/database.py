@@ -94,7 +94,13 @@ class Connect:
                     self.session.execute(stmt, rows)
                     self.session.commit()
 
-    def select_from_db(self, model_fields, expression, join=None) -> Tuple[Any] or None:
+    def insert_to_db(self, model, fields) -> None:
+        """Общий метод для записи в БД новых данных"""
+        entity = model(**fields)
+        self.session.add(entity)
+        self.session.commit()
+
+    def select_from_db(self, model_fields, expression=None, join=None) -> Tuple[Any] or None:
         """Метод проверки наличия записей в БД"""
         if not isinstance(model_fields, tuple):
             model_fields = (model_fields,)
@@ -114,16 +120,15 @@ class Connect:
         self.session.query(*model_fields).filter(*expression).update(fields)
         self.session.commit()
 
-    def insert_to_db(self, model, fields) -> None:
-        """Общий метод для записи в БД новых данных"""
-        entity = model(**fields)
-        self.session.add(entity)
-        self.session.commit()
-
-    def delete_from_db(self, model_fields, expression, join=None) -> None:
-        """Общий метод для удаления данных из БД"""
-        entry = self.select_from_db(model_fields, expression, join)
-        self.session.delete(entry)
+    def delete_from_db(self, model_fields, expression=None, join=None) -> None:
+        """Общий метод для удаления данных из БД
+        @rtype: object
+        """
+        if not isinstance(model_fields, tuple):
+            model_fields = (model_fields,)
+        if not isinstance(expression, tuple):
+            expression = (expression,)
+        self.select_from_db(*model_fields, *expression, join).delete()
         self.session.commit()
 
 
@@ -222,6 +227,6 @@ if __name__ == '__main__':
     now = datetime.now()
     Base.metadata.create_all(Connect.engine)
     print("All tables are created successfully")
-    Connect()._insert_basics()
-    print("Primary inserts done")
-    print(datetime.now() - now)
+    # Connect()._insert_basics()
+    # print("Primary inserts done")
+    # print(datetime.now() - now)

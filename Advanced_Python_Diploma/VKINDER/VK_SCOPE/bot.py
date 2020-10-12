@@ -76,22 +76,6 @@ class Bot(VKAuth, Connect):
 
         self.vk_bot.method('messages.send', values)
 
-    def create_user(self, id):
-        self.users[id] = VKUser(id)
-        user = self.users[id]
-        user.welcomed = False
-        return user
-
-    def check_user_city(self, user):
-
-        self._check_city_and_region(user)
-
-        # проверяем не поменялся ли у юзера его город
-        user_db_city = self.select_from_db(User.city_id, User.id == user.user_id).first()[0]
-        if user_db_city != user.city['id']:
-            self._check_city_and_region(user)  # если нового города юзера вдруг нет в БД
-            self.update_data(User.id, User.id == user.user_id, {User.city_id: user.city['id']})
-
     def listen_msg(self, scan=True) -> Tuple:
         """Ожидание сообщений от пользователя и их обработка.
         Метод отслеживает события в VKLongPoll и при первом событии от юзера инициализирует его экземпляр VKUser"""
@@ -116,7 +100,7 @@ class Bot(VKAuth, Connect):
                     user = self.create_user(event.user_id)
 
                 if not user.welcomed:
-                    user.welcomed = self.welcome_user(user)
+                    self.welcome_user(user)
 
                 if event.type == VkEventType.MESSAGE_NEW:
                     if event.to_me:
@@ -126,80 +110,23 @@ class Bot(VKAuth, Connect):
             except AttributeError:
                 pass
 
-    def show_results(self, user, results: Tuple[int, int] = None, datingusers: List[VKDatingUser] = None) -> None:
-        """Метод выдачи пользователю результатов поиска"""
-        if datingusers:
-            dating_users = datingusers
-        else:
-            if results:
-                remainder = results[0] % 10
-                if remainder == 0 or remainder >= 5 or (10 <= results[0] <= 19) or (10 <= results[0] % 100 <= 19):
-                    var = 'вариантов'
-                elif remainder == 1:
-                    var = 'вариант'
-                else:
-                    var = 'варианта'
-                self.write_msg(user.user_id, f'&#128515; Мы нашли {results[0]} {var}!!!')
-                query_id = results[1]
-                dating_users = self.get_datingusers_from_db(user.user_id, query_id)
-            else:
-                dating_users = self.get_datingusers_from_db(user.user_id)
+    def create_user(self, id):
+        self.users[id] = VKUser(id)
+        user = self.users[id]
+        return user
 
-        if dating_users:
-            # получаем список юзеров из БД
-            for d_user in dating_users:
-                d_user.photos = d_user.get_photo()
-                name = d_user.first_name + ' ' + d_user.last_name
-                link = d_user.link
-                if len(d_user.photos) > 1:
-                    photos_list = []
-                    for photo in d_user.photos:
-                        photo_id, owner_id, _ = photo
-                        photos_list.append(f'photo{owner_id}_{photo_id}')
-                    photos = ','.join(photos_list)
-                    message = f'{name} {link} \n '
-                elif len(d_user.photos) == 1:
-                    photo_id, owner_id, _ = d_user.photos[0]
-                    photos = f'photo{owner_id}_{photo_id}'
-                    message = f'{name} {link} \n '
-                else:
-                    message = f'{name} {link} \n Фоток нет, но вы держитесь!\n'
-                    photos = ''
+    def check_user_city(self, user):
 
-                keyboard = VkKeyboard(one_time=False)
-                keyboard.add_button("Да", color=VkKeyboardColor.POSITIVE)
-                keyboard.add_button("Нет", color=VkKeyboardColor.NEGATIVE)
-                keyboard.add_line()
-                keyboard.add_button("Отмена", color=VkKeyboardColor.NEGATIVE)
-                keyboard = keyboard.get_keyboard()
-                if photos:
-                    self.write_msg(user.user_id, message=message, attachment=photos)
-                else:
-                    self.write_msg(user.user_id, message=message)
-                self.write_msg(user.user_id, message='Нравится?', keyboard=keyboard)
+        self._check_city_and_region(user)
 
-                expected_answers = ['да', 'нет', 'отмена']
-                answer = self.listen_msg()[0]
-                while answer not in expected_answers:
-                    self.write_msg(user.user_id, "&#129300; Не понимаю... Используй кнопки. &#128071;",
-                                   keyboard=keyboard)
-                    answer = self.listen_msg()[0]
-                else:
-                    if answer == "да":
-                        fields = {DatingUser.viewed: True, DatingUser.black_list: False}
-                        self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
-                        continue
-                    elif answer == "нет":
-                        fields = {DatingUser.viewed: True, DatingUser.black_list: True}
-                        self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
-                        continue
-                    elif answer == "отмена":
-                        self.write_msg(user.user_id, "Заходи ещё! &#128406;",
-                                       keyboard=self.empty_keyboard)
-                        return
-        self.write_msg(user.user_id, "&#128579; Похоже, что ты уже всех посмотрел. Попробуй новый поиск! &#128373;",
-                       keyboard=self.empty_keyboard)
-        return
+        # проверяем не поменялся ли у юзера его город
+        user_db_city = self.select_from_db(User.city_id, User.id == user.user_id).first()[0]
+        if user_db_city != user.city['id']:
+            self._check_city_and_region(user)  # если нового города юзера вдруг нет в БД
+            self.update_data(User.id, User.id == user.user_id, {User.city_id: user.city['id']})
+            user_db_city = self.select_from_db(User.city_id, User.id == user.user_id).first()[0]
+
+        return user_db_city
 
     def insert_query(self, user_id, search_values) -> int:
         """ Метод записи в БД информации об условиях поиска пользователя """
@@ -281,6 +208,81 @@ class Bot(VKAuth, Connect):
 
         return dusers, query_id
 
+    def show_results(self, user, results: Tuple[int, int] = None, datingusers: List[VKDatingUser] = None) -> None:
+        """Метод выдачи пользователю результатов поиска"""
+        if datingusers:
+            dating_users = datingusers
+        else:
+            if results:
+                remainder = results[0] % 10
+                if remainder == 0 or remainder >= 5 or (10 <= results[0] <= 19) or (10 <= results[0] % 100 <= 19):
+                    var = 'вариантов'
+                elif remainder == 1:
+                    var = 'вариант'
+                else:
+                    var = 'варианта'
+                self.write_msg(user.user_id, f'&#128515; Мы нашли {results[0]} {var}!!!')
+                query_id = results[1]
+                dating_users = self.get_datingusers_from_db(user.user_id, query_id)
+            else:
+                dating_users = self.get_datingusers_from_db(user.user_id)
+
+        if dating_users:
+            # получаем список юзеров из БД
+            for d_user in dating_users:
+                d_user.photos = d_user.get_photo()
+                name = d_user.first_name + ' ' + d_user.last_name
+                link = d_user.link
+                if len(d_user.photos) > 1:
+                    photos_list = []
+                    for photo in d_user.photos:
+                        photo_id, owner_id = photo
+                        photos_list.append(f'photo{owner_id}_{photo_id}')
+                    photos = ','.join(photos_list)
+                    message = f'{name} {link} \n '
+                elif len(d_user.photos) == 1:
+                    photo_id, owner_id = d_user.photos[0]
+                    photos = f'photo{owner_id}_{photo_id}'
+                    message = f'{name} {link} \n '
+                else:
+                    message = f'{name} {link} \n Фоток нет, но вы держитесь!\n'
+                    photos = ''
+
+                keyboard = VkKeyboard(one_time=False)
+                keyboard.add_button("Да", color=VkKeyboardColor.POSITIVE)
+                keyboard.add_button("Нет", color=VkKeyboardColor.NEGATIVE)
+                keyboard.add_line()
+                keyboard.add_button("Отмена", color=VkKeyboardColor.NEGATIVE)
+                keyboard = keyboard.get_keyboard()
+                if photos:
+                    self.write_msg(user.user_id, message=message, attachment=photos)
+                else:
+                    self.write_msg(user.user_id, message=message)
+                self.write_msg(user.user_id, message='Нравится?', keyboard=keyboard)
+
+                expected_answers = ['да', 'нет', 'отмена']
+                answer = self.listen_msg()[0]
+                while answer not in expected_answers:
+                    self.write_msg(user.user_id, "&#129300; Не понимаю... Используй кнопки. &#128071;",
+                                   keyboard=keyboard)
+                    answer = self.listen_msg()[0]
+                else:
+                    if answer == "да":
+                        fields = {DatingUser.viewed: True, DatingUser.black_list: False}
+                        self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
+                        continue
+                    elif answer == "нет":
+                        fields = {DatingUser.viewed: True, DatingUser.black_list: True}
+                        self.update_data(DatingUser.id, DatingUser.id == d_user.db_id, fields=fields)
+                        continue
+                    elif answer == "отмена":
+                        self.write_msg(user.user_id, "Заходи ещё! &#128406;",
+                                       keyboard=self.empty_keyboard)
+                        return
+        self.write_msg(user.user_id, "&#128579; Похоже, что ты уже всех посмотрел. Попробуй новый поиск! &#128373;",
+                       keyboard=self.empty_keyboard)
+        return
+
     def get_datingusers_from_db(self, user_id, query_id=None, blacklist=None) -> List or int:
         """Метод получения юзеров из БД и создания из них экземпляров класса VKDatingUser"""
         fields = (
@@ -355,7 +357,8 @@ class Bot(VKAuth, Connect):
                 self.write_msg(user.user_id,
                                f"&#128522; Привет, {user.first_name.capitalize()}! Давно не виделись!",
                                keyboard=keyboard.get_keyboard())
-        return True
+        user.welcomed = True
+        return user.welcomed
 
     def get_sex(self, user):
         # пол

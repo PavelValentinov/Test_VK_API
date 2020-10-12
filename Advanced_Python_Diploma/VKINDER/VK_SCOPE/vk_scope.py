@@ -172,6 +172,7 @@ class VKUser(VKAuth, Connect):
         self.last_name = info[0].get('last_name')
         self.sex = info[0].get('sex')
         self.link = 'https://vk.com/' + str(info[0].get('domain'))
+        self.welcomed = False
 
         # Если город и страна пользователя не указаны - Москва по умолчанию
         if not info[0].get('city'):
@@ -226,7 +227,8 @@ class VKDatingUser(VKAuth):
         photos = []
         for photo in response['items']:
             photos.append((photo['id'], photo['owner_id'], photo['likes']['count']))
-        top3_photos = sorted(photos, key=operator.itemgetter(2), reverse=True)[:3]
+        sorted_photos = sorted(photos, key=operator.itemgetter(2), reverse=True)
+        top3_photos = [(id, photo) for id, photo, _ in sorted_photos][:3]
         return top3_photos
 
 
@@ -236,5 +238,5 @@ if __name__ == '__main__':
     # print(now)
     # geo.get_countries()
     # geo.get_regions()
-    geo.get_cities()
+    # geo.get_cities()
     # print(datetime.now() - now)
