@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 from DB.database import City, Region, Connect, User, Query, DatingUser
@@ -11,14 +13,15 @@ def auth():
 
 
 @pytest.fixture()
-def user(id=None):
-    if id:
-        return VKUser(id)
-    return VKUser(604152544)
+def user(bot, db):
+    user = bot.create_user(1)
+    user.insert_self_to_db()
+    yield user
+    db.delete_from_db(User, User.id == user.user_id)
 
 
 @pytest.fixture()
-def datinguser(user):
+def datinguser(user, db):
     values = {
         'db_id': 0,
         'vk_id': user.user_id,
@@ -26,7 +29,9 @@ def datinguser(user):
         'last_name': user.last_name,
         'vk_link': user.link
     }
-    return VKDatingUser(**values)
+    d_user = VKDatingUser(**values)
+    yield d_user
+    db.delete_from_db(DatingUser, DatingUser.id == 0)
 
 
 @pytest.fixture()
@@ -87,18 +92,17 @@ def test_get_city(bot, db):
 
 
 def test_check_user_city(bot, user):
-    assert bot.check_user_city(user) == 1
+    assert bot.check_user_city(user) == 2
 
 
-def test_create_user(bot, db):
-    new_user = bot.create_user(1)
-    assert isinstance(new_user, VKUser)
-    assert new_user.user_id == 1
-    assert new_user.welcomed is False
-    assert new_user.user_id in bot.users
+def test_create_user(bot, user):
+    assert isinstance(user, VKUser)
+    assert user.user_id == 1
+    assert user.welcomed is False
+    assert user.user_id in bot.users
 
 
-def test_insert_query(bot, db):
+def test_insert_query(bot, db, user):
     query_values = {
         'sex': 1,
         'city': 1,
@@ -108,24 +112,22 @@ def test_insert_query(bot, db):
         'sort': 1,
     }
 
-    new_user = bot.create_user(1)
-    new_user.insert_self_to_db()
     query_id = bot.insert_query(1, query_values)
-    db_query = db.select_from_db(Query, Query.user_id == new_user.user_id).first()
-    assert query_id == db_query.id
-    assert db_query.sex_id == query_values['sex']
-    assert db_query.city_id == query_values['city']
-    assert db_query.age_from == query_values['age_from']
-    assert db_query.age_to == query_values['age_to']
-    assert db_query.status_id == query_values['status']
-    assert db_query.sort_id == query_values['sort']
-    assert db_query.user_id == new_user.user_id
+    db_query = db.select_from_db(Query, Query.user_id == user.user_id).first()
+    try:
+        assert query_id == db_query.id
+        assert db_query.sex_id == query_values['sex']
+        assert db_query.city_id == query_values['city']
+        assert db_query.age_from == query_values['age_from']
+        assert db_query.age_to == query_values['age_to']
+        assert db_query.status_id == query_values['status']
+        assert db_query.sort_id == query_values['sort']
+        assert db_query.user_id == user.user_id
+    finally:
+        db.delete_from_db(Query, Query.user_id == user.user_id)
 
-    db.delete_from_db(Query, Query.user_id == new_user.user_id)
-    db.delete_from_db(User, User.id == new_user.user_id)
 
-
-def test_search_users(bot, db):
+def test_search_users(bot, db, user):
     query_values = {
         'sex': 1,
         'city': 456,
@@ -134,39 +136,34 @@ def test_search_users(bot, db):
         'status': 1,
         'sort': 1,
     }
-    new_user = bot.create_user(1)
-    new_user.insert_self_to_db()
-    dusers, query_id = bot.search_users(new_user)
-    assert dusers > 0
-    assert bot.search_users(new_user, query_values) is None
-    db.delete_from_db(DatingUser, DatingUser.query_id == query_id)
-    db.delete_from_db(Query, Query.user_id == new_user.user_id)
-    db.delete_from_db(User, User.id == new_user.user_id)
+    dusers, query_id = bot.search_users(user)
+    try:
+        assert dusers > 0
+        assert bot.search_users(user, query_values) is None
+    finally:
+        db.delete_from_db(DatingUser, DatingUser.query_id == query_id)
+        db.delete_from_db(Query, Query.user_id == user.user_id)
 
 
 def test_welcome_user(user, bot):
     assert user.welcomed is False
-    bot.welcome_user(user)
-    assert user.welcomed is True
-    user.welcomed = False
-    assert user.welcomed is False
+    with patch("VK_SCOPE.bot.Bot.write_msg"):
+        bot.welcome_user(user)
+        assert user.welcomed is True
 
 
-def test_insert_self_to_db(db, bot):
-    new_user = bot.create_user(1)
-    new_user.insert_self_to_db()
-    db_user = db.select_from_db(User, User.id == new_user.user_id).first()
-    assert db_user.id == new_user.user_id
-    assert db_user.sex_id == new_user.sex
-    assert db_user.city_id == new_user.city['id']
-    db.delete_from_db(User, User.id == new_user.user_id)
+def test_insert_self_to_db(db, bot, user):
+    db_user = db.select_from_db(User, User.id == user.user_id).first()
+    assert db_user.id == user.user_id
+    assert db_user.sex_id == user.sex
+    assert db_user.city_id == user.city['id']
 
 
 def test_get_self_info(user):
     result = user.get_self_info(user.user_id)
     assert isinstance(result, list)
     assert result[0].get('sex') == 2
-    assert result[0].get('city').get('id') == 1
+    assert result[0].get('city').get('id') == 2
 
 
 def test_get_photo(datinguser, db):
@@ -177,7 +174,101 @@ def test_get_photo(datinguser, db):
         assert isinstance(id, int)
         assert isinstance(owner_id, int)
         assert owner_id == datinguser.id
-    db.delete_from_db(DatingUser, DatingUser.id == 0)
+
+
+@pytest.mark.parametrize(
+    ("sex_title", "expected_sex_id"), [("мужской", 2), ("женский", 1), ("пол не указан", 0)]
+)
+def test_get_sex(bot, user, sex_title, expected_sex_id):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg", return_value=(sex_title, user)) as listen_msg_mock:
+            sex = bot.get_sex(user)
+            assert sex == expected_sex_id
+    write_msg_mock.assert_called_once()
+    listen_msg_mock.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("city_title", "expected_city_id"), [("Canbolat", 3273662), ("Санкт-Петербург", 2)]
+)
+def test_get_unique_city(bot, user, city_title, expected_city_id):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg", return_value=(city_title, user)) as listen_msg_mock:
+            city = bot.get_city(user)
+            assert city == expected_city_id
+    write_msg_mock.assert_called_once()
+    listen_msg_mock.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("city_title", "city_order", "expected_city_id"), [
+        ("Москва", "1", 1), ("Омск", "1", 104)]
+)
+def test_get_not_unique_city(bot, user, city_title, city_order, expected_city_id):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg",
+                   side_effect=[(city_title, user), (city_order, user)]) as listen_msg_mock:
+            city = bot.get_city(user)
+            assert city == expected_city_id
+    write_msg_mock.assert_called()
+    listen_msg_mock.assert_called()
+
+
+@pytest.mark.parametrize(
+    ("age_from", "expected_age"), [("18", 18), ("51", 51)]
+)
+def test_get_age_from(bot, user, age_from, expected_age):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg", return_value=(age_from, user)) as listen_msg_mock:
+            age = bot.get_age_from(user)
+            assert age == expected_age
+    write_msg_mock.assert_called_once()
+    listen_msg_mock.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("age_to", "expected_age"), [("18", 18), ("0", 100)]
+)
+def test_get_age_to(bot, user, age_to, expected_age):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg", return_value=(age_to, user)) as listen_msg_mock:
+            age = bot.get_age_to(user)
+            assert age == expected_age
+    write_msg_mock.assert_called_once()
+    listen_msg_mock.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("status", "expected_status_id"), [("не женат (не замужем)", 1),
+                                       ("встречается", 2),
+                                       ("помолвлен(-а)", 3),
+                                       ("женат (замужем)", 4),
+                                       ("всё сложно", 5),
+                                       ("в активном поиске", 6),
+                                       ("влюблен(-а)", 7),
+                                       ("в гражданском браке", 8)]
+)
+def test_get_status(bot, user, status, expected_status_id):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg", return_value=(status, user)) as listen_msg_mock:
+            status = bot.get_status(user)
+            assert status == expected_status_id
+    write_msg_mock.assert_called_once()
+    listen_msg_mock.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("sort", "expected_sort_id"), [("по популярности", 0),
+                                   ("по дате регистрации", 1)
+                                   ]
+)
+def test_sort(bot, user, sort, expected_sort_id):
+    with patch("VK_SCOPE.bot.Bot.write_msg") as write_msg_mock:
+        with patch("VK_SCOPE.bot.Bot.listen_msg", return_value=(sort, user)) as listen_msg_mock:
+            sort = bot.get_sort(user)
+            assert sort == expected_sort_id
+    write_msg_mock.assert_called_once()
+    listen_msg_mock.assert_called_once()
 
 
 if __name__ == '__main__':

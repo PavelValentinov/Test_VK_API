@@ -120,7 +120,9 @@ class Bot(VKAuth, Connect):
         self._check_city_and_region(user)
 
         # проверяем не поменялся ли у юзера его город
-        user_db_city = self.select_from_db(User.city_id, User.id == user.user_id).first()[0]
+        user_db_city = self.select_from_db(User.city_id, User.id == user.user_id).first()
+        if user_db_city:
+            user_db_city = user_db_city[0]
         if user_db_city != user.city['id']:
             self._check_city_and_region(user)  # если нового города юзера вдруг нет в БД
             self.update_data(User.id, User.id == user.user_id, {User.city_id: user.city['id']})
@@ -396,23 +398,22 @@ class Bot(VKAuth, Connect):
             answer = self.listen_msg(scan=False)[0].strip().lower()
             if answer == "отмена":
                 return
-            else:
-                try:
-                    symbol = re.search(r'\W', answer)[0]
-                    words = re.split(symbol, answer)
-                    if len(words) < 3:
-                        for word in words:
-                            words[words.index(word)] = word.capitalize()
+            try:
+                symbol = re.search(r'\W', answer)[0]
+                words = re.split(symbol, answer)
+                if len(words) < 3:
+                    for word in words:
+                        words[words.index(word)] = word.capitalize()
+                    answer = symbol.join(words)
+                else:
+                    if '-' == symbol:
+                        words[0] = words[0].capitalize()
+                        words[-1] = words[-1].capitalize()
                         answer = symbol.join(words)
                     else:
-                        if '-' == symbol:
-                            words[0] = words[0].capitalize()
-                            words[-1] = words[-1].capitalize()
-                            answer = symbol.join(words)
-                        else:
-                            answer = answer.title()
-                except TypeError:
-                    answer = answer.capitalize()
+                        answer = answer.title()
+            except TypeError:
+                answer = answer.capitalize()
 
             city = user.select_from_db(City, City.title.startswith(answer)).order_by(City.region).all()
 
